@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { type ResponseType } from 'axios';
 import type {Endpoints, Params} from '~/types/Api';
 import endpointsModule from "~/Endpoints";
 
@@ -6,11 +6,14 @@ const endpoints: Endpoints = endpointsModule;
 
 export const useApi = () => {
     const { public: { API_URL } } = useRuntimeConfig();
+    const { locale } = useI18n();
     const baseUrl = API_URL ? API_URL.replace('**', '') : '/api/';
-    const callApi = async <T>(key: string, params: Params = {}, headers: Record<string, string> = {}): Promise<T> => {
+    const callApi = async <T>(key: string, params: Params = {}, headers: Record<string, string> = {}, responseType:ResponseType | undefined = undefined): Promise<T> => {
         if (!endpoints[key]) {
             throw new Error(`Endpoint "${key}" не найден`)
         }
+
+        headers['X-Accept-Language'] = locale.value;
 
         let { method, url } = endpoints[key]
 
@@ -26,7 +29,8 @@ export const useApi = () => {
                 method,
                 url: `${baseUrl}${url}`,
                 [method === 'get' ? 'params' : 'data']: params,
-                headers
+                headers,
+                responseType,
             });
 
             return response.data as T;

@@ -1,8 +1,10 @@
 export const FILE_STATUS = {
+    PREPARE: -1,
     CREATED: 0,
     LOADING: 1,
-    UPLOADED: 2,
-    ERROR: 3,
-    DELETE: 4,
-    COMPLETED: 5,
+    ERROR: 2,
+    DELETE: 3,
+    UPLOADED: 4,
+    PROCESSING: 5,
+    COMPLETED: 6,
 };

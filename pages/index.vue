@@ -1,15 +1,43 @@
 <script setup lang="ts">
-import FileUploader from "~/components/functional/fileUploader/FileUploader.vue";
-import type {Task} from "~/types/Task";
+import Converter from "~/components/functional/Converter.vue";
+import TopBlock from "~/components/ui/TopBlock.vue";
+import {useI18n} from "vue-i18n";
+import Advantages from "~/components/Blocks/Advantages.vue";
+import CategoryLinksAll from "~/components/Blocks/CategoryLinksAll.vue";
 
-const api = useApi();
+const props = defineProps({
+    category: {
+        type: String,
+        required: true
+    }
+})
+
+const { t } = useI18n();
+const { formats } = useFormats();
+const title = t(`titles.index`);
+const subtitle = t(`subtitles.index`);
+
+useSeoMeta({
+    title: t('page.index.title'),
+    description: t('page.index.description'),
+});
 
 </script>
 
 <template>
-    <UContainer>
-        <FileUploader chunkSize="26214"/>
-    </UContainer>
+    <TopBlock :hideBreadCrumbs="true">
+        <template #title>
+            {{title}}
+        </template>
+        <template #subtitle>
+            <div class="max-w-4xl mx-auto">
+                {{subtitle}}
+            </div>
+        </template>
+    </TopBlock>
+    <Converter/>
+    <Advantages class="bg-white"></Advantages>
+    <CategoryLinksAll class="bg-white" :file-types="formats" />
 </template>
 
 <style scoped>

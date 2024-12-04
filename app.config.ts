@@ -1,9 +1,7 @@
 export default defineAppConfig({
   ui: {
-    primary: 'lime',
+    primary: 'blue',
+    secondary: 'orange',
     gray: 'neutral',
   },
-  progress: {
-    rounded: 'rounded-none'
-  }
 })

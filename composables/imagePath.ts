@@ -1,15 +1,23 @@
 import type {ImagePath} from "~/types/ImagePath";
 
 export const imagePath = () => {
-    const { public: { FILE_URL } } = useRuntimeConfig();
+    const { public: { FILE_URL, STORAGE_URL } } = useRuntimeConfig();
     const baseFileUrl = FILE_URL || '/img/';
-    const getImagePath = (task: string, source: string):ImagePath => {
+    const storageFileUrl = STORAGE_URL || '/img/';
+    const getImagePath = (task: string, fileName: string):ImagePath => {
         return {
-            src: `${baseFileUrl}${task}/${source}`
+            src: `${baseFileUrl}${task}/${fileName}`
+        }
+    }
+
+    const getStoragePath = (source: string):ImagePath => {
+        return {
+            src: `${storageFileUrl}${source}`
         }
     }
 
     return {
-        getImagePath
+        getImagePath,
+        getStoragePath
     }
 }

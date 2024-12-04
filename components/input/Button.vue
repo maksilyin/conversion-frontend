@@ -37,12 +37,6 @@ const tagData = computed(() => {
         v-bind="tagData.params"
         class="transition ease-in hover:bg-opacity-80 inline-flex items-center justify-center whitespace-nowrap gap-5 rounded-xl bg-primary px-5 py-4 text-white font-medium cursor-pointer">
         <slot/>
-        <svg-icon
-            v-if="props.icon !== ''"
-            :name="props.icon"
-            width="24px"
-            height="24px"
-        />
     </component>
 </template>
 

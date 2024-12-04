@@ -2,8 +2,9 @@
 import type { UploadFile } from "~/types/UploadFile";
 import { FILE_STATUS } from "~/utils/constants"
 import { useI18n } from 'vue-i18n';
-import FormatSelect from "~/components/ui/FormatSelect.vue";
 const { t } = useI18n();
+import { formatSize } from "~/utils/functions";
+import {useMimeTypes} from "~/composables/useMimeTypes";
 
 interface Props {
     data: UploadFile;
@@ -12,7 +13,10 @@ interface Props {
 }
 
 const props = defineProps({
-    modelValue: Object as PropType<UploadFile>,
+    file: {
+       required: true,
+       type: Object as PropType<UploadFile>
+    },
     multiple: {
         type: Boolean,
         default: false,
@@ -27,27 +31,40 @@ const props = defineProps({
     }
 });
 
-const image = ref(props.modelValue?.path?.src);
+const {fileColor, fileIcon} = useMimeTypes(props.file.mimetype);
+const { formatMap, getExtensionByMimeType } = useFormats();
+const { uuid } = useTask();
+const { getImagePath, getStoragePath } = imagePath();
+const image = ref<null | string>(null);
 const icon = ref('file');
 const isShowProgress = ref(false);
 const toFormat = ref(props.format);
+const mainColor = fileColor() || 'blue-400';
 
-const emits = defineEmits(['update:modelValue', 'delete', 'selectFormat']);
-
-const file = computed(() => {
-    return props.modelValue?.file;
-})
-
-const result = computed(() => {
-    return props.modelValue?.result;
-})
+const emits = defineEmits(['update:modelValue', 'delete', 'selectFormat', 'download']);
 
 const status = computed(() => {
-    return props.modelValue.status;
+    return props.file.status;
 })
 
 const filename = computed(() => {
-    return file.value ? file.value.name : props.modelValue.filename;
+    return props.file.filename;
+})
+
+const extension = computed(() => {
+    return props.file?.extension ? props.file.extension : getExtensionByMimeType(props.file.mimetype);
+});
+
+const mainIcon = computed(() => {
+    if (extension.value && extension.value in formatMap.value) {
+        const icon = formatMap.value[extension.value].icon;
+
+        if (icon && icon !== '') {
+            return icon;
+        }
+    }
+
+    return 'flowbite:file-lines-outline'
 })
 
 const statusMessage = computed(() => {
@@ -59,7 +76,7 @@ const statusMessage = computed(() => {
             }
         case FILE_STATUS.UPLOADED:
             return {
-                color: 'primary',
+                color: 'blue',
                 text: t('status.uploaded')
             }
         case FILE_STATUS.ERROR:
@@ -72,9 +89,14 @@ const statusMessage = computed(() => {
                 color: 'red',
                 text: t('status.delete')
             }
+        case FILE_STATUS.PROCESSING:
+            return {
+                color: 'purple',
+                text: t('status.processing')
+            }
         case FILE_STATUS.COMPLETED:
             return {
-                color: 'primary',
+                color: 'green',
                 text: t('status.completed')
             }
         default:
@@ -90,37 +112,56 @@ const isUploaded = computed(() => {
 })
 
 const progress = computed(() => {
-    return props.modelValue.progress.toFixed(0);
+    return props.file.progress.toFixed(0);
 })
 
 const size = computed(() => {
-    if (file.value) {
-        const k = 1024;
-        const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
-        const i = Math.floor(Math.log(file.value.size) / Math.log(k));
-        return parseFloat((file.value.size / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
-    }
-    return ''
+    return formatSize(props.file.size);
+})
+
+const errorMessage = computed(() => {
+    return props.file.result?.error || props.file.message;
 })
 
 const removeFile = () => {
     emits('delete');
 }
 
-onMounted(() => {
-    if (file.value && file.value.type.includes('image/')) {
+const downloadFile = () => {
+    emits('download');
+}
+
+const setImage = () => {
+    if (props.file?.file && props.file.file.type.includes('image/')) {
         const reader = new FileReader();
 
-        reader.onload = (e) => {
+        reader.onload = (e:any) => {
             image.value = e.target.result;
         };
 
-        reader.readAsDataURL(file.value);
+        reader.readAsDataURL(props.file.file);
     }
+    else if (props.file?.mimetype && props.file?.mimetype.includes('image/') && props.file?.externalPath) {
+         image.value = props.file.externalPath;
+    }
+    else if (props.file?.mimetype && props.file?.mimetype.includes('image/') && uuid.value) {
+        image.value = getImagePath(uuid.value, `${props.file.hash}_${props.file.filename}`)['src']
+    }
+    else if (props.file?.extension && props.file.extension in formatMap.value) {
+        const imageIcon = formatMap.value[props.file.extension].icon_image;
+
+        if (imageIcon !== '') {
+            image.value = getStoragePath(imageIcon).src;
+        }
+    }
+}
+
+onMounted(() => {
+  //  setImage();
 })
 
 watchEffect(() => {
-    if (status.value === FILE_STATUS.LOADING) {
+    if (status.value <= FILE_STATUS.LOADING || status.value === FILE_STATUS.DELETE) {
         isShowProgress.value = true;
     }
     else {
@@ -128,76 +169,89 @@ watchEffect(() => {
             isShowProgress.value = false;
         }, 1000)
     }
-})
 
-watch(toFormat, newValue => {
-    if (!props.multiple) {
-       // isOpenModal.value = false;
-        //emits('selectFormat', {hash: props.data.hash, format: newValue})
-        //emits('update:modelValue', selected)
+    if (status.value >= FILE_STATUS.CREATED && !image.value) {
+        setImage();
     }
 })
 
 const progressClass = {
     progress: {
-        rounded: 'rounded-none [&::-webkit-progress-value]:rounded-none [&::-moz-progress-bar]:rounded-none [&::-webkit-progress-bar]:rounded-none',
-        indeterminate: {
-            rounded: 'rounded-none indeterminate:after:rounded-none [&:indeterminate::-webkit-progress-value]:rounded-none [&:indeterminate::-moz-progress-bar]:rounded-none',
-        },
-        bar: 'rounded-none [&::-webkit-progress-value]:rounded-none [&::-moz-progress-bar]:rounded-none [&::-webkit-progress-value]:transition-all [&::-webkit-progress-value]:ease-in-out [&::-webkit-progress-bar]:bg-transparent [&::-webkit-progress-bar]:dark:bg-transparent [@supports(selector(&::-moz-progress-bar))]:bg-transparent [@supports(selector(&::-moz-progress-bar))]:dark:bg-transparent'
+        bar: `!text-blue-400`,
     }
 }
 
 </script>
 
 <template>
-    <div class="rounded-sm border p-2 shadow-base relative overflow-hidden">
+    <div class="rounded-lg border border-gray-300 p-2 shadow-base relative overflow-hidden">
         <div class="flex items-center gap-5">
-            <div class="w-[50px] h-[50px] relative">
-                <img class="w-[50px] h-[50px] object-contain object-center" v-if="image" :src="image" alt="">
+            <div class="w-[60px] h-[60px] flex-shrink-0 relative">
+                <img class="w-full h-full object-cover object-center" v-if="image" :src="image" alt="">
+                <UIcon v-else :name="mainIcon" class="w-full h-full"/>
                 <div v-if="isShowProgress || status === FILE_STATUS.DELETE" class="w-full h-full absolute inset-0 flex items-center justify-center bg-opacity-80 bg-gray-50">
                     <UIcon loading name="svg-spinners:ring-resize" class="w-4 h-4 text-blue-500" />
                 </div>
             </div>
-            <div class="w-1/3">{{ filename }}</div>
-            <div v-if="!hiddenFormats" class="w-28">
-                <div v-if="isUploaded">
-                    <FormatSelect v-model="modelValue.convert" :label="t('in')"/>
+            <div class="w-1/3 flex-shrink-0">
+                <span class="truncate text-ellipsis overflow-hidden w-full block" :title="filename">{{ filename }}</span>
+                <div class="w-full pt-1">
+                    <UProgress size="md" :class="{'opacity-50': !isShowProgress}" :ui="progressClass" :value="parseInt(progress)" />
+                    <div class="text-gray-500 text-xs flex items-center gap-2 pt-1">
+                        <span>
+                            {{ progress }}%
+                        </span>
+                        <span>
+                            {{ size }}
+                        </span>
+                    </div>
                 </div>
             </div>
-            <div class="w-1/4">
-                <UBadge
-                    size="sm"
-                    class="min-w-[100px] justify-center"
-                    :color="statusMessage.color"
-                    variant="outline"
-                    :ui="{ rounded: 'rounded-none' }"
-                    :label="statusMessage.text"
-                    :trailing="false"
-                />
+            <div v-if="!hiddenFormats" class="mx-auto w-[100px] flex-shrink-0">
+                <div v-if="status >= FILE_STATUS.UPLOADED">
+                    <slot></slot>
+                </div>
             </div>
-            <div class="w-28 ml-auto">
-                <UBadge color="white" variant="solid">
-                    <span class="whitespace-nowrap">
-                        <span v-if="modelValue?.extension">
-                            {{ modelValue.extension.toUpperCase() }} /
-                        </span>
-                        {{size}}
+            <div class="w-[124px]">
+                <div class="flex items-center gap-2">
+                    <UBadge
+                        size="sm"
+                        class="min-w-[100px] justify-center"
+                        :color="statusMessage.color"
+                        variant="subtle"
+                        :ui="{ rounded: 'rounded' }"
+                        :label="statusMessage.text"
+                        :trailing="false"
+                    />
+                    <UTooltip v-if="errorMessage" :text="errorMessage" strategy="absolute" :resize="true" :popper="{ placement: 'top' }">
+                        <UIcon name="rivet-icons:info-circle" class="text-red-500"/>
+                    </UTooltip>
+                </div>
+            </div>
+            <div class="w-28 ml-auto hidden md:block">
+                <span class="whitespace-nowrap font-medium text-xs">
+                    <span v-if="extension">
+                        {{ extension.toUpperCase() }} /
                     </span>
-                </UBadge>
+                    {{size}}
+                </span>
             </div>
             <div class="w-8">
                 <UButton
                     v-if="isUploaded"
+                    class="text-xs"
                     icon="heroicons-outline:x-circle"
                     color="red"
                     @click="removeFile"
                     :disabled="status === FILE_STATUS.DELETE"
                 />
+                <UButton
+                    v-if="status === FILE_STATUS.COMPLETED"
+                    icon="material-symbols:download"
+                    color="blue"
+                    @click="downloadFile"
+                />
             </div>
-        </div>
-        <div v-if="isShowProgress" class="absolute bottom-0 left-0 w-full">
-            <UProgress size="xs" :ui="progressClass" :value="progress" />
         </div>
     </div>
 </template>
