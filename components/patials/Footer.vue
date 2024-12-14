@@ -12,10 +12,10 @@ import LangSwitcher from "../ui/LangSwitcher.vue";
             <ThemeSwitch />
         </div>
         <div class="text-center text-sm dark:text-gray-400">
-            Copyright © {{new Date().getFullYear()}} The Fit Life Guide. All rights reserved.
+            Copyright © {{new Date().getFullYear()}} All rights reserved.
         </div>
         <div class="text-center text-sm mt-2">
-            <NuxtLinkLocale :to="'/privacy'" class="hover:text-secondary dark:text-gray-400 dark:hover:text-secondary">{{ $t('privacy_policy') }}</NuxtLinkLocale>
+           
         </div>
     </UContainer>
 </template>

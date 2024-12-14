@@ -9,6 +9,13 @@ const { initConvertChain } = useBreadcrumbs();
 const { t } = useI18n();
 const title = t('titles.convert3')
 const subtitle = t('subtitles.convert3')
+
+useSeoMeta({
+    title: t('page.index.title'),
+    description: t('page.index.description'),
+});
+
+
 initConvertChain();
 </script>
 

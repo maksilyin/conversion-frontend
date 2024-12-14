@@ -25,6 +25,11 @@ if (!formatDetail.value) {
 const title = t('titles.convert').replace('#FORMAT#', formatDetail.value.name)
 const subtitle = t('subtitles.convert').replace('#FORMAT#', formatDetail.value.name)
 
+useSeoMeta({
+    title: t('page.index.title'),
+    description: t('page.index.description'),
+});
+
 initConvertChain(formatDetail.value);
 
 </script>
