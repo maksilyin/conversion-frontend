@@ -184,7 +184,7 @@ const progressClass = {
 </script>
 
 <template>
-    <div class="rounded-lg border border-gray-300 p-2 shadow-base relative overflow-hidden">
+    <div class="bg-white rounded-lg border border-gray-300 p-2 shadow-base relative overflow-hidden">
         <div class="flex items-center gap-5">
             <div class="w-[60px] h-[60px] flex-shrink-0 relative">
                 <img class="w-full h-full object-cover object-center" v-if="image" :src="image" alt="">
@@ -223,7 +223,10 @@ const progressClass = {
                         :label="statusMessage.text"
                         :trailing="false"
                     />
-                    <UTooltip v-if="errorMessage" :text="errorMessage" strategy="absolute" :resize="true" :popper="{ placement: 'top' }">
+                    <UTooltip v-if="errorMessage" strategy="absolute" :resize="true" :popper="{ placement: 'top', arrow: true }">
+                        <template #text>
+                            <span class="text-red-500">{{ errorMessage }}</span>
+                        </template>
                         <UIcon name="rivet-icons:info-circle" class="text-red-500"/>
                     </UTooltip>
                 </div>

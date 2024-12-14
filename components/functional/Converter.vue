@@ -11,8 +11,8 @@ const props = defineProps({
     }
 });
 
-const { files, deleteFile, downloadResult, addParam, setFromPayload, setDefaultFileParams } = useUploader();
-const { uuid, payload, status } = useTask();
+const { files, deleteFile, downloadResult, addParam, setFromPayload, setDefaultFileParams, unmount } = useUploader();
+const { uuid, payload, status, deleteTask } = useTask();
 const { t } = useI18n();
 const router = useRouter();
 const allConvert = ref(props.convertFormat !== '' ? [props.convertFormat] : []);
@@ -34,37 +34,40 @@ watch(payload, (newValue: Record<string, any>) => {
 
 watch(status, (newValue) => {
     if (newValue === 'pending' && uuid.value) {
-        router.replace(`/t/${uuid.value}`);
+        window.history.replaceState(null, '', `/t/${uuid.value}`);
     }
 })
+
+onBeforeRouteLeave(() => {
+    unmount();
+    deleteTask();
+});
 
 </script>
 
 <template>
-    <UContainer class="max-w-[991px] pb-20">
-        <FileUploader type="convert" :params="params">
-            <template #files>
-                <FileInfo
-                    v-for="file in files"
-                    :file="file"
-                    :key="file.hash"
-                    @delete="deleteFile(file.hash, uuid)"
-                    @download="downloadResult(file.hash, uuid)"
-                >
-                    <FormatSelect
-                        :label="t('in')"
-                        :extension="file?.extension?.toLowerCase()"
-                        v-model="file.params.convert"
-                        :hidden-select="file.status > FILE_STATUS.UPLOADED"
-                    />
-                </FileInfo>
-            </template>
-            <template #compact>
-                <FormatSelect v-model="allConvert" :label="t('convert_all')"/>
-            </template>
-        </FileUploader>
-        <UNotifications />
-    </UContainer>
+    <FileUploader type="convert" :params="params">
+        <template #files>
+            <FileInfo
+                v-for="file in files"
+                :file="file"
+                :key="file.hash"
+                @delete="deleteFile(file.hash, uuid)"
+                @download="downloadResult(file.hash, uuid)"
+            >
+                <FormatSelect
+                    :label="t('in')"
+                    :extension="file?.extension?.toLowerCase()"
+                    v-model="file.params.convert"
+                    :hidden-select="file.status > FILE_STATUS.UPLOADED"
+                />
+            </FileInfo>
+        </template>
+        <template #compact>
+            <FormatSelect v-model="allConvert" :label="t('convert_all')"/>
+        </template>
+    </FileUploader>
+    <UNotifications />
 </template>
 
 <style scoped>

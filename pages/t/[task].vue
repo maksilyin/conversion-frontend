@@ -1,13 +1,26 @@
 <script setup lang="ts">
-import FileUploader from "~/components/functional/fileUploader/FileUploader.vue";
-import FormatSelect from "~/components/ui/FormatSelect.vue";
-import FileInfo from "~/components/functional/fileUploader/FileInfo.vue";
+import Converter from "~/components/functional/Converter.vue";
+import TopBlock from "~/components/ui/TopBlock.vue";
 import {useI18n} from "vue-i18n";
-const { files, deleteFile, downloadResult, addParam, setFromPayload } = useUploader();
-const { uuid, createTask, payload, loadTask } = useTask();
-const { t } = useI18n();
+import Advantages from "~/components/Blocks/Advantages.vue";
+import CategoryLinksAll from "~/components/Blocks/CategoryLinksAll.vue";
+
 const router = useRouter();
 const route = useRoute();
+
+const props = defineProps({
+    category: {
+        type: String,
+        required: true
+    }
+})
+
+const { t } = useI18n();
+const { formats } = useFormats();
+const { setFromPayload } = useUploader();
+const { uuid, loadTask, payload, deleteTask } = useTask();
+const title = t(`titles.index`);
+const subtitle = t(`subtitles.index`);
 
 const taskId = Array.isArray(route.params.task) ? route.params.task[0] : route.params.task;
 await loadTask(taskId);
@@ -16,54 +29,35 @@ if (payload.value?.files) {
     setFromPayload(payload.value.files);
 }
 
-const allConvert = ref(['JPEG']);
-const params = {
-    convert: ['JPEG']
-}
+useSeoMeta({
+    title: t('page.index.title'),
+    description: t('page.index.description'),
+});
 
-const redirectTask = (e: string) => {
-    if (uuid.value) {
-        router.replace(`/t/${uuid.value}`);
-    }
-}
-
-watch(allConvert, newValue => {
-    files.value.forEach(file => {
-        addParam(file.hash, 'convert', newValue);
-    })
-})
-
-watch(payload, (newValue: Record<string, any>) => {
-    setFromPayload(newValue.files);
-})
+onBeforeRouteLeave(() => {
+    deleteTask();
+});
 
 </script>
 
 <template>
-    <UContainer class="max-w-[991px]">
-        <FileUploader @create="createTask" @startTask="redirectTask" type="convert" :params="params">
-            <template #files>
-                <FileInfo
-                    v-for="file in files"
-                    :file="file"
-                    :key="file.hash"
-                    @delete="deleteFile(file.hash, uuid)"
-                    @download="downloadResult(file.hash, uuid)"
-                >
-                    <FormatSelect
-                        :label="t('in')"
-                        :extension="file?.extension?.toLowerCase()"
-                        v-model="file.params.convert"
-                        :hidden-select="file.status > FILE_STATUS.UPLOADED"
-                    />
-                </FileInfo>
-            </template>
-            <template #compact>
-                <FormatSelect v-model="allConvert" :label="t('convert_all')"/>
-            </template>
-        </FileUploader>
-        <UNotifications />
-    </UContainer>
+    <div :key="uuid" class="relative">
+        <div class="relative z-1">
+            <TopBlock :hideBreadCrumbs="true">
+                <template #title>
+                    <span v-html="title"></span>
+                </template>
+                <template #subtitle>
+                    <div class="max-w-4xl mx-auto">
+                        {{subtitle}}
+                    </div>
+                </template>
+            </TopBlock>
+            <Converter/>
+        </div>
+    </div>
+    <Advantages class="border-t"></Advantages>
+    <CategoryLinksAll :file-types="formats" />
 </template>
 
 <style scoped>

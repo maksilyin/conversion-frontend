@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { imageFormats, docFormats, archiveFormats } from "~/collections/fileFormats";
 import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
 
@@ -27,28 +26,7 @@ const props = defineProps({
 })
 
 const { filteredFormats, formats } = useFormats(props.extension);
-const formatList = computed(() => {
-    return [
-        {
-            label: t('format.images'),
-            type: 'image',
-            icon: 'material-symbols:imagesmode-outline',
-            formats: imageFormats
-        },
-        {
-            label: t('format.documents'),
-            type: 'document',
-            icon: 'material-symbols-light:lab-profile-outline',
-            formats: docFormats
-        },
-        {
-            label: t('format.archive'),
-            type: 'archive',
-            icon: 'material-symbols:unarchive-outline',
-            formats: archiveFormats
-        }
-    ]
-});
+
 const emit = defineEmits(['update:modelValue'])
 const showTab = ref('image');
 const selected = ref([...props.modelValue])
@@ -75,7 +53,7 @@ const setItem = (value: string) => {
 
     emit('update:modelValue', selected.value)
 }
-
+console.log(props.modelValue)
 const selectedFormat = computed(() => {
     if (props.modelValue.length === 1) {
         return props.modelValue[0];
@@ -102,11 +80,11 @@ watch(() => props.modelValue, newValue => {
         <span>{{ label }}</span>
         <span>{{ selectedFormat }}</span>
     </div>
-    <UPopover v-if="!hiddenSelect" :popper="{ arrow: true }">
-        <div class="flex items-center gap-2">
+    <UPopover v-if="!hiddenSelect" :popper="{ arrow: true }" v-model:open="isOpenModal">
+        <div class="flex items-center gap-2" @click="isOpenModal=!isOpenModal">
             {{ label }}
-            <span class="border rounded border-gray-300 text-xs px-3 py-2 inline-flex items-center justify-between cursor-pointer min-w-[60px] gap-2 transition hover:border-primary-500 hover:text-primary-500" @click="isOpenModal=true">
-                <span>{{ selectedFormat.toUpperCase() }}</span>
+            <span class="w-[80px] border rounded border-gray-300 text-xs px-3 py-2 inline-flex items-center justify-between cursor-pointer min-w-[60px] gap-2 transition hover:border-primary-500 hover:text-primary-500" @click="isOpenModal=true">
+                <span class="mx-auto">{{ selectedFormat.toUpperCase() }}</span>
                 <UIcon name="material-symbols:keyboard-arrow-down-rounded" class="w-4 h-4 ml-auto" />
             </span>
         </div>
@@ -120,7 +98,7 @@ watch(() => props.modelValue, newValue => {
                         :class="{'bg-blue-50 !border-blue-300 text-blue-600': showTab === formatNavItem.slug}"
                         @mouseover="showTab = formatNavItem.slug"
                     >
-                        <UIcon :name="formatNavItem.icon" class="w-5 h-5" />{{ formatNavItem.name }}
+                        <UIcon v-if="formatNavItem.icon" :name="formatNavItem.icon" class="w-5 h-5" />{{ formatNavItem.name }}
                     </div>
                 </div>
                 <div class="w-full rounded border border-gray-200 p-2 overflow-y-auto scrollbar-thumb-rounded-lg scrollbar-track-rounded-lg scrollbar-thin">
@@ -129,7 +107,7 @@ watch(() => props.modelValue, newValue => {
                         v-for="format in formatNavItem.formats"
                         @click="setItem(format.extension)"
                         class="cursor-pointer rounded text-sm w-[calc(100%/3-0.34rem)] font-medium text-center text-gray-500 transition border border-gray-300 hover:bg-gray-50 hover:border-gray-400 hover:text-gray-600 py-1 px-2"
-                        :class="{'!bg-green-50 !border-green-500 !text-green-600': checkItem(format.extension)}"
+                        :class="{'!bg-primary-50 !border-primary-500 !text-primary-600': checkItem(format.extension)}"
                     >
                         {{ format.name }}
                     </span>

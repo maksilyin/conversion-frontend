@@ -151,6 +151,7 @@ export const useFormats = (extension: string[] | string = '') => {
     }
 
     const filteredFormats = computed(() => {
+        console.log(formats)
         if (!formats.value.length) {
             return [];
         }

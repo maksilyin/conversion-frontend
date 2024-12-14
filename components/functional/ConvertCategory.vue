@@ -39,14 +39,14 @@ initConvertChain(null, null, fileType)
 <template>
     <TopBlock>
         <template #title>
-            {{title}}
+            <span v-html="title"></span>
         </template>
         <template #subtitle>
             {{subtitle}}
         </template>
     </TopBlock>
     <Converter/>
-    <Advantages class="bg-white"></Advantages>
+    <Advantages class="bg-white border-t"></Advantages>
     <CategoryLinks :file-type="fileType"/>
 </template>
 

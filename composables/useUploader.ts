@@ -57,7 +57,7 @@ export const useUploader = () => {
 
             api.callApi<BlobPart>('file.download', {
                 task: uuid,
-                filename: fileResult.filename,
+                hash: hash,
             }, headers, 'blob').then((res) => {
                 const blob = new Blob([res], {type: fileResult.mimetype});
                 downloadFile(blob, fileResult.originalName);
@@ -128,8 +128,12 @@ export const useUploader = () => {
         return files[hash];
     }
 
-    const setFileStatus = (hash: string, status: number, message:any = null) => {
+    const setFileStatus = (hash: string, status: number, message: any = null) => {
         setValue('status', hash, status);
+
+        if (message) {
+            setValue('message', hash, message);
+        }
     }
 
     const setFileProgress = (hash:string, value: number) => {
@@ -176,6 +180,7 @@ export const useUploader = () => {
             formData.append('total', totalChunks.toString());
             formData.append('task', uuid);
             formData.append('hash', hash);
+            formData.append('size', file.size.toString());
             formData.append('filename', file.name);
 
             try {
@@ -202,7 +207,8 @@ export const useUploader = () => {
                     await uploadNext(hash);
                 }
                 else {
-                    setFileStatus(hash, FILE_STATUS.ERROR, 'Upload failed');
+                    const errorMessage = e?.response?.data?.error || 'Upload failed';
+                    setFileStatus(hash, FILE_STATUS.ERROR, errorMessage);
                     console.error(e);
                 }
             }
@@ -218,6 +224,12 @@ export const useUploader = () => {
         defaultFileParams.value = params;
     }
 
+    const unmount = () => {
+        Object.keys(files).forEach((key) => {
+            delete files[key];
+        });
+    }
+
     return {
         files: filesArray,
         addFile,
@@ -230,6 +242,7 @@ export const useUploader = () => {
         setFromPayload,
         downloadResult,
         downloadZip,
-        setDefaultFileParams
+        setDefaultFileParams,
+        unmount,
     }
 }

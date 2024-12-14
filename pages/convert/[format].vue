@@ -32,18 +32,18 @@ initConvertChain(formatDetail.value);
 <template>
     <TopBlock>
         <template #title>
-            {{title}}
+            <span v-html="title"></span>
         </template>
         <template #subtitle>
             {{subtitle}}
         </template>
     </TopBlock>
     <Converter :convert-format="format"/>
-    <Instruction class="bg-white" :format="formatDetail"/>
-    <Advantages :format="formatDetail"></Advantages>
-    <FormatLinks class="bg-white" :format="formatDetail"/>
+    <Instruction class="border-t" :format="formatDetail"/>
+    <Advantages class="bg-gray-50" :format="formatDetail"></Advantages>
+    <FormatLinks :format="formatDetail"/>
     <FormatLinks :is-from-format="true" :format="formatDetail"/>
-    <DetailText class="bg-white" v-if="formatDetail?.description" :text="formatDetail.description"></DetailText>
+    <DetailText v-if="formatDetail?.description" :text="formatDetail.description"></DetailText>
 </template>
 
 <style scoped>

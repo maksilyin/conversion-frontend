@@ -12,7 +12,6 @@ export const useTask = (taskUuid: string | null = null) => {
     });
 
     const payload = computed(() => {
-        console.log(task.value?.payload)
         return task.value?.payload;
     });
 
@@ -89,6 +88,10 @@ export const useTask = (taskUuid: string | null = null) => {
         task.value = await api.fetchData('task', { task_id: uuid });
     }
 
+    const deleteTask = () => {
+        task.value = null;
+    }
+
     watch(status, () => {
         isStarting.value = false;
     })
@@ -101,6 +104,7 @@ export const useTask = (taskUuid: string | null = null) => {
         setTask,
         startEcho,
         startTask,
+        deleteTask,
         payload,
         isProcessing,
         status,

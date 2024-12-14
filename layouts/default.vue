@@ -34,7 +34,7 @@ useHead({
     titleTemplate: null,
 });
 
-await loadFormats();
+loadFormats();
 
 </script>
 
@@ -47,8 +47,8 @@ await loadFormats();
             </template>
         </Head>
         <Body class="dark:bg-black-900 min-h-[100vh]">
-            <header class="navigation xl:px-11 py-3 border-b">
-                <Navbar :data="menu"></Navbar>
+            <header class="navigation xl:px-11 py-5 border-b">
+                <Navbar></Navbar>
             </header>
             <slot></slot>
             <Footer></Footer>

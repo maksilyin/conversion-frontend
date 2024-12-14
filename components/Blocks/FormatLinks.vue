@@ -77,7 +77,7 @@ const getLink = (formatItem: FileFormat) => {
 </script>
 
 <template>
-    <div class="py-20">
+    <div class="section relative">
         <UContainer>
             <h2>{{ title }}</h2>
             <div
@@ -90,7 +90,7 @@ const getLink = (formatItem: FileFormat) => {
                         v-for="formatItem in formatLinks"
                         :key="formatItem.name + '-' + format.name"
                         :to="getLink(formatItem)"
-                        class="flex items-center justify-center p-2 hover:bg-primary-50 hover:border-primary-400 rounded-lg border border-primary-200 text-primary-500 transition"
+                        class="flex items-center justify-center p-2 hover:bg-blue-light-100 hover:border-primary-400 rounded-md border border-blue-dark text-blue-dark-100 transition duration-500"
                     >
                         <span class="font-semibold">{{ getLabel(formatItem) }}</span>
                     </NuxtLinkLocale>

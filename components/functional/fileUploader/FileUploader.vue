@@ -90,27 +90,31 @@ watch(filesToUpload, async (newValue) => {
 </script>
 
 <template>
-    <div v-if="files.length" class="flex flex-col gap-2 pb-10">
-        <slot name="files"></slot>
-    </div>
-    <FileInput @addFile="(e) => {console.log('addFile')}" v-if="!files.length"/>
-    <div v-else>
-        <div v-if="isShowProgress || status === 'complete'" class="flex justify-center pb-10">
-            <UProgress v-if="isShowProgress" size="lg" color="blue" :value="taskProgress"></UProgress>
-            <UButton
-                v-else-if="status === 'complete'"
-                icon="material-symbols:download"
-                size="xl"
-                color="primary"
-                variant="solid"
-                label="Скачать все"
-                :trailing="false"
-                @click="downloadZip(uuid)"
-            />
+    <UContainer class="max-w-[991px]">
+        <div v-if="files.length" class="flex flex-col gap-2 pb-10">
+            <slot name="files"></slot>
         </div>
-        <FileInputCompact @send="send">
-            <slot name="compact"></slot>
-        </FileInputCompact>
+    </UContainer>
+    <FileInput v-if="!files.length"  @addFile="(e) => {console.log('addFile')}"/>
+    <div class="sticky bottom-0 bg-white py-5 border-t" v-else>
+        <UContainer>
+            <div v-if="isShowProgress || status === 'complete'" class="flex justify-center pb-5">
+                <UProgress v-if="isShowProgress" size="lg" color="blue" :value="taskProgress"></UProgress>
+                <UButton
+                    v-else-if="status === 'complete'"
+                    icon="material-symbols:download"
+                    size="xl"
+                    color="primary"
+                    variant="solid"
+                    label="Скачать все"
+                    :trailing="false"
+                    @click="downloadZip(uuid)"
+                />
+            </div>
+            <FileInputCompact @send="send">
+                <slot name="compact"></slot>
+            </FileInputCompact>
+        </UContainer>
     </div>
     <input ref="fileInput" @change="onSelectFile" id="input-file" type="file" multiple class="hidden" />
 </template>

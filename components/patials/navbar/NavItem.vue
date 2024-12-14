@@ -6,7 +6,7 @@ interface Props {
 }
 
 const props = defineProps<Props>();
-const className = "px-3 xl:px-4 py-2 text-sm font-medium text-gray-600 hover:text-secondary dark:text-gray-400 dark:hover:text-secondary flex gap-2 items-center relative";
+const className = "px-3 xl:px-4 py-2 text-sm font-medium text-gray-600 hover:text-blue-dark dark:text-gray-400 dark:hover:text-secondary flex gap-2 items-center relative";
 
 const isExternal = computed(() => {
     return /^(http|https):\/\//.test(props.item.url)

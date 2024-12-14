@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import {useI18n} from "vue-i18n";
 import type {FileFormat, FileType} from "~/types/FileFormat";
+import FormatLink from "~/components/ui/FormatLink.vue";
 
 const { getStoragePath } = imagePath();
 const { t } = useI18n();
@@ -45,36 +46,31 @@ onMounted(() => {
 </script>
 
 <template>
-    <div class="py-20">
+    <div class="section">
         <UContainer>
             <h2>{{ $t('convert') }}</h2>
-            <div class="flex flex-col gap-8">
-                <div v-for="fileType in fileTypes" :key="fileType.id">
-                    <h3 class="text-lg font-medium text-gray-500 mb-5">{{ $t('convert') }} {{ fileType.name.toLowerCase() }}</h3>
+            <div class="flex flex-col gap-16">
+                <div class="border-b border-gray-200 pb-16" v-for="fileType in fileTypes" :key="fileType.id">
+                    <div class="flex gap-2 items-center mb-5">
+                        <span class="inline-flex items-center justify-center w-8 h-8 flex-shrink">
+                            <img
+                                v-if="fileType.icon_image"
+                                :src="getStoragePath(fileType.icon_image).src"
+                                class="w-full h-full object-contain"
+                                :alt="fileType.name"
+                            />
+                            <UIcon v-else-if="fileType.icon" :name="fileType.icon" class="w-full h-full text-orange-400"/>
+                        </span>
+                        <h3 class="text-lg font-medium text-blue-dark-900">
+                            <NuxtLinkLocale class="transition hover:text-blue-dark" :to="`/convert/${fileType.slug}`">{{ fileType.name }}</NuxtLinkLocale>
+                        </h3>
+                    </div>
                     <div
                         ref="showBlock"
-                        class="transition-max-height duration-500 overflow-hidden border border-gray-200 p-4 rounded-lg bg-gray-200 bg-opacity-10"
+                        class="transition-max-height duration-500"
                     >
-                        <div ref="linkWrapper" class="grid grid-cols-2 xs:grid-cols-3 sm:grid-cols-5 lg:grid-cols-6 gap-3 min-h-full">
-                            <NuxtLinkLocale
-                                v-for="formatItem in fileType.formats"
-                                :key="formatItem.id"
-                                :to="`/convert/${formatItem.extension}`"
-                                class="flex items-center justify-center hover:text-primary-700 rounded-lg text-primary-500 transition"
-                            >
-                                <span class="font-semibold flex gap-2 items-center">
-                                    <span v-if="formatItem.icon_image || formatItem.icon" class="inline-flex items-center justify-center w-6 h-6">
-                                        <img
-                                            v-if="formatItem.icon_image"
-                                            :src="getStoragePath(formatItem.icon_image).src"
-                                            class="w-full h-full object-contain"
-                                            :alt="formatItem.name"
-                                        />
-                                        <UIcon v-else-if="formatItem.icon" :name="formatItem.icon" class="w-full h-full"/>
-                                    </span>
-                                    Конвертер {{formatItem.name}}
-                                </span>
-                            </NuxtLinkLocale>
+                        <div ref="linkWrapper" class="grid grid-cols-2 xs:grid-cols-3 sm:grid-cols-3 lg:grid-cols-3 gap-3 min-h-full">
+                            <FormatLink :item="formatItem" v-for="(formatItem, index) in fileType.formats" :key="formatItem.id"/>
                         </div>
                     </div>
                     <div v-if="isShowMore" class="text-center pt-8">

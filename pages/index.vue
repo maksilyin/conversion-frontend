@@ -14,6 +14,7 @@ const props = defineProps({
 
 const { t } = useI18n();
 const { formats } = useFormats();
+const { uuid } = useTask();
 const title = t(`titles.index`);
 const subtitle = t(`subtitles.index`);
 
@@ -25,19 +26,25 @@ useSeoMeta({
 </script>
 
 <template>
-    <TopBlock :hideBreadCrumbs="true">
-        <template #title>
-            {{title}}
-        </template>
-        <template #subtitle>
-            <div class="max-w-4xl mx-auto">
-                {{subtitle}}
+    <div key="index">
+        <div class="relative">
+            <div class="relative z-1">
+                <TopBlock :hideBreadCrumbs="true">
+                    <template #title>
+                        <span v-html="title"></span>
+                    </template>
+                    <template #subtitle>
+                        <div class="max-w-4xl mx-auto">
+                            {{subtitle}}
+                        </div>
+                    </template>
+                </TopBlock>
+                <Converter/>
             </div>
-        </template>
-    </TopBlock>
-    <Converter/>
-    <Advantages class="bg-white"></Advantages>
-    <CategoryLinksAll class="bg-white" :file-types="formats" />
+        </div>
+        <Advantages class="border-t"></Advantages>
+        <CategoryLinksAll :file-types="formats" />
+    </div>
 </template>
 
 <style scoped>

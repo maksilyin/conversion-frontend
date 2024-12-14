@@ -46,8 +46,8 @@ useSchemaOrg([
 const uiClass = {
     ol: "flex items-center gap-x-1.5",
     li: "flex items-center gap-x-1.5 text-gray-500 dark:text-gray-400 text-sm leading-6 min-w-0",
-    active: 'text-gray-400 dark:text-gray-500',
-    inactive: 'hover:text-primary dark:hover:text-primary',
+    active: 'text-gray-400 dark:text-gray-600',
+    inactive: 'hover:text-blue-dark dark:hover:text-primary',
     base: 'flex items-center gap-x-1.5 group min-w-0 text-xs font-normal',
 }
 

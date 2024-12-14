@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import {useI18n} from "vue-i18n";
 import type {FileFormat, FileType} from "~/types/FileFormat";
+import FormatLink from "~/components/ui/FormatLink.vue";
 
 const { getStoragePath } = imagePath();
 const { t } = useI18n();
@@ -50,28 +51,15 @@ onMounted(() => {
             <h2>{{ $t('convert') }} {{ fileType.name.toLowerCase() }}</h2>
             <div
                 ref="showBlock"
-                class="transition-max-height duration-500 overflow-hidden"
+                class="transition-max-height duration-500 p-1 overflow-hidden"
             >
-                <div ref="linkWrapper" class="grid grid-cols-2 xs:grid-cols-3 sm:grid-cols-5 lg:grid-cols-6 gap-3 min-h-full">
-                    <NuxtLinkLocale
-                        v-for="formatItem in fileType.formats"
-                        :key="formatItem.id"
-                        :to="`/convert/${formatItem.extension}`"
-                        class="flex items-center justify-center hover:text-primary-700 rounded-lg text-primary-600 transition"
-                    >
-                        <span class="font-semibold flex gap-2 items-center">
-                            <span v-if="formatItem.icon_image || formatItem.icon" class="inline-flex items-center justify-center w-6 h-6">
-                                <img
-                                    v-if="formatItem.icon_image"
-                                    :src="getStoragePath(formatItem.icon_image).src"
-                                    class="w-full h-full object-contain"
-                                    :alt="formatItem.name"
-                                />
-                                <UIcon v-else-if="formatItem.icon" :name="formatItem.icon" class="w-full h-full"/>
-                            </span>
-                            Конвертер {{formatItem.name}}
-                        </span>
-                    </NuxtLinkLocale>
+                <div
+                    ref="showBlock"
+                    class="transition-max-height duration-500"
+                >
+                    <div ref="linkWrapper" class="grid grid-cols-2 xs:grid-cols-3 sm:grid-cols-3 lg:grid-cols-3 gap-3 min-h-full">
+                        <FormatLink :item="formatItem" v-for="(formatItem, index) in fileType.formats" :key="formatItem.id"/>
+                    </div>
                 </div>
             </div>
             <div v-if="isShowMore" class="text-center pt-8">

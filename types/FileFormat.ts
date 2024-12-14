@@ -11,6 +11,7 @@ export type FileType = {
 export type FileFormat = {
     id: string,
     name: string,
+    extended_name: string
     extension: string,
     icon: string,
     icon_image: string,

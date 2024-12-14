@@ -55,18 +55,18 @@ for (let i = 1; i <= count; i++) {
 </script>
 
 <template>
-    <div class="bg-gray-50 py-20">
+    <div class="section">
         <UContainer>
             <h2>{{title}}</h2>
             <div class="space-y-8">
                 <div v-for="(item, index) in items" :key="item.id" class="flex items-start space-x-4">
                     <div class="flex-shrink-0">
-                        <div class="w-12 h-12 bg-orange-500 text-white rounded-full flex items-center justify-center">
+                        <div class="w-12 h-12 bg-orange-dark text-white rounded-full flex items-center justify-center">
                             <span class="text-lg font-bold">{{index + 1}}</span>
                         </div>
                     </div>
                     <div>
-                        <h3 class="text-lg font-semibold text-gray-800">{{item.name}}</h3>
+                        <h3 class="text-lg font-semibold text-blue-dark-900">{{item.name}}</h3>
                         <p class="text-gray-600">{{item.text}}</p>
                     </div>
                 </div>

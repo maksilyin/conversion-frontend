@@ -33,17 +33,21 @@ initConvertChain(formatDetailFrom, formatDetailTo);
 </script>
 
 <template>
-    <TopBlock>
-        <template #title>
-            {{title}}
-        </template>
-        <template #subtitle>
-            {{subtitle}}
-        </template>
-    </TopBlock>
-    <Converter :convert-format="formatTo"/>
-    <Instruction class="bg-white" :formatFrom="formatDetailFrom" :format="formatDetailTo"/>
-    <Advantages :formatFrom="formatDetailFrom" :format="formatDetailTo"></Advantages>
+    <div class="relative">
+        <div class="relative z-1">
+            <TopBlock>
+                <template #title>
+                    <span v-html="title"></span>
+                </template>
+                <template #subtitle>
+                    {{subtitle}}
+                </template>
+            </TopBlock>
+            <Converter :convert-format="formatTo"/>
+        </div>
+    </div>
+    <Instruction class="border-t" :formatFrom="formatDetailFrom" :format="formatDetailTo"/>
+    <Advantages class="bg-gray-50" :formatFrom="formatDetailFrom" :format="formatDetailTo"></Advantages>
     <FormatLinks :is-from-format="true" :format="formatDetailFrom"/>
     <FormatLinks class="bg-white" :format="formatDetailTo"/>
     <PreviewDescription :format-to="formatDetailTo" :format-from="formatDetailFrom"/>

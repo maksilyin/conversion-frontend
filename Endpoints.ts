@@ -9,11 +9,11 @@ export default {
     },
     'file.download': {
         method: 'get',
-        url: 'file/download/',
+        url: 'file/download/{task}/{hash}/',
     },
     'file.download.all': {
         method: 'get',
-        url: 'file/download/all/',
+        url: 'file/download/{task}/all/',
     },
     'task': {
         method: 'get',

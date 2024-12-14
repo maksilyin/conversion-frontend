@@ -22,7 +22,7 @@ initConvertChain();
         </template>
     </TopBlock>
     <Converter/>
-    <Advantages class="bg-white"></Advantages>
+    <Advantages class="bg-white border-t"></Advantages>
     <ConvertList/>
 </template>
 
