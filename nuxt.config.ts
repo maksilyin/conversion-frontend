@@ -39,4 +39,5 @@ export default defineNuxtConfig({
     defaultLocale: 'en',
     vueI18n: './nuxt-i18n.js',
   },
+  site: { indexable: false }
 })
