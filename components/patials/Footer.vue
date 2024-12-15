@@ -15,7 +15,7 @@ import LangSwitcher from "../ui/LangSwitcher.vue";
             Copyright © {{new Date().getFullYear()}} All rights reserved.
         </div>
         <div class="text-center text-sm mt-2">
-           
+
         </div>
     </UContainer>
 </template>

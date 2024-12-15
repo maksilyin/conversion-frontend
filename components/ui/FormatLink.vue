@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type {FileFormat} from "~/types/FileFormat";
+import FileIcon from "~/components/ui/FileIcon.vue";
 const { getStoragePath } = imagePath();
 const props = defineProps({
     item: {
@@ -22,6 +23,7 @@ const props = defineProps({
                     :alt="item.name"
                 />
                 <UIcon v-else-if="item.icon" :name="item.icon" class="w-full h-full text-orange-500"/>
+                <FileIcon class="w-full h-full" v-else />
             </span>
                 <div>
                     <div class="font-medium transition text-blue-dark-900">

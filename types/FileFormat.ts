@@ -15,6 +15,7 @@ export type FileFormat = {
     extension: string,
     icon: string,
     icon_image: string,
+    color: string,
     mime_type?: string,
     excerpt?: string,
     description?: string,
