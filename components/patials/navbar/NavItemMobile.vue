@@ -9,7 +9,7 @@ interface Props {
 let isAnimate = false;
 const isOpen = ref(false);
 const props = defineProps<Props>();
-const className = "px-3 xl:px-4 py-2 text-sm font-medium text-gray-600 hover:text-secondary dark:text-gray-400 dark:hover:text-secondary flex gap-2 items-center relative";
+const className = "px-3 xl:px-4 py-2 font-medium text-gray-900 hover:text-secondary dark:text-gray-400 dark:hover:text-secondary flex gap-2 items-center relative";
 
 const isExternal = computed(() => {
     return /^(http|https):\/\//.test(props.item.url)
@@ -24,8 +24,15 @@ const itemLink = computed(() => {
 });
 
 const clickHandler = (e:PointerEvent) => {
-    isOpen.value = !isOpen.value;
+    if (props.item?.component || props.item.children) {
+        e.preventDefault();
+        isOpen.value = !isOpen.value;
+    }
 }
+
+const items = computed(() => {
+    return
+})
 
 onMounted(() => {
 
@@ -34,35 +41,28 @@ onMounted(() => {
 </script>
 
 <template>
-    <div class="flex gap-2 items-center justify-center">
-        <NuxtLinkLocale
-            v-if="!isExternal"
-            :to="itemLink"
-            :class="className + (hasSubmenu ? ' parent' : '')"
-        >
-            {{ item.name }}
-            <span @click.stop.prevent="clickHandler" class="absolute lg:static right-[-13px] transition-all" :class="{'rotate-180': isOpen}">
-                <svg v-if="hasSubmenu" class="size-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
-                </svg>
-            </span>
-        </NuxtLinkLocale>
-        <a v-else :href="item.url" :class="className">
-            {{ item.name }}
-            <span @click.stop.prevent="clickHandler" class="absolute lg:static right-[-13px] transition-all" :class="{'rotate-180': isOpen}">
-                <svg v-if="hasSubmenu" class="size-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
-                </svg>
-            </span>
-        </a>
-    </div>
-    <div
-        v-if="hasSubmenu"
-        class=""
-    >
-        <slide-up-down :active="isOpen" :duration="300">
-            <NavItemMobile v-for="subItem in item.children" :key="subItem.type + subItem.id" :item="subItem"/>
-        </slide-up-down>
+    <div class="group">
+        <div>
+            <NuxtLinkLocale
+                :to="itemLink"
+                :class="className"
+                @click="clickHandler"
+            >
+                {{ item.name }}
+                <UIcon v-if="item?.component || item.children"
+                       class="w-5 h-5" name="material-symbols:keyboard-arrow-down-rounded transition"
+                       :class="{'rotate-180': isOpen}"
+                />
+            </NuxtLinkLocale>
+            <slide-up-down :active="isOpen" :duration="500">
+                <div class="p-3">
+                    <component v-if="item?.component" :is="item.component"/>
+                    <div v-else-if="item.children">
+                        <NavItemMobile v-for="childItem in item.children" :item="childItem"/>
+                    </div>
+                </div>
+            </slide-up-down>
+        </div>
     </div>
 </template>
 

@@ -38,5 +38,17 @@ export default {
     'formats.detail.type': {
         method: 'get',
         url: 'formats/type/{type}/',
+    },
+    'page': {
+        method: 'get',
+        url: 'page/',
+    },
+    'text': {
+        method: 'get',
+        url: 'text/{key}/',
+    },
+    'lang': {
+        method: 'get',
+        url: 'lang/',
     }
 } as const;

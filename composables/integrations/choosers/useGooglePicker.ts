@@ -107,8 +107,13 @@ export const useGooglePicker = (): Picker => {
     }
 
     onMounted(() => {
-        addScriptIfNotExists('https://apis.google.com/js/api.js', onApiLoad);
-        addScriptIfNotExists('https://accounts.google.com/gsi/client', gisLoaded);
+        try {
+            addScriptIfNotExists('https://apis.google.com/js/api.js', onApiLoad);
+            addScriptIfNotExists('https://accounts.google.com/gsi/client', gisLoaded);
+        }
+        catch (e) {
+            console.log(e)
+        }
     });
 
     return {

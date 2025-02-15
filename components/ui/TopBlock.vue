@@ -14,17 +14,19 @@ const props = defineProps({
 </script>
 
 <template>
-    <UContainer>
-        <Breadcrumbs v-if="!hideBreadCrumbs" :links="breadcrumbs"/>
-        <div class="pt-14 pb-7">
-            <h1 class="text-blue-dark-900 mb-5 mt-2 text-center text-3xl font-medium dark:text-white md:text-3xl lg:text-4xl lg:leading-snug">
-                <slot name="title"></slot>
-            </h1>
-            <p class="text-gray-600 mb-5 text-center text-lg dark:text-white lg:leading-snug">
-                <slot name="subtitle"></slot>
-            </p>
-        </div>
-    </UContainer>
+    <div>
+        <UContainer>
+            <Breadcrumbs v-if="!hideBreadCrumbs" :links="breadcrumbs"/>
+            <div class="pt-7 lg:pt-14 pb-7">
+                <h1 class="text-black-500 font-[700] mb-5 mt-2 text-center text-3xl dark:text-white md:text-3xl lg:text-[42px] lg:leading-snug">
+                    <slot name="title"></slot>
+                </h1>
+                <p class="text-lg text-black-300 mb-5 text-center dark:text-white lg:leading-snug">
+                    <slot name="subtitle"></slot>
+                </p>
+            </div>
+        </UContainer>
+    </div>
 </template>
 
 <style scoped>

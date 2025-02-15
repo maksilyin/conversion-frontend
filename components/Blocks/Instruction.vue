@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import {useI18n} from "vue-i18n";
 import type {FileFormat} from "~/types/FileFormat";
+import TitleH2 from "~/components/ui/TitleH2.vue";
 
 const { fromConvertible } = useFormats();
 const { t } = useI18n();
@@ -57,17 +58,17 @@ for (let i = 1; i <= count; i++) {
 <template>
     <div class="section">
         <UContainer>
-            <h2>{{title}}</h2>
+            <TitleH2>{{title}}</TitleH2>
             <div class="space-y-8">
                 <div v-for="(item, index) in items" :key="item.id" class="flex items-start space-x-4">
                     <div class="flex-shrink-0">
-                        <div class="w-12 h-12 bg-orange-dark text-white rounded-full flex items-center justify-center">
+                        <div class="w-12 h-12 bg-orange-500 text-white rounded-full flex items-center justify-center">
                             <span class="text-lg font-bold">{{index + 1}}</span>
                         </div>
                     </div>
                     <div>
-                        <h3 class="text-lg font-semibold text-blue-dark-900">{{item.name}}</h3>
-                        <p class="text-gray-600">{{item.text}}</p>
+                        <h3 class="text-lg font-semibold text-black">{{item.name}}</h3>
+                        <p class="text-black-300">{{item.text}}</p>
                     </div>
                 </div>
             </div>

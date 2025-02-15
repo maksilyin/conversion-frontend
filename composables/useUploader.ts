@@ -41,11 +41,11 @@ export const useUploader = () => {
         }
     }
 
-    const downloadResult = async (hash: string, uuid: string) => {
+    const downloadResult = async (hash: string, uuid: string, index = 0) => {
         if (hash in files) {
             const file = files[hash];
 
-            if (!file.result) {
+            if (!file.result || file.result.length - 1 < index) {
                 return;
             }
 
@@ -53,8 +53,7 @@ export const useUploader = () => {
                 Accept: 'application/octet-stream',
             }
 
-            const fileResult = file.result;
-
+            const fileResult = file.result[index];
             api.callApi<BlobPart>('file.download', {
                 task: uuid,
                 hash: hash,
@@ -68,7 +67,6 @@ export const useUploader = () => {
     }
 
     const downloadZip = async (uuid: string) => {
-        console.log(uuid)
         const headers = {
             Accept: 'application/octet-stream',
         }

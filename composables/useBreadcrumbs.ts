@@ -1,5 +1,6 @@
 import type {FileFormat, FileType} from "~/types/FileFormat";
 import {useI18n} from "vue-i18n";
+import type {Page} from "~/types/Page";
 
 const links: BreadcrumbLink[] = reactive([])
 export const useBreadcrumbs = () => {
@@ -42,9 +43,18 @@ export const useBreadcrumbs = () => {
         }
     }
 
+    const initPageChain = (page: Page) => {
+        clearLinks();
+
+        setItem({
+            label: page.name,
+        })
+    }
+
     return {
         setItem,
         initConvertChain,
+        initPageChain,
         links,
     }
 }

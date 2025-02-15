@@ -151,7 +151,6 @@ export const useFormats = (extension: string[] | string = '') => {
     }
 
     const filteredFormats = computed(() => {
-        console.log(formats)
         if (!formats.value.length) {
             return [];
         }
@@ -187,6 +186,10 @@ export const useFormats = (extension: string[] | string = '') => {
         return format?.extension ? format.extension : null;
     }
 
+    const getFileFormat = (extension: string) => {
+        return formatMap.value[extension]
+    }
+
     return {
         formats,
         loadFormats,
@@ -199,5 +202,6 @@ export const useFormats = (extension: string[] | string = '') => {
         toConvertFormats,
         loadDetailTypeFile,
         getExtensionByMimeType,
+        getFileFormat,
     }
 }

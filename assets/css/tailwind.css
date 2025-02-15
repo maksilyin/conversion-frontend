@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-    font-family: 'Inter';
+    font-family: 'Open Sans';
 }
 
 body {
@@ -184,4 +184,12 @@ h2 {
     {
         clip-path: polygon(50% 0%, 100% 0, 100% 100%, 0 100%, 0 100%, 0 0, 50% 0, 50% 50%, 50% 50%);
     }
+}
+
+.bg-elipses {
+    @apply bg-repeat bg-top;
+    background-image: url(/img/bg.svg);
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: top ;
 }

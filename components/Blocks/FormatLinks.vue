@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import {useI18n} from "vue-i18n";
 import type {FileFormat} from "~/types/FileFormat";
+import TitleH2 from "~/components/ui/TitleH2.vue";
 
 const { fromConvertible, toConvertFormats } = useFormats();
 const { t } = useI18n();
@@ -79,7 +80,7 @@ const getLink = (formatItem: FileFormat) => {
 <template>
     <div class="section relative">
         <UContainer>
-            <h2>{{ title }}</h2>
+            <TitleH2>{{ title }}</TitleH2>
             <div
                 ref="showBlock"
                 class="transition-max-height duration-500 overflow-hidden"

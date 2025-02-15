@@ -5,6 +5,8 @@ import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
 import { formatSize } from "~/utils/functions";
 import {useMimeTypes} from "~/composables/useMimeTypes";
+import FileIcon from "~/components/ui/FileIcon.vue";
+import StatusBadge from "~/components/functional/fileUploader/StatusBadge.vue";
 
 interface Props {
     data: UploadFile;
@@ -31,8 +33,9 @@ const props = defineProps({
     }
 });
 
+const indexResult = 0;
 const {fileColor, fileIcon} = useMimeTypes(props.file.mimetype);
-const { formatMap, getExtensionByMimeType } = useFormats();
+const { formatMap, getExtensionByMimeType, getFileFormat } = useFormats();
 const { uuid } = useTask();
 const { getImagePath, getStoragePath } = imagePath();
 const image = ref<null | string>(null);
@@ -42,6 +45,10 @@ const toFormat = ref(props.format);
 const mainColor = fileColor() || 'blue-400';
 
 const emits = defineEmits(['update:modelValue', 'delete', 'selectFormat', 'download']);
+
+const result = computed(() => {
+    return props.file.result ? props.file.result[indexResult] : null;
+})
 
 const status = computed(() => {
     return props.file.status;
@@ -55,57 +62,9 @@ const extension = computed(() => {
     return props.file?.extension ? props.file.extension : getExtensionByMimeType(props.file.mimetype);
 });
 
-const mainIcon = computed(() => {
-    if (extension.value && extension.value in formatMap.value) {
-        const icon = formatMap.value[extension.value].icon;
-
-        if (icon && icon !== '') {
-            return icon;
-        }
-    }
-
-    return 'flowbite:file-lines-outline'
-})
-
-const statusMessage = computed(() => {
-    switch (status.value) {
-        case FILE_STATUS.LOADING:
-            return {
-                color: 'blue',
-                text: t('status.loading') + ' ' + progress.value + '%'
-            }
-        case FILE_STATUS.UPLOADED:
-            return {
-                color: 'blue',
-                text: t('status.uploaded')
-            }
-        case FILE_STATUS.ERROR:
-            return {
-                color: 'red',
-                text: t('status.error')
-            }
-        case FILE_STATUS.DELETE:
-            return {
-                color: 'red',
-                text: t('status.delete')
-            }
-        case FILE_STATUS.PROCESSING:
-            return {
-                color: 'purple',
-                text: t('status.processing')
-            }
-        case FILE_STATUS.COMPLETED:
-            return {
-                color: 'green',
-                text: t('status.completed')
-            }
-        default:
-            return {
-                color: 'blue',
-                text: t('status.created')
-            }
-    }
-})
+const color = computed(() => {
+    return extension.value ? getFileFormat(extension.value)?.color : null;
+});
 
 const isUploaded = computed(() => {
     return status.value === FILE_STATUS.UPLOADED;
@@ -120,7 +79,7 @@ const size = computed(() => {
 })
 
 const errorMessage = computed(() => {
-    return props.file.result?.error || props.file.message;
+    return result.value?.error || props.file.message;
 })
 
 const removeFile = () => {
@@ -145,14 +104,7 @@ const setImage = () => {
          image.value = props.file.externalPath;
     }
     else if (props.file?.mimetype && props.file?.mimetype.includes('image/') && uuid.value) {
-        image.value = getImagePath(uuid.value, `${props.file.hash}_${props.file.filename}`)['src']
-    }
-    else if (props.file?.extension && props.file.extension in formatMap.value) {
-        const imageIcon = formatMap.value[props.file.extension].icon_image;
-
-        if (imageIcon !== '') {
-            image.value = getStoragePath(imageIcon).src;
-        }
+        image.value = getImagePath(uuid.value, props.file.hash)['src']
     }
 }
 
@@ -184,20 +136,38 @@ const progressClass = {
 </script>
 
 <template>
-    <div class="bg-white rounded-lg border border-gray-300 p-2 shadow-base relative overflow-hidden">
+    <div class="bg-white shadow-black-300/30 shadow-ring-5 rounded-md p-2 pr-3 relative overflow-hidden">
+        <div class="mb-2 flex xs:hidden items-center flex-wrap">
+            <span class="truncate text-ellipsis overflow-hidden max-w-[50%] block text-xs mr-auto" :title="filename">{{ filename }}</span>
+            <div class="text-gray-500 text-xs flex items-center gap-3">
+                <span class="text-nowrap">
+                    <span v-if="extension">
+                        {{ extension.toUpperCase() }} /
+                    </span>
+                    <span>
+                        {{ size }}
+                    </span>
+                </span>
+            </div>
+        </div>
         <div class="flex items-center gap-5">
-            <div class="w-[60px] h-[60px] flex-shrink-0 relative">
+            <div class="w-[60px] h-[60px] flex-shrink-0 relative hidden md:block">
                 <img class="w-full h-full object-cover object-center" v-if="image" :src="image" alt="">
-                <UIcon v-else :name="mainIcon" class="w-full h-full"/>
+                <FileIcon
+                    v-else-if="extension"
+                    class="w-full h-full"
+                    :label="extension.toUpperCase()"
+                    :color="color || ''"
+                />
                 <div v-if="isShowProgress || status === FILE_STATUS.DELETE" class="w-full h-full absolute inset-0 flex items-center justify-center bg-opacity-80 bg-gray-50">
                     <UIcon loading name="svg-spinners:ring-resize" class="w-4 h-4 text-blue-500" />
                 </div>
             </div>
-            <div class="w-1/3 flex-shrink-0">
-                <span class="truncate text-ellipsis overflow-hidden w-full block" :title="filename">{{ filename }}</span>
+            <div class="w-1/3 flex-shrink-0 hidden xs:block">
+                <span class="truncate text-xs sm:text-md text-ellipsis overflow-hidden w-full block" :title="filename">{{ filename }}</span>
                 <div class="w-full pt-1">
                     <UProgress size="md" :class="{'opacity-50': !isShowProgress}" :ui="progressClass" :value="parseInt(progress)" />
-                    <div class="text-gray-500 text-xs flex items-center gap-2 pt-1">
+                    <div class="text-gray-500 text-xs flex items-center justify-between gap-2 pt-1">
                         <span>
                             {{ progress }}%
                         </span>
@@ -214,21 +184,13 @@ const progressClass = {
             </div>
             <div class="w-[124px]">
                 <div class="flex items-center gap-2">
-                    <UBadge
-                        size="sm"
-                        class="min-w-[100px] justify-center"
-                        :color="statusMessage.color"
-                        variant="subtle"
-                        :ui="{ rounded: 'rounded' }"
-                        :label="statusMessage.text"
-                        :trailing="false"
-                    />
-                    <UTooltip v-if="errorMessage" strategy="absolute" :resize="true" :popper="{ placement: 'top', arrow: true }">
-                        <template #text>
-                            <span class="text-red-500">{{ errorMessage }}</span>
+                    <StatusBadge class="min-w-[100px] justify-center" :status="status"/>
+                    <UPopover v-if="errorMessage" mode="hover" :resize="true" :popper="{ placement: 'top', arrow: false }">
+                        <template #panel>
+                            <p class="text-red-500 py-1 px-2 text-xs max-w-[200px]">{{ errorMessage }}</p>
                         </template>
                         <UIcon name="rivet-icons:info-circle" class="text-red-500"/>
-                    </UTooltip>
+                    </UPopover>
                 </div>
             </div>
             <div class="w-28 ml-auto hidden md:block">
@@ -240,20 +202,22 @@ const progressClass = {
                 </span>
             </div>
             <div class="w-8">
-                <UButton
-                    v-if="isUploaded"
-                    class="text-xs"
-                    icon="heroicons-outline:x-circle"
-                    color="red"
-                    @click="removeFile"
-                    :disabled="status === FILE_STATUS.DELETE"
-                />
-                <UButton
-                    v-if="status === FILE_STATUS.COMPLETED"
-                    icon="material-symbols:download"
-                    color="blue"
-                    @click="downloadFile"
-                />
+                <UTooltip v-if="isUploaded" :text="$t('delete')" openDelay="1000" :popper="{ placement: 'top', arrow: true }">
+                    <UButton
+                        class="text-xs"
+                        icon="heroicons-outline:x-circle"
+                        color="red"
+                        @click="removeFile"
+                        :disabled="status === FILE_STATUS.DELETE"
+                    />
+                </UTooltip>
+                <UTooltip v-if="status === FILE_STATUS.COMPLETED" :text="$t('download')" openDelay="1000" :popper="{ placement: 'top', arrow: true }">
+                    <UButton
+                        icon="material-symbols:download"
+                        color="blue"
+                        @click="downloadFile"
+                    />
+                </UTooltip>
             </div>
         </div>
     </div>

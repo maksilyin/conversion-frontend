@@ -6,6 +6,8 @@ import digital_platform from '~/assets/icons/digital_platform.svg';
 import software_app_development_icon from '~/assets/icons/software_app_development_icon.svg'
 import content_information_data_media from '~/assets/icons/content_information_data_media.svg'
 import launch_icon from '~/assets/icons/launch_icon.svg'
+import RoundedBlock from "~/components/ui/RoundedBlock.vue";
+import TitleH2 from "~/components/ui/TitleH2.vue";
 
 const { t } = useI18n();
 const props = defineProps({
@@ -41,6 +43,10 @@ const title = computed(() => {
     else {
         return t('titles.advantages2').replace('#FORMAT1#', props.formatFrom.name).replace('#FORMAT2#', props.format.name);
     }
+})
+
+const subtitle = computed(() =>{
+  return t('subtitles.advantages3');
 })
 
 const count = 6;
@@ -92,35 +98,27 @@ for (let i = 1; i <= count; i++) {
 </script>
 
 <template>
-    <div class="section">
+    <div class="section bg-black-300">
         <UContainer>
-            <h2>{{ title }}</h2>
-            <div class="grid grid-cols sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                <UCard
-                    class="group relative overflow-hidden transition duration-500 hover:bg-blue-light-50"
-                    v-for="(item, index) in items" :key="item.id"
-                    :ui="{ring: 'ring-1 ring-blue-dark dark:ring-gray-800'}"
-                >
-                    <div
-                        aria-hidden="true"
-                        class="inset-0 opacity-10 absolute aspect-video border rounded-full -translate-y-1/2 group-hover:-translate-y-1/4 duration-300 bg-gradient-to-b blur-2xl dark:opacity-0 dark:group-hover:opacity-5"
-                    ></div>
-                    <div class="relative z-1">
-                        <div class="pb-4 text-center">
-                            <span class="inline-flex items-center justify-center p-2 rounded-full h-20">
-                                <img class="h-20" v-if="iconsSvg[index]" :src="iconsSvg[index]" alt=""/>
-                                <UIcon v-else :name="icons[index]" class="w-14 h-14" :class="color[index]"/>
+            <RoundedBlock>
+                <TitleH2 class="mb-6">{{ title }}</TitleH2>
+                <p class="text-center text-black-300 mb-12 text-lg">{{ subtitle }}</p>
+                <div class="grid grid-cols sm:grid-cols-2 lg:grid-cols-3 gap-10">
+                    <div class="relative z-1" v-for="(item, index) in items" :key="item.id">
+                        <div class="pb-2 sm:pb-4">
+                            <span class="inline-flex items-center justify-center rounded-full">
+                                <img class="h-12 sm:h-16" :src="iconsSvg[index]" alt=""/>
                             </span>
                         </div>
-                        <div class="font-bold text-lg mb-2 text-blue-dark-900">
+                        <div class="font-bold text-lg mb-2 text-black">
                             {{item.name}}
                         </div>
-                        <div class="text-gray-600">
+                        <div class="text-black-300">
                             {{item.text}}
                         </div>
                     </div>
-                </UCard>
-            </div>
+                </div>
+            </RoundedBlock>
         </UContainer>
     </div>
 </template>

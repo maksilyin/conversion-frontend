@@ -1,8 +1,10 @@
 <script setup>
 import {useI18n} from "vue-i18n";
-import IButton from "~/components/ui/IButton.vue";
-const { status, isProcessing } = useTask()
+import UploadFileButton from "~/components/ui/UploadFileButton.vue";
+const { downloadZip, files } = useUploader()
+const { uuid, status, isProcessing } = useTask()
 const { t } = useI18n();
+import { FILE_STATUS } from "~/utils/constants"
 
 const props = defineProps({
     data: {
@@ -13,7 +15,18 @@ const props = defineProps({
     }
 })
 
-const { openChooser } = useFileChooser();
+const isAllCompleted = computed(() => {
+    let res = true;
+
+    files.value.forEach(file => {
+        if (file.status !== FILE_STATUS.COMPLETED) {
+            res = false
+        }
+    })
+
+    return res;
+})
+
 const emits = defineEmits(['send']);
 
 const send = async () => {
@@ -23,37 +36,42 @@ const send = async () => {
 </script>
 
 <template>
-    <div class="p-2 bg-white">
-        <div class="flex gap-3">
-            <label :for="props.for">
-                <UButton
-                    icon="clarity:add-line"
-                    class="text-md py-2 px-4 h-10 md:pr-4 justify-center relative bg-blue-dark-100 transition duration-500 rounded-md hover:bg-blue-dark"
-                    :disabled="isProcessing"
-                >
-                    {{$t('add_more_files')}}
-                    <label :for="props.for" class="absolute w-full h-full inset-0 cursor-pointer"></label>
-                </UButton>
-            </label>
-            <UButton
-                @click.stop="openChooser('dropbox')"
-                class="w-10 p-1 text-md justify-center bg-blue-dark-100 transition duration-500 rounded-md hover:bg-blue-dark"
-                icon="ri:dropbox-fill"
-                :disabled="isProcessing"
-            ></UButton>
-            <UButton
-                @click.stop="openChooser('google')"
-                class="w-10 p-1 text-md justify-center bg-blue-dark-100 transition duration-500 rounded-md hover:bg-blue-dark"
-                icon="uil:google-drive"
-                :disabled="isProcessing"
-            ></UButton>
+    <div class="p-0 md:p-2 bg-white">
+        <div class="flex gap-3 md:gap-2 flex-col md:flex-row items-center">
+            <UploadFileButton class="hidden md:flex" size="small">
+                <label :for="props.for">
+                    <UButton
+                        @click.stop
+                        icon="clarity:add-line"
+                        class="text-md py-2 px-4 h-10 md:pr-4 justify-center relative bg-blue-dark-100 transition duration-500 rounded-md hover:bg-blue-dark rounded-br-none rounded-tr-none"
+                        :disabled="isProcessing"
+                    >
+                        {{$t('add_more_files')}}
+                        <label :for="props.for" class="absolute w-full h-full inset-0 cursor-pointer"></label>
+                    </UButton>
+                </label>
+            </UploadFileButton>
             <div class="mx-auto">
                 <slot></slot>
             </div>
             <UButton
-                class="text-md bg-blue-dark-100 transition duration-500 rounded-md hover:bg-blue-dark ml-auto px-4"
-                :label="t('convert')" @click="send"
+                v-if="status === 'complete' && isAllCompleted"
+                size="xl"
+                icon="material-symbols:download"
+                color="text-md justify-center h-12 bg-blue-dark-100 transition duration-500 rounded-none md:rounded-md hover:bg-blue-dark ml-auto px-6"
+                label="Скачать все"
+                :trailing="false"
+                @click="downloadZip(uuid)"
+            />
+            <UButton
+                v-else
+                class="text-md justify-center h-12 bg-blue-dark-100 transition duration-500 rounded-none md:rounded-md hover:bg-blue-dark ml-auto px-6 w-full md:w-auto"
+                @click="send"
+                :disabled="isProcessing"
             >
+                <span class="inline-block py-3 md:py-0">
+                    {{$t('convert')}}
+                </span>
                 <template #trailing>
                     <UIcon v-if="isProcessing" name="svg-spinners:180-ring-with-bg" class="w-5 h-5" />
                     <UIcon v-else name="i-heroicons-arrow-right-20-solid" class="w-5 h-5" />

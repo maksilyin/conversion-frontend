@@ -4,6 +4,9 @@ import TopBlock from "~/components/ui/TopBlock.vue";
 import {useI18n} from "vue-i18n";
 import Advantages from "~/components/Blocks/Advantages.vue";
 import CategoryLinksAll from "~/components/Blocks/CategoryLinksAll.vue";
+import DecorBg from "~/components/design/DecorBg.vue";
+import ConvertList from "~/components/Blocks/ConvertList.vue";
+import CategoryCardList from "~/components/Blocks/CategoryCardList.vue";
 
 const props = defineProps({
     category: {
@@ -27,7 +30,8 @@ useSeoMeta({
 
 <template>
     <div key="index">
-        <div class="relative">
+        <div class="relative bg-grey-light">
+            <DecorBg/>
             <div class="relative z-1">
                 <TopBlock :hideBreadCrumbs="true">
                     <template #title>
@@ -39,11 +43,11 @@ useSeoMeta({
                         </div>
                     </template>
                 </TopBlock>
-                <Converter/>
             </div>
+            <Converter/>
         </div>
-        <Advantages class="border-t"></Advantages>
-        <CategoryLinksAll :file-types="formats" />
+        <Advantages></Advantages>
+        <CategoryCardList  />
     </div>
 </template>
 

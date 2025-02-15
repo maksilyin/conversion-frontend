@@ -2,6 +2,7 @@
 import FileInput from "./FileInput";
 import FileInputCompact from "~/components/functional/fileUploader/FileInputCompact";
 import { FILE_STATUS } from "~/utils/constants"
+import DrugAndDrop from "~/components/functional/fileUploader/DrugAndDrop.vue";
 const {uuid, createTask, startTask, taskProgress, status} = useTask();
 
 const props = defineProps({
@@ -90,26 +91,19 @@ watch(filesToUpload, async (newValue) => {
 </script>
 
 <template>
-    <UContainer class="max-w-[991px]">
-        <div v-if="files.length" class="flex flex-col gap-2 pb-10">
+    <DrugAndDrop for="input-file"/>
+    <UContainer>
+        <div v-if="files.length" class="flex flex-col pb-10">
             <slot name="files"></slot>
         </div>
     </UContainer>
-    <FileInput v-if="!files.length"  @addFile="(e) => {console.log('addFile')}"/>
-    <div class="sticky bottom-0 bg-white py-5 border-t" v-else>
-        <UContainer>
-            <div v-if="isShowProgress || status === 'complete'" class="flex justify-center pb-5">
-                <UProgress v-if="isShowProgress" size="lg" color="blue" :value="taskProgress"></UProgress>
-                <UButton
-                    v-else-if="status === 'complete'"
-                    icon="material-symbols:download"
-                    size="xl"
-                    color="primary"
-                    variant="solid"
-                    label="Скачать все"
-                    :trailing="false"
-                    @click="downloadZip(uuid)"
-                />
+    <FileInput v-if="!files.length"/>
+    <div v-else class="sticky z-[100] bottom-0 bg-white pb-0 pt-3 md:pb-5 md:pt-5 border-t">
+        <UContainer class="px-0 sm:px-0">
+            <div v-if="isShowProgress || status === 'complete'" class="flex justify-center">
+                <div v-if="isShowProgress" class="absolute w-full left-0 top-0">
+                    <UProgress size="sm" color="blue" :value="taskProgress"></UProgress>
+                </div>
             </div>
             <FileInputCompact @send="send">
                 <slot name="compact"></slot>

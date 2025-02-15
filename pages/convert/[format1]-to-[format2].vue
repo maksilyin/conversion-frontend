@@ -28,9 +28,12 @@ if (!formatDetailFrom || !formatDetailTo) {
 const title = t('titles.convert2').replace('#FORMAT1#', formatDetailFrom.name).replace('#FORMAT2#', formatDetailTo.name)
 const subtitle = t('subtitles.convert2').replace('#FORMAT1#', formatDetailFrom.name).replace('#FORMAT2#', formatDetailTo.name)
 
+const metaTitle = t('page.format1_to_format2.title').replace('#FORMAT1#', formatDetailFrom.name).replace('#FORMAT2#', formatDetailTo.name)
+const metaDescription = t('page.format1_to_format2.description').replace('#FORMAT1#', formatDetailFrom.name).replace('#FORMAT2#', formatDetailTo.name)
+
 useSeoMeta({
-    title: t('page.index.title'),
-    description: t('page.index.description'),
+    title: `${metaTitle} ${t('meta.title.suffix')}`,
+    description: `${metaDescription} ${t('meta.description.suffix')}`,
 });
 
 initConvertChain(formatDetailFrom, formatDetailTo);

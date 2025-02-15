@@ -2,6 +2,7 @@
 import {useI18n} from "vue-i18n";
 import type {FileFormat, FileType} from "~/types/FileFormat";
 import FormatLink from "~/components/ui/FormatLink.vue";
+import TitleH2 from "~/components/ui/TitleH2.vue";
 
 const { getStoragePath } = imagePath();
 const { t } = useI18n();
@@ -43,12 +44,27 @@ onMounted(() => {
     })
 })
 
+const getSupportFormatsString = (num: number = 4) => {
+    let result: string[] = [];
+    const formats =  props.fileType.formats.slice(0, num);
+
+    result = formats.map(format => {
+        return format.name;
+    })
+
+    return result.join(', ');
+}
+
+const title = t('titles.convert_category_block').replace('#TYPE#', t(`forms.rp.${props.fileType.slug}`))
+const subtitle = t('subtitles.convert_category_block').replace('#TYPE#', t(`forms.rpm.${props.fileType.slug}`)).replace('#SUPPORTFORMATS#', getSupportFormatsString())
+
 </script>
 
 <template>
     <div class="py-20">
         <UContainer>
-            <h2>{{ $t('convert') }} {{ fileType.name.toLowerCase() }}</h2>
+            <TitleH2>{{ title }}</TitleH2>
+            <p class="max-w-4xl mx-auto text-center text-lg mb-10">{{ subtitle }}</p>
             <div
                 ref="showBlock"
                 class="transition-max-height duration-500 p-1 overflow-hidden"

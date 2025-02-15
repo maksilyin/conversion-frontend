@@ -10,12 +10,12 @@ export type UploadFile = {
     extension?: string,
     mimetype: string,
     externalPath?: string,
-    result?: {
+    result?: [{
         extension: string,
         filename: string
         mimetype: string
         originalName: string
         size: number
         error?: string
-    }
+    }]
 };

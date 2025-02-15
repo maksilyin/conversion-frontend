@@ -3,7 +3,6 @@ import Navbar from "~/components/patials/navbar/Navbar.vue";
 import Footer from "~/components/patials/Footer.vue";
 import {useI18n} from "vue-i18n";
 const { t } = useI18n();
-const { loadFormats } = useFormats();
 
 const head = useLocaleHead({
     addDirAttribute: true,
@@ -11,11 +10,11 @@ const head = useLocaleHead({
     addSeoAttributes: true
 });
 
-defineOgImage({url: '/img/logo.png', width: 657, height: 232, alt: 'The Fit Life Guide'})
+defineOgImage({url: '/img/logo.png', width: 657, height: 232, alt: 'FastConvert'})
 
 const title = computed(() => {
     const defaultTitle = t('layouts.title');
-    const routeTitle = typeof route.meta.title === 'string' ? t(route.meta.title) : 'The Fit Life Guide';
+    const routeTitle = typeof route.meta.title === 'string' ? t(route.meta.title) : 'FastConvert';
 
     return routeTitle || defaultTitle;
 });
@@ -28,13 +27,12 @@ useHead({
         { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
         {
             rel: 'stylesheet',
-            href: 'https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap'
+            href: 'https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap'
         },
+        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
     ],
     titleTemplate: null,
 });
-
-loadFormats();
 
 </script>
 
@@ -47,7 +45,7 @@ loadFormats();
             </template>
         </Head>
         <Body class="dark:bg-black-900 min-h-[100vh]">
-            <header class="navigation xl:px-11 py-5 border-b">
+            <header class="navigation xl:px-11 py-5 shadow-bottom-lg">
                 <Navbar></Navbar>
             </header>
             <slot></slot>

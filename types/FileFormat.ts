@@ -1,11 +1,15 @@
+import type {Seo} from "~/types/Seo";
+
 export type FileType = {
     id: number,
     name: string,
     slug: string,
     icon: string,
     icon_image: string,
+    excerpt?: string,
     description?: string,
-    formats: FileFormat[];
+    formats: FileFormat[],
+    seo: Seo,
 };
 
 export type FileFormat = {
@@ -15,7 +19,7 @@ export type FileFormat = {
     extension: string,
     icon: string,
     icon_image: string,
-    color: string,
+    color?: string,
     mime_type?: string,
     excerpt?: string,
     description?: string,
@@ -32,5 +36,6 @@ export type FileFormat = {
         id: number,
         name: string,
         slug: string,
-    }
+    },
+    seo: Seo,
 };
