@@ -1,0 +1,32 @@
+{
+  "name": "nuxt-app",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "devDependencies": {
+    "@nuxt/devtools": "latest",
+    "@nuxt/image": "^1.8.1",
+    "@nuxt/ui": "^2.19.2",
+    "@nuxtjs/i18n": "^9.0.0",
+    "@nuxtjs/laravel-echo": "^1.1.0",
+    "@nuxtjs/seo": "^2.0.0-rc.23",
+    "laravel-echo": "^1.17.0",
+    "nuxt": "^3.14.159",
+    "nuxt-og-image": "^3.0.8",
+    "nuxt-schema-org": "^3.4.2",
+    "pusher-js": "^8.4.0-rc2"
+  },
+  "dependencies": {
+    "axios": "^1.7.7",
+    "nuxt-storage": "^1.2.2",
+    "tailwind-scrollbar": "^3.1.0",
+    "uuid": "^11.0.3",
+    "vue-slide-up-down": "^3.0.0"
+  }
+}
