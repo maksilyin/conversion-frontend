@@ -44,7 +44,7 @@ watch(payload, (newValue: Record<string, any>) => {
 })
 
 watch(status, (newValue) => {
-    if (newValue === 'pending' && uuid.value) {
+    if (newValue === TASK_STATUS.PENDING && uuid.value) {
         window.history.replaceState(null, '', `/t/${uuid.value}`);
     }
 })
@@ -59,7 +59,7 @@ onBeforeRouteLeave(() => {
 <template>
     <FileUploader type="convert" :params="params" :chunkSize="CHUNK_SIZE">
         <template #files>
-            <div class="md:hidden pb-2">
+            <div v-if="status !== TASK_STATUS.LOCK && status !== TASK_STATUS.CLEAR" class="md:hidden pb-2">
                 <UploadFileButton :hide-choosers="true" size="small">
                     <label for="input-file">
                         <UButton

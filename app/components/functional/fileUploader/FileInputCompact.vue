@@ -1,10 +1,10 @@
 <script setup>
 import {useI18n} from "vue-i18n";
 import UploadFileButton from "~/components/ui/UploadFileButton.vue";
-const { downloadZip, files } = useUploader()
+const { downloadZip, isDownloadZipLoading, files } = useUploader()
 const { uuid, status, isProcessing } = useTask()
 const { t } = useI18n();
-import { FILE_STATUS } from "~/utils/constants"
+import {FILE_STATUS, TASK_STATUS} from "~/utils/constants"
 
 const props = defineProps({
     data: {
@@ -38,12 +38,12 @@ const send = async () => {
 <template>
     <div class="p-0 md:p-2 bg-white">
         <div class="flex gap-3 md:gap-2 flex-col md:flex-row items-center">
-            <UploadFileButton class="hidden md:flex" size="small">
+            <UploadFileButton v-if="status !== TASK_STATUS.LOCK && status !== TASK_STATUS.CLEAR" class="hidden md:flex" size="small">
                 <label :for="props.for">
                     <UButton
                         @click.stop
                         icon="clarity:add-line"
-                        class="text-md py-2 px-4 h-10 md:pr-4 justify-center relative bg-blue-dark-100 transition duration-500 rounded-md hover:bg-blue-dark rounded-br-none rounded-tr-none"
+                        class="text-md py-2 px-4 h-10 md:pr-4 justify-center relative bg-blue-dark-100 disabled:bg-blue-dark-100 disabled:opacity-50 transition duration-500 rounded-md hover:bg-blue-dark rounded-br-none rounded-tr-none"
                         :disabled="isProcessing"
                     >
                         {{$t('add_more_files')}}
@@ -55,13 +55,14 @@ const send = async () => {
                 <slot></slot>
             </div>
             <UButton
-                v-if="status === 'complete' && isAllCompleted"
+                v-if="status === TASK_STATUS.COMPLETE && isAllCompleted"
                 size="xl"
-                icon="material-symbols:download"
+                :icon="!isDownloadZipLoading ? 'material-symbols:download' : 'svg-spinners:180-ring-with-bg'"
                 color="text-md justify-center h-12 bg-blue-dark-100 transition duration-500 rounded-none md:rounded-md hover:bg-blue-dark ml-auto px-6"
                 label="Скачать все"
                 :trailing="false"
                 @click="downloadZip(uuid)"
+                :disabled="isDownloadZipLoading"
             />
             <UButton
                 v-else

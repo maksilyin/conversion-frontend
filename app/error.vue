@@ -35,14 +35,14 @@ const errorMessage = computed(() => {
 <template>
     <NuxtLoadingIndicator />
     <NuxtLayout>
-        <UContainer>
+        <UContainer class="pb-16">
             <div v-if="error.statusCode === 404" class="prose mx-auto mt-10 dark:prose-invert">
                 <h1 class="text-center text-9xl mb-10 text-black-900 dark:text-gray-200">40<span class="text-secondary">4</span></h1>
                 <p class="my-5 text-center text-3xl mb-10 uppercase font-bold">{{$t('page.error.page_not_found')}}</p>
                 <p class="text-center">{{$t('page.error.not_found_text')}}</p>
                 <div class="text-center">
                     <NuxtLinkLocale
-                        class="text-sm inline-flex items-center gap-2 px-3 py-2 rounded border border-secondary bg-blue-dark transition-all hover:border-secondary-900 hover:bg-blue-dark-100 text-white dark:text-gray-400 hover:dark:text-white no-underline font-normal"
+                        class="text-sm inline-flex items-center gap-2 px-5 py-3 rounded border border-secondary bg-orange-main transition-all hover:border-secondary-900 hover:bg-orange-300 text-white dark:text-gray-400 hover:dark:text-white no-underline font-normal"
                         to="/"
                     >
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
@@ -62,7 +62,7 @@ const errorMessage = computed(() => {
                 </p>
                 <div class="text-center">
                     <NuxtLinkLocale
-                        class="text-sm inline-flex items-center gap-2 px-3 py-2 rounded border border-secondary bg-blue-dark transition-all hover:border-secondary-900 hover:bg-blue-dark-100 text-white dark:text-gray-400 hover:dark:text-white no-underline font-normal"
+                        class="text-sm inline-flex items-center gap-2 px-3 py-3 rounded border border-secondary bg-orange-main transition-all hover:border-secondary-900 hover:bg-orange-300 text-white dark:text-gray-400 hover:dark:text-white no-underline font-normal"
                         to="/"
                     >
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">

@@ -3,7 +3,7 @@
 import IButton from "~/components/ui/IButton.vue";
 import {useI18n} from "vue-i18n";
 const { t } = useI18n();
-
+const { isProcessing } = useTask()
 const openDropdown = ref(false);
 const mobileButton = ref(null);
 const widthDropdown = ref('auto');
@@ -36,7 +36,10 @@ const handleDropdown = () => {
 const handleClick = (chooser) => {
     return (e) => {
         e.preventDefault()
-        openChooser(chooser)
+
+        if (isProcessing.value) {
+            openChooser(chooser)
+        }
     }
 }
 
@@ -91,6 +94,7 @@ const dropDownButtonClass = computed(() => {
                             @click.stop="handleDropdown"
                             size="xl"
                             :class="dropDownButtonClass"
+                            :disabled="isProcessing"
                         >
                         </IButton>
                     </span>
@@ -101,15 +105,17 @@ const dropDownButtonClass = computed(() => {
             v-if="!hideChoosers"
             @click.stop="openChooser('dropbox')"
             size="xl"
-            class="w-14 p-2 justify-center hidden lg:flex text-xl"
+            class="w-14 p-2 justify-center hidden lg:flex text-xl disabled:opacity-50"
             icon="ri:dropbox-fill"
+            :disabled="isProcessing"
         />
         <IButton
             v-if="!hideChoosers"
             @click.stop="openChooser('google')"
             size="xl"
-            class="w-14 p-2 justify-center hidden lg:flex text-xl"
+            class="w-14 p-2 justify-center hidden lg:flex text-xl disabled:opacity-50"
             icon="uil:google-drive"
+            :disabled="isProcessing"
         />
     </div>
 </template>

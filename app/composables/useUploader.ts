@@ -17,6 +17,7 @@ const defaultParams:UploaderParams = {
 
 const files: Record<string, UploadFile> = reactive({});
 const defaultFileParams = ref({});
+const isDownloadZipLoading = ref(false)
 export const useUploader = () => {
     const api = useApi();
 
@@ -67,6 +68,7 @@ export const useUploader = () => {
     }
 
     const downloadZip = async (uuid: string) => {
+        isDownloadZipLoading.value = true;
         const headers = {
             Accept: 'application/octet-stream',
         }
@@ -77,6 +79,8 @@ export const useUploader = () => {
             downloadFile(blob, 'archive.zip');
         }).catch(e => {
             console.log(e)
+        }).finally(() => {
+            isDownloadZipLoading.value = false;
         })
     }
 
@@ -242,5 +246,6 @@ export const useUploader = () => {
         downloadZip,
         setDefaultFileParams,
         unmount,
+        isDownloadZipLoading,
     }
 }

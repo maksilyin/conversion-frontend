@@ -8,3 +8,12 @@ export const FILE_STATUS = {
     PROCESSING: 5,
     COMPLETED: 6,
 };
+
+export const TASK_STATUS = {
+    CREATED: 'created',
+    PENDING: 'pending',
+    COMPLETE: 'complete',
+    LOCK: 'lock',
+    CLEAR: 'clear'
+
+}
