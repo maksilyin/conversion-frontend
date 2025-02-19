@@ -65,7 +65,7 @@ const items = [
 ]
 
 const dropDownButtonClass = computed(() => {
-    let className = 'p-2 justify-center relative rounded-bl-none rounded-tl-none border-l';
+    let className = 'p-2 justify-center relative rounded-bl-none rounded-tl-none border-l disabled:bg-blue-dark-100 disabled:opacity-50';
 
     if (props.size === 'small') {
         className += ' w-10';
