@@ -2,6 +2,8 @@
 import { useI18n } from 'vue-i18n';
 import { converterIconsV2 } from "~/collections/icons"
 const { t } = useI18n();
+import type {FileFormat, FileType} from "~/types/FileFormat";
+import {fa} from "cronstrue/dist/i18n/locales/fa";
 
 const props = defineProps({
     modelValue: {
@@ -26,13 +28,14 @@ const props = defineProps({
     }
 })
 
-const { filteredFormats, formats } = useFormats(props.extension);
+const { filteredFormats, searchFormats, formats } = useFormats(props.extension);
 
 const emit = defineEmits(['update:modelValue'])
 const showTab = ref('image');
 const selected = ref([...props.modelValue])
 const isOpenModal = ref(false);
 const isOpenModalToggle = ref(false);
+const searchQuery = ref('');
 
 const setItem = (value: string) => {
     if (!props.multiple) {
@@ -77,8 +80,39 @@ const handleDropdown = () => {
     isOpenModal.value = !isOpenModalToggle.value
 }
 
+const formatList = computed(() => {
+    if (searchQuery.value.length > 0) {
+        let formatTypes: FileType[] = JSON.parse(JSON.stringify(filteredFormats.value));
+
+        formatTypes = formatTypes.filter(fileType => {
+            let formats: FileFormat[] = fileType.formats;
+
+            formats = formats.filter(format => {
+                return format.extension.toLowerCase().indexOf(searchQuery.value.toLowerCase()) >= 0
+            });
+
+            if (formats.length) {
+                fileType.formats = formats;
+                return true;
+            }
+
+            return false;
+        });
+
+        return formatTypes;
+    }
+
+    return filteredFormats.value;
+})
+
 watch(() => props.modelValue, newValue => {
  //   selected.value = newValue;
+})
+
+watch(isOpenModal, newValue => {
+    if (!newValue && isOpenModalToggle.value) {
+        isOpenModalToggle.value = false
+    }
 })
 
 </script>
@@ -97,10 +131,21 @@ watch(() => props.modelValue, newValue => {
             </span>
         </div>
         <template #panel>
+            <div class="px-2 pt-2">
+                <UInput
+                    v-model="searchQuery"
+                    class="search-input rounded border border-gray-200"
+                    icon="i-heroicons-magnifying-glass-20-solid"
+                    size="md"
+                    color="white"
+                    :trailing="false"
+                    placeholder="Search..."
+                />
+            </div>
             <div class="flex gap-2 p-2 pt-2 h-[330px] w-[450px]">
                 <div class="w-56 rounded border border-gray-200 p-2">
                     <div
-                        v-for="formatNavItem in filteredFormats"
+                        v-for="formatNavItem in formatList"
                         :key="formatNavItem.id"
                         class="cursor-pointer py-1 pl-1 pr-2 rounded border border-transparent font-medium text-sm transition hover:bg-blue-50 hover:border-blue-300 hover:text-blue-600 flex items-center gap-2"
                         :class="{'bg-blue-50 !border-blue-300 text-blue-600': showTab === formatNavItem.slug}"
@@ -111,7 +156,7 @@ watch(() => props.modelValue, newValue => {
                     </div>
                 </div>
                 <div class="w-full rounded border border-gray-200 p-2 overflow-y-auto scrollbar-thumb-rounded-lg scrollbar-track-rounded-lg scrollbar-thin">
-                    <div v-for="formatNavItem in filteredFormats" :key="formatNavItem.id" class="flex flex-wrap gap-2" v-show="showTab === formatNavItem.slug">
+                    <div v-for="formatNavItem in formatList" :key="formatNavItem.id" class="flex flex-wrap gap-2" v-show="showTab === formatNavItem.slug">
                     <span
                         v-for="format in formatNavItem.formats"
                         @click="setItem(format.extension)"
@@ -128,5 +173,7 @@ watch(() => props.modelValue, newValue => {
 </template>
 
 <style scoped>
-
+.search-input ::v-deep(input) {
+    @apply ring-0;
+}
 </style>

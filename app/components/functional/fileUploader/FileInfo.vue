@@ -7,6 +7,7 @@ import { formatSize } from "~/utils/functions";
 import {useMimeTypes} from "~/composables/useMimeTypes";
 import FileIcon from "~/components/ui/FileIcon.vue";
 import StatusBadge from "~/components/functional/fileUploader/StatusBadge.vue";
+import ProgressBar from "~/components/functional/fileUploader/ProgressBar.vue";
 
 interface Props {
     data: UploadFile;
@@ -34,15 +35,13 @@ const props = defineProps({
 });
 
 const indexResult = 0;
-const {fileColor, fileIcon} = useMimeTypes(props.file.mimetype);
-const { formatMap, getExtensionByMimeType, getFileFormat } = useFormats();
+const { fileIcon } = useMimeTypes(props.file.mimetype);
+const { getExtensionByMimeType, getFileFormat } = useFormats();
 const { uuid } = useTask();
-const { getImagePath, getStoragePath } = imagePath();
+const { getImagePath } = imagePath();
 const image = ref<null | string>(null);
 const icon = ref('file');
 const isShowProgress = ref(false);
-const toFormat = ref(props.format);
-const mainColor = fileColor() || 'blue-400';
 
 const emits = defineEmits(['update:modelValue', 'delete', 'selectFormat', 'download']);
 
@@ -127,11 +126,19 @@ watchEffect(() => {
     }
 })
 
-const progressClass = {
-    progress: {
-        bar: `!text-blue-400`,
+const progressClass = computed(() => {
+    let color = 'blue';
+
+    if (status.value === FILE_STATUS.DELETE) {
+        color = 'red';
     }
-}
+
+    return {
+        progress: {
+            bar: `!text-${color}-400`,
+        }
+    }
+})
 
 </script>
 
@@ -166,7 +173,7 @@ const progressClass = {
             <div class="w-1/3 flex-shrink-0 hidden xs:block">
                 <span class="truncate text-xs sm:text-md text-ellipsis overflow-hidden w-full block" :title="filename">{{ filename }}</span>
                 <div class="w-full pt-1">
-                    <UProgress size="md" :class="{'opacity-50': !isShowProgress}" :ui="progressClass" :value="parseInt(progress)" />
+                    <ProgressBar :class="{'opacity-50': !isShowProgress}" :file="file"/>
                     <div class="text-gray-500 text-xs flex items-center justify-between gap-2 pt-1">
                         <span>
                             {{ progress }}%

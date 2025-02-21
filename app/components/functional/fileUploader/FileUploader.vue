@@ -45,15 +45,25 @@ const sendData = computed(() => {
         task: uuid.value,
         type: props.type,
         payload: {
-            files: files.value.map(file => ({
-                hash: file.hash,
-                status: file.status,
-                filename: file.filename,
-                params: file.params,
-            }))
+            files: getFilesForPayload()
         }
     }
 })
+
+const getFilesForPayload = () => {
+    let filesFiltered = files.value.filter(file => {
+        return file.status !== FILE_STATUS.DELETE
+    })
+
+    return filesFiltered.map(file => {
+        return {
+            hash: file.hash,
+            status: file.status,
+            filename: file.filename,
+            params: file.params,
+        }
+    })
+}
 
 const send = () => {
     startTask(sendData.value);

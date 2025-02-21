@@ -28,15 +28,25 @@ export const useUploader = () => {
         if (hash in files) {
             setFileStatus(hash, FILE_STATUS.DELETE)
             const file = files[hash];
+            file.progress = 0;
 
             try {
+                const timeout = setTimeout(() => {
+                    file.progress = 70;
+                }, 200)
                 await api.callApi('file.delete', {
                     hash,
                     task: uuid,
                     filename: file.filename,
                 });
-                delete files[hash]
-            } catch (e) {
+                clearTimeout(timeout)
+                file.progress = 100;
+
+                setTimeout(() => {
+                    delete files[hash];
+                }, 100)
+            }
+            catch (e) {
                 console.log(e)
             }
         }
