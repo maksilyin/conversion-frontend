@@ -7,7 +7,7 @@ const props = defineProps({
     },
     converterIcons: {
         required: false,
-        type: Array,
+        type: Object,
     }
 })
 

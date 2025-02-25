@@ -5,7 +5,7 @@ export default {
     },
     'file.delete': {
         method: 'delete',
-        url: 'file/delete/',
+        url: 'file/delete/{task}/{hash}/',
     },
     'file.download': {
         method: 'get',
@@ -23,9 +23,17 @@ export default {
         method: 'post',
         url: 'task/create/',
     },
+    'task.create.file': {
+        method: 'post',
+        url: 'task/file/create/',
+    },
     'task.send': {
         method: 'put',
         url: 'task/',
+    },
+    'task.delete': {
+        method: 'delete',
+        url: 'task/{task}/',
     },
     'formats': {
         method: 'get',

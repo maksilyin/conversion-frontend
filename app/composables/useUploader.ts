@@ -65,6 +65,7 @@ export const useUploader = () => {
             }
 
             const fileResult = file.result[index];
+            console.log(fileResult)
             api.callApi<BlobPart>('file.download', {
                 task: uuid,
                 hash: hash,
@@ -257,5 +258,6 @@ export const useUploader = () => {
         setDefaultFileParams,
         unmount,
         isDownloadZipLoading,
+        setFileStatus,
     }
 }

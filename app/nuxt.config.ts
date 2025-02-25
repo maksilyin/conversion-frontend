@@ -17,6 +17,7 @@ export default defineNuxtConfig({
       GOOGLE_PICKER_API_KEY: process.env.GOOGLE_PICKER_API_KEY,
       DROPBOX_KEY: process.env.DROPBOX_KEY,
       CHUNK_SIZE: process.env.CHUNK_SIZE,
+      TASK_SIZE_LIMIT: process.env.TASK_SIZE_LIMIT,
     }
   },
   devtools: { enabled: true },

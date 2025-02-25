@@ -57,7 +57,7 @@ onBeforeRouteLeave(() => {
 </script>
 
 <template>
-    <FileUploader type="convert" :params="params" :chunkSize="CHUNK_SIZE">
+    <FileUploader type="convert" :params="params" :chunkSize="parseInt(CHUNK_SIZE)">
         <template #files>
             <div v-if="status !== TASK_STATUS.LOCK && status !== TASK_STATUS.CLEAR" class="md:hidden pb-2">
                 <UploadFileButton :hide-choosers="true" size="small">

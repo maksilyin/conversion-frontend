@@ -28,10 +28,11 @@ export default {
     video: 'video',
     or_any: ', or any',
     files: 'files',
-    drop_max_size: 'Перетащите файлы сюда. Максимальный размер файла — 100 МБ',
+    drop_max_size: 'Перетащите файлы сюда. Максимальный размер — 2.5 ГБ',
     choose_files: 'Choose Files',
     from_dropbox: 'From Dropbox',
     from_google: 'From Google',
+    remove: 'Remove',
 
     titles: {
         convert: 'Конвертировать файлы в #FORMAT#',
@@ -252,5 +253,14 @@ export default {
                 ariaLabel: 'Home',
             }
         }
+    },
+    error: {
+        file: {
+            limit: 'Total uploaded size exceeds the allowed limit'
+        }
+    },
+    modal: {
+        limit_reg: 'Вы достигли максимального объема загрузки. Зарегистрируйтесь, чтобы увеличить лимит',
+        limit: 'Вы загрузили максимальный объем файлов, доступный сейчас. Дальнейшая загрузка недоступна.'
     }
 }

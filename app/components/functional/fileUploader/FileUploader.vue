@@ -3,7 +3,9 @@ import FileInput from "./FileInput";
 import FileInputCompact from "~/components/functional/fileUploader/FileInputCompact";
 import { FILE_STATUS } from "~/utils/constants"
 import DrugAndDrop from "~/components/functional/fileUploader/DrugAndDrop.vue";
-const {uuid, createTask, startTask, taskProgress, status} = useTask();
+import {useI18n} from "vue-i18n";
+import TaskLimitModal from "~/components/modals/TaskLimitModal.vue";
+const {uuid, createTask, startTask, taskProgress, status, createFile} = useTask();
 
 const props = defineProps({
     type: {
@@ -23,21 +25,57 @@ const props = defineProps({
         default: () => {}
     }
 })
-
-const { setInputFiles, uploadFile, files, downloadZip } = useUploader()
+const { public: { TASK_SIZE_LIMIT } } = useRuntimeConfig();
+const { t } = useI18n();
+const modal = useModal();
+const { setInputFiles, uploadFile, files, setFileStatus } = useUploader()
 const isShowProgress = ref(false);
 const isCreatingTask = ref(false);
 const fileInput = ref(null);
+const totalUploadedSize = ref(0)
 
 const onSelectFile = async () => {
-    setInputFiles(Array.from(fileInput.value.files), props.params);
+    setInputFiles(Array.from(fileInput.value.files));
     fileInput.value.value = null;
 }
 
 const uploadFiles = () => {
+    let hasError = false;
+
     filesToUpload.value.forEach(file => {
-        uploadFile(file.file, file.hash, uuid.value, props.chunkSize, props.maxRetries);
+        if (limitLeft.value >= file.size) {
+            useLimitSize(file.size);
+            createAndUploadFile(file);
+        }
+        else {
+            hasError = true;
+            setFileStatus(file.hash, FILE_STATUS.ERROR, t('error.file.limit'));
+        }
     })
+
+    if (hasError) {
+        openModal()
+    }
+}
+
+const createAndUploadFile = async (file) => {
+    setFileStatus(file.hash, FILE_STATUS.PREPARE);
+    createFile({
+        hash: file.hash,
+        size: file.size,
+        extension: file.extension,
+        filename: file.filename
+    })
+        .then(() => {
+            uploadFile(file.file, file.hash, uuid.value, props.chunkSize, props.maxRetries);
+        })
+        .catch(e => {
+            console.log(e)
+        })
+}
+
+function openModal() {
+    modal.open(TaskLimitModal)
 }
 
 const sendData = computed(() => {
@@ -71,7 +109,19 @@ const send = () => {
 
 const filesToUpload = computed(() => {
     return files.value.filter(file => file.status === FILE_STATUS.CREATED);
-})
+});
+
+const useLimitSize = (size) => {
+    totalUploadedSize.value += size;
+}
+
+const limit = computed(() => {
+    return (TASK_SIZE_LIMIT || 100) * 1024 * 1024;
+});
+
+const limitLeft = computed(() => {
+    return limit.value - totalUploadedSize.value;
+});
 
 watch(status, newValue => {
     if (newValue === 'pending') {
@@ -89,12 +139,21 @@ watch(filesToUpload, async (newValue) => {
 
     if (!uuid.value && !isCreatingTask.value) {
         isCreatingTask.value = true;
-        await createTask();
+        await createTask(props.type);
         isCreatingTask.value = false;
+        totalUploadedSize[uuid.value] = 0;
     }
 
     if (uuid.value) {
         uploadFiles();
+    }
+})
+
+onBeforeMount(() => {
+    if (uuid.value) {
+        files.value.forEach(file => {
+            useLimitSize(file.size)
+        })
     }
 })
 

@@ -2,7 +2,6 @@
 import {useI18n} from "vue-i18n";
 import { converterIcons } from "~/collections/icons"
 import FileTypeIcon from "~/components/ui/FileTypeIcon.vue";
-const { getStoragePath } = imagePath();
 const { formats } = useFormats();
 const { t } = useI18n();
 </script>

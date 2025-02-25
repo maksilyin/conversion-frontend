@@ -13,4 +13,5 @@ await loadLocales();
     <NuxtLayout>
         <NuxtPage/>
     </NuxtLayout>
+    <UModals />
 </template>

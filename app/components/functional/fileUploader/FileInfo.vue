@@ -8,6 +8,7 @@ import {useMimeTypes} from "~/composables/useMimeTypes";
 import FileIcon from "~/components/ui/FileIcon.vue";
 import StatusBadge from "~/components/functional/fileUploader/StatusBadge.vue";
 import ProgressBar from "~/components/functional/fileUploader/ProgressBar.vue";
+import DownloadFileButton from "~/components/ui/DownloadFileButton.vue";
 
 interface Props {
     data: UploadFile;
@@ -208,7 +209,7 @@ const progressClass = computed(() => {
                     {{size}}
                 </span>
             </div>
-            <div class="w-8">
+            <div class="w-16">
                 <UTooltip v-if="isUploaded" :text="$t('delete')" openDelay="1000" :popper="{ placement: 'top', arrow: true }">
                     <UButton
                         class="text-xs"
@@ -218,13 +219,10 @@ const progressClass = computed(() => {
                         :disabled="status === FILE_STATUS.DELETE"
                     />
                 </UTooltip>
-                <UTooltip v-if="status === FILE_STATUS.COMPLETED" :text="$t('download')" openDelay="1000" :popper="{ placement: 'top', arrow: true }">
-                    <UButton
-                        icon="material-symbols:download"
-                        color="blue"
-                        @click="downloadFile"
-                    />
-                </UTooltip>
+                <DownloadFileButton
+                    :removeHandler="removeFile"
+                    :downloadHandler="downloadFile"
+                />
             </div>
         </div>
     </div>
