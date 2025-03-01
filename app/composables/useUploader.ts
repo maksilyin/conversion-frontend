@@ -16,8 +16,9 @@ const defaultParams:UploaderParams = {
 }
 
 const files: Record<string, UploadFile> = reactive({});
+const filesList: UploadFile[] = reactive([]);
 const defaultFileParams = ref({});
-const isDownloadZipLoading = ref(false)
+const isDownloadZipLoading = ref(false);
 export const useUploader = () => {
     const api = useApi();
 
@@ -65,7 +66,7 @@ export const useUploader = () => {
             }
 
             const fileResult = file.result[index];
-            console.log(fileResult)
+
             api.callApi<BlobPart>('file.download', {
                 task: uuid,
                 hash: hash,
@@ -95,8 +96,11 @@ export const useUploader = () => {
         })
     }
 
-    const getFileLink = (uuid: string, filename: string) => {
-
+    const createFile = async (data: object) => {
+        const params = {
+            ...data
+        };
+        return await api.callApi<string>('file.create', params);
     }
 
     const setInputFiles = (inputFiles: File[]) => {
@@ -243,6 +247,10 @@ export const useUploader = () => {
         });
     }
 
+    const deleteFile2 = (hash: string) => {
+        delete files[hash];
+    }
+
     return {
         files: filesArray,
         addFile,
@@ -259,5 +267,7 @@ export const useUploader = () => {
         unmount,
         isDownloadZipLoading,
         setFileStatus,
+        createFile,
+        deleteFile2,
     }
 }

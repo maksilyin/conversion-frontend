@@ -34,11 +34,15 @@ const props = defineProps({
         default: false,
     }
 });
-
+const {
+    removeFile,
+    downloadResultFile,
+    processingFile,
+} = useFile(props.file.hash);
 const indexResult = 0;
 const { fileIcon } = useMimeTypes(props.file.mimetype);
 const { getExtensionByMimeType, getFileFormat } = useFormats();
-const { uuid } = useTask();
+const { uuid, isProcessingTask } = useTask();
 const { getImagePath } = imagePath();
 const image = ref<null | string>(null);
 const icon = ref('file');
@@ -70,6 +74,10 @@ const isUploaded = computed(() => {
     return status.value === FILE_STATUS.UPLOADED;
 })
 
+const isError = computed(() => {
+    return status.value === FILE_STATUS.ERROR;
+})
+
 const progress = computed(() => {
     return props.file.progress.toFixed(0);
 })
@@ -81,14 +89,6 @@ const size = computed(() => {
 const errorMessage = computed(() => {
     return result.value?.error || props.file.message;
 })
-
-const removeFile = () => {
-    emits('delete');
-}
-
-const downloadFile = () => {
-    emits('download');
-}
 
 const setImage = () => {
     if (props.file?.file && props.file.file.type.includes('image/')) {
@@ -127,19 +127,17 @@ watchEffect(() => {
     }
 })
 
-const progressClass = computed(() => {
-    let color = 'blue';
-
-    if (status.value === FILE_STATUS.DELETE) {
-        color = 'red';
-    }
-
-    return {
-        progress: {
-            bar: `!text-${color}-400`,
-        }
-    }
+const isShowRemoveButton = computed(() => {
+    return !props.file.result || isError.value
 })
+
+const download = () => {
+    downloadResultFile()
+}
+
+const remove = () => {
+    removeFile();
+}
 
 </script>
 
@@ -210,18 +208,25 @@ const progressClass = computed(() => {
                 </span>
             </div>
             <div class="w-16">
-                <UTooltip v-if="isUploaded" :text="$t('delete')" openDelay="1000" :popper="{ placement: 'top', arrow: true }">
+                <UTooltip v-if="isShowRemoveButton" :text="$t('delete')" openDelay="1000" :popper="{ placement: 'top', arrow: true }">
                     <UButton
                         class="text-xs"
-                        icon="heroicons-outline:x-circle"
                         color="red"
                         @click="removeFile"
-                        :disabled="status === FILE_STATUS.DELETE"
-                    />
+                        :disabled="processingFile.remove || isProcessingTask || (status !== FILE_STATUS.ERROR && status < FILE_STATUS.UPLOADED)"
+                    >
+                        <template #trailing>
+                            <UIcon v-if="processingFile.remove" name="svg-spinners:180-ring-with-bg" class="w-4 h-4" />
+                            <UIcon v-else name="heroicons-outline:x-circle" class="w-4 h-4" />
+                        </template>
+                    </UButton>
                 </UTooltip>
                 <DownloadFileButton
-                    :removeHandler="removeFile"
-                    :downloadHandler="downloadFile"
+                    v-else
+                    :is-download-processing="processingFile.download"
+                    :is-remove-processing="processingFile.remove"
+                    :removeHandler="remove"
+                    :downloadHandler="download"
                 />
             </div>
         </div>

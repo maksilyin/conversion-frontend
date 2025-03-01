@@ -1,4 +1,8 @@
 export default {
+    'file.create': {
+        method: 'post',
+        url: 'file/create/',
+    },
     'file.upload': {
         method: 'post',
         url: 'file/upload/',
@@ -22,10 +26,6 @@ export default {
     'task.create': {
         method: 'post',
         url: 'task/create/',
-    },
-    'task.create.file': {
-        method: 'post',
-        url: 'task/file/create/',
     },
     'task.send': {
         method: 'put',

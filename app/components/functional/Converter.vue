@@ -13,7 +13,7 @@ const props = defineProps({
 });
 
 const { files, deleteFile, downloadResult, addParam, setFromPayload, setDefaultFileParams, unmount } = useUploader();
-const { uuid, payload, status, deleteTask, isProcessing } = useTask();
+const { uuid, payload, status, deleteTask, isProcessingTask } = useTask();
 const { t } = useI18n();
 const router = useRouter();
 const allConvert = ref(props.convertFormat !== '' ? [props.convertFormat] : []);
@@ -67,7 +67,7 @@ onBeforeRouteLeave(() => {
                             size="xl"
                             icon="clarity:add-line"
                             class="text-md py-2 px-4 h-10 md:pr-4 justify-center relative bg-blue-dark-100 transition duration-500 rounded-md hover:bg-blue-dark rounded-br-none rounded-tr-none"
-                            :disabled="isProcessing"
+                            :disabled="isProcessingTask"
                         >
                             {{$t('add_more_files')}}
                             <label for="input-file" class="absolute w-full h-full inset-0 cursor-pointer"></label>

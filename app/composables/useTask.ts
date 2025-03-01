@@ -19,7 +19,7 @@ export const useTask = (taskUuid: string | null = null) => {
         return task.value?.status;
     });
 
-    const isProcessing = computed(() => {
+    const isProcessingTask = computed(() => {
         return status.value === 'pending' || status.value === 'processing' || isStarting.value
     });
 
@@ -93,18 +93,6 @@ export const useTask = (taskUuid: string | null = null) => {
         task.value = null;
     }
 
-    const createFile = async (data: object) => {
-        if (!task.value) {
-            throw new Error('Task is not created');
-        }
-        const params = {
-            ...data,
-            task: uuid.value,
-            type: task.value.type,
-        };
-        return await api.callApi<string>('task.create.file', params);
-    }
-
     const clearTask = async () => {
         const params = {
             task: uuid.value,
@@ -126,9 +114,8 @@ export const useTask = (taskUuid: string | null = null) => {
         startTask,
         deleteTask,
         payload,
-        isProcessing,
+        isProcessingTask,
         status,
         taskProgress,
-        createFile,
     }
 }
