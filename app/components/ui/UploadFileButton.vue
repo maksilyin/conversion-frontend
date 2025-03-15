@@ -2,8 +2,9 @@
 
 import IButton from "~/components/ui/IButton.vue";
 import {useI18n} from "vue-i18n";
+
 const { t } = useI18n();
-const { isProcessingTask } = useTask()
+const { isSomeProcessing } = useProcessing();
 const openDropdown = ref(false);
 const mobileButton = ref(null);
 const widthDropdown = ref('auto');
@@ -14,7 +15,7 @@ const props = defineProps({
     },
     size: {
         type: String,
-    }
+    },
 })
 
 const { openChooser } = useFileChooser();
@@ -37,7 +38,7 @@ const handleClick = (chooser) => {
     return (e) => {
         e.preventDefault()
 
-        if (isProcessingTask.value) {
+        if (!isSomeProcessing.value) {
             openChooser(chooser)
         }
     }
@@ -65,7 +66,7 @@ const items = [
 ]
 
 const dropDownButtonClass = computed(() => {
-    let className = 'p-2 justify-center relative rounded-bl-none rounded-tl-none border-l disabled:bg-blue-dark-100 disabled:opacity-50';
+    let className = 'p-2 justify-center relative rounded-bl-none rounded-tl-none border-l';
 
     if (props.size === 'small') {
         className += ' w-10';
@@ -94,7 +95,7 @@ const dropDownButtonClass = computed(() => {
                             @click.stop="handleDropdown"
                             size="xl"
                             :class="dropDownButtonClass"
-                            :disabled="isProcessingTask"
+                            :disabled="isSomeProcessing"
                         >
                         </IButton>
                     </span>
@@ -105,17 +106,17 @@ const dropDownButtonClass = computed(() => {
             v-if="!hideChoosers"
             @click.stop="openChooser('dropbox')"
             size="xl"
-            class="w-14 p-2 justify-center hidden lg:flex text-xl disabled:opacity-50"
+            class="w-14 p-2 justify-center hidden lg:flex text-xl"
             icon="ri:dropbox-fill"
-            :disabled="isProcessingTask"
+            :disabled="isSomeProcessing"
         />
         <IButton
             v-if="!hideChoosers"
             @click.stop="openChooser('google')"
             size="xl"
-            class="w-14 p-2 justify-center hidden lg:flex text-xl disabled:opacity-50"
+            class="w-14 p-2 justify-center hidden lg:flex text-xl"
             icon="uil:google-drive"
-            :disabled="isProcessingTask"
+            :disabled="isSomeProcessing"
         />
     </div>
 </template>

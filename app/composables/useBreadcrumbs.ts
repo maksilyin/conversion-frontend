@@ -1,6 +1,7 @@
 import type {FileFormat, FileType} from "~/types/FileFormat";
 import {useI18n} from "vue-i18n";
 import type {Page} from "~/types/Page";
+import type {BreadcrumbLink} from "#ui/types";
 
 const links: BreadcrumbLink[] = reactive([])
 export const useBreadcrumbs = () => {

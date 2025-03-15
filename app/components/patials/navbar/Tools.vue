@@ -6,7 +6,7 @@ const { t } = useI18n();
 const sections = [
     {
         id: 1,
-        label: 'Конвертировать',
+        label: t('convert'),
         image: converterIcons.convert,
         links: [
             {

@@ -1,5 +1,6 @@
 export type UploadFile = {
     file?: File,
+    index: number,
     status: number,
     hash: string,
     progress: number,

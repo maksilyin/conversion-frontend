@@ -33,9 +33,9 @@ initConvertChain();
                         <span v-html="title"></span>
                     </template>
                     <template #subtitle>
-                        <div class="max-w-4xl mx-auto text-center">
+                        <span class="block max-w-4xl mx-auto text-center">
                             {{subtitle}}
-                        </div>
+                        </span>
                     </template>
                 </TopBlock>
             </div>

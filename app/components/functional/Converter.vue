@@ -13,16 +13,29 @@ const props = defineProps({
 });
 
 const { files, deleteFile, downloadResult, addParam, setFromPayload, setDefaultFileParams, unmount } = useUploader();
-const { uuid, payload, status, deleteTask, isProcessingTask } = useTask();
+const { uuid, payload, status, deleteTask, isProcessingTask, isDeleted, clearTask } = useTask();
 const { t } = useI18n();
 const router = useRouter();
+const route = useRoute();
 const allConvert = ref(props.convertFormat !== '' ? [props.convertFormat] : []);
 const params = {
     convert: props.convertFormat !== '' ? [props.convertFormat] : []
 }
 const { public: { CHUNK_SIZE } } = useRuntimeConfig();
+const localePath = useLocalePath()
 
 setDefaultFileParams(params);
+
+const redirectToMain = () => {
+    if (route.name?.toString().split('___')[0] !== 'task') {
+        unmount();
+        deleteTask();
+        window.history.replaceState(null, '', localePath(`/`));
+    }
+    else {
+        router.push(localePath('/'))
+    }
+}
 
 watch(allConvert, newValue => {
     files.value.forEach(file => {
@@ -40,12 +53,26 @@ watch(allConvert, newValue => {
 })
 
 watch(payload, (newValue: Record<string, any>) => {
-    setFromPayload(newValue.files);
+    if (newValue?.files && Array.isArray(newValue?.files)) {
+        setFromPayload(newValue.files);
+    }
 })
 
 watch(status, (newValue) => {
     if (newValue === TASK_STATUS.PENDING && uuid.value) {
-        window.history.replaceState(null, '', `/t/${uuid.value}`);
+        window.history.replaceState(null, '', localePath(`/t/${uuid.value}`));
+    }
+})
+
+watch(files, (newValue) => {
+    if (status.value === TASK_STATUS.COMPLETE && !newValue.length) {
+        redirectToMain();
+    }
+})
+
+watch(isDeleted, (newValue: boolean) => {
+    if (newValue) {
+        redirectToMain();
     }
 })
 
@@ -66,7 +93,7 @@ onBeforeRouteLeave(() => {
                             @click.stop
                             size="xl"
                             icon="clarity:add-line"
-                            class="text-md py-2 px-4 h-10 md:pr-4 justify-center relative bg-blue-dark-100 transition duration-500 rounded-md hover:bg-blue-dark rounded-br-none rounded-tr-none"
+                            class="text-md min-w-[240px] py-2 px-4 h-10 md:pr-4 justify-center relative bg-blue-dark-100 transition duration-500 rounded-md hover:bg-blue-dark rounded-br-none rounded-tr-none"
                             :disabled="isProcessingTask"
                         >
                             {{$t('add_more_files')}}
@@ -79,9 +106,7 @@ onBeforeRouteLeave(() => {
                 <FileInfo
                     v-for="file in files"
                     :file="file"
-                    :key="file.hash"
-                    @delete="deleteFile(file.hash, uuid)"
-                    @download="downloadResult(file.hash, uuid)"
+                    :key="file.index"
                 >
                     <FormatSelect
                         :label="t('in')"

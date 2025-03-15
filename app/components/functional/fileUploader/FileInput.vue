@@ -1,7 +1,5 @@
 <script setup>
-import iconUpload from "~/assets/icons/upload.svg"
 import IButton from "~/components/ui/IButton.vue";
-import documentIcon from "~/assets/icons/download_file_document.svg";
 import {useI18n} from "vue-i18n";
 import UploadFileButton from "~/components/ui/UploadFileButton.vue";
 import RoundedBlock from "~/components/ui/RoundedBlock.vue";
@@ -68,8 +66,11 @@ const handleFiles = (files) => {
                             <Icon name="tabler:cloud-upload" class="w-[100px] h-[100px] text-gray-500 opacity-70"/>
                             <div class="mt-5 sm:mb-5 text-lg md:text-2xl text-center">
                                     <span class="font-bold text-black">
-                                        {{$t('drug_drop')}} <span class="text-orange-main">{{$t('images')}}</span>, <br>
-                                        <span class="text-orange-main">{{$t('video')}}</span>{{$t('or_any')}} <span class="text-orange-main">{{$t('files')}}</span>
+                                        <span v-html="t('drag_drop')"></span>
+                                        <span class="text-orange-main">{{$t('drag_drop_images')}}</span>{{$t('drag_drop_split')}}
+                                        <span v-html="t('drag_drop_new_line')"></span>
+                                        <span class="text-orange-main">{{$t('drag_drop_video')}}</span>{{$t('or_any')}}
+                                        <span class="text-orange-main">{{$t('drag_drop_files')}}</span>
                                     </span>
                             </div>
                             <div class="flex flex-col items-center justify-center pt-5 pb-6">
@@ -79,7 +80,7 @@ const handleFiles = (files) => {
                                             @click.stop
                                             size="xl"
                                             icon="line-md:upload"
-                                            class="text-md sm:text-xl font-medium py-3 px-2 sm:px-5 h-14 md:pr-4 justify-center relative rounded-br-none rounded-tr-none"
+                                            class="text-md min-w-[200px] sm:text-xl font-medium py-3 px-2 sm:px-5 h-14 md:pr-4 justify-center relative rounded-br-none rounded-tr-none"
                                         >
                                             {{ $t('choose_files') }}
                                             <label ref="labelInput" :for="props.for" class="absolute w-full h-full inset-0 cursor-pointer"></label>

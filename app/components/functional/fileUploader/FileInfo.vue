@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { UploadFile } from "~/types/UploadFile";
+import type { FileType } from "~/types/FileFormat";
 import { FILE_STATUS } from "~/utils/constants"
 import { useI18n } from 'vue-i18n';
 const { t } = useI18n();
@@ -9,6 +10,7 @@ import FileIcon from "~/components/ui/FileIcon.vue";
 import StatusBadge from "~/components/functional/fileUploader/StatusBadge.vue";
 import ProgressBar from "~/components/functional/fileUploader/ProgressBar.vue";
 import DownloadFileButton from "~/components/ui/DownloadFileButton.vue";
+import { converterIconsV2 } from "~/collections/icons"
 
 interface Props {
     data: UploadFile;
@@ -41,14 +43,12 @@ const {
 } = useFile(props.file.hash);
 const indexResult = 0;
 const { fileIcon } = useMimeTypes(props.file.mimetype);
-const { getExtensionByMimeType, getFileFormat } = useFormats();
+const { getExtensionByMimeType, getFileFormat, getFileTypeByExtension } = useFormats();
 const { uuid, isProcessingTask } = useTask();
 const { getImagePath } = imagePath();
 const image = ref<null | string>(null);
 const icon = ref('file');
 const isShowProgress = ref(false);
-
-const emits = defineEmits(['update:modelValue', 'delete', 'selectFormat', 'download']);
 
 const result = computed(() => {
     return props.file.result ? props.file.result[indexResult] : null;
@@ -65,6 +65,16 @@ const filename = computed(() => {
 const extension = computed(() => {
     return props.file?.extension ? props.file.extension : getExtensionByMimeType(props.file.mimetype);
 });
+
+const resultExtension = computed(() => {
+    if (result.value) {
+        return result.value?.extension
+            ? result.value?.extension
+            : getExtensionByMimeType(result.value.mimetype);
+    }
+
+    return extension.value;
+})
 
 const color = computed(() => {
     return extension.value ? getFileFormat(extension.value)?.color : null;
@@ -84,6 +94,14 @@ const progress = computed(() => {
 
 const size = computed(() => {
     return formatSize(props.file.size);
+})
+
+const resultSize = computed(() => {
+    if (result.value) {
+        return formatSize(result.value.size);
+    }
+
+    return size.value
 })
 
 const errorMessage = computed(() => {
@@ -107,6 +125,17 @@ const setImage = () => {
         image.value = getImagePath(uuid.value, props.file.hash)['src']
     }
 }
+
+const fileType = computed(() => {
+    if (extension.value) {
+        const fileType: FileType | null = getFileTypeByExtension(extension.value)
+
+        if (fileType) {
+            return fileType.slug
+        }
+    }
+    return null;
+})
 
 onMounted(() => {
   //  setImage();
@@ -159,6 +188,12 @@ const remove = () => {
         <div class="flex items-center gap-5">
             <div class="w-[60px] h-[60px] flex-shrink-0 relative hidden md:block">
                 <img class="w-full h-full object-cover object-center" v-if="image" :src="image" alt="">
+                <img
+                    v-else-if="converterIconsV2[fileType]"
+                    :src="converterIconsV2[fileType]"
+                    class="w-full h-full object-contain"
+                    alt=""
+                />
                 <FileIcon
                     v-else-if="extension"
                     class="w-full h-full"
@@ -201,26 +236,28 @@ const remove = () => {
             </div>
             <div class="w-28 ml-auto hidden md:block">
                 <span class="whitespace-nowrap font-medium text-xs">
-                    <span v-if="extension">
-                        {{ extension.toUpperCase() }} /
+                    <span v-if="resultExtension">
+                        {{ resultExtension.toUpperCase() }} /
                     </span>
-                    {{size}}
+                    {{ resultSize }}
                 </span>
             </div>
-            <div class="w-16">
-                <UTooltip v-if="isShowRemoveButton" :text="$t('delete')" openDelay="1000" :popper="{ placement: 'top', arrow: true }">
-                    <UButton
-                        class="text-xs"
-                        color="red"
-                        @click="removeFile"
-                        :disabled="processingFile.remove || isProcessingTask || (status !== FILE_STATUS.ERROR && status < FILE_STATUS.UPLOADED)"
-                    >
-                        <template #trailing>
-                            <UIcon v-if="processingFile.remove" name="svg-spinners:180-ring-with-bg" class="w-4 h-4" />
-                            <UIcon v-else name="heroicons-outline:x-circle" class="w-4 h-4" />
-                        </template>
-                    </UButton>
-                </UTooltip>
+            <div class="w-16 flex justify-end">
+                <div class="" v-if="isShowRemoveButton">
+                    <UTooltip :text="$t('remove')" :openDelay="1000" :popper="{ placement: 'top', arrow: true }">
+                        <UButton
+                            class="text-xs"
+                            color="red"
+                            @click="removeFile"
+                            :disabled="processingFile.remove || isProcessingTask || (status !== FILE_STATUS.ERROR && status < FILE_STATUS.UPLOADED)"
+                        >
+                            <template #trailing>
+                                <UIcon v-if="processingFile.remove" name="svg-spinners:180-ring-with-bg" class="w-4 h-4" />
+                                <UIcon v-else name="heroicons-outline:x-circle" class="w-4 h-4" />
+                            </template>
+                        </UButton>
+                    </UTooltip>
+                </div>
                 <DownloadFileButton
                     v-else
                     :is-download-processing="processingFile.download"

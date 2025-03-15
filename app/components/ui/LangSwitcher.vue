@@ -38,6 +38,8 @@ watch(current, (newValue: Record<string, any>) => {
         icon="ph:globe"
         :options="options"
         :popper="{placement: 'top'}"
+        variant="none"
+        class="ring-1 ring-gray-400 rounded cursor-pointer"
     />
 </template>
 

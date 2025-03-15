@@ -38,7 +38,11 @@ export const useDropBox = (): Chooser => {
                 const { data } = res;
 
                 file.file = new File([data], file.filename, {type: data.type});
-                file.status = FILE_STATUS.CREATED;
+                file.status = FILE_STATUS.ADD;
+            })
+            .catch((e: any) => {
+                file.status = FILE_STATUS.ERROR;
+                file.message = e.message
             })
     }
 

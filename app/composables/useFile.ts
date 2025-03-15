@@ -4,22 +4,31 @@ import {downloadFile} from "~/utils/functions";
 
 export const useFile = (hash: string) => {
     const api = useApi();
-    const { getFile, deleteFile2 } = useUploader();
+    const { files, deleteFile2 } = useUploader();
     const { uuid } = useTask();
-    const file = getFile(hash);
     const isProcessingFile = ref(false);
     const processing = reactive<Record<string, boolean>>({
         download: false,
         remove: false
     })
 
+    const file = computed<UploadFile | undefined>(() => {
+        return files.value.find(file => file.hash === hash)
+    })
+
     const removeFile = async () => {
+        if (!file.value) {
+            return;
+        }
         setStatus(FILE_STATUS.DELETE)
-        file.progress = 0;
+        file.value.progress = 0;
 
         try {
             const timeout = setTimeout(() => {
-                file.progress = 70;
+                if (!file.value) {
+                    return;
+                }
+                file.value.progress = 70;
             }, 200)
 
             setProcessing('remove', true);
@@ -27,10 +36,10 @@ export const useFile = (hash: string) => {
             await api.callApi('file.delete', {
                 hash,
                 task: uuid.value,
-                filename: file.filename,
+                filename: file.value.filename,
             });
             clearTimeout(timeout)
-            file.progress = 100;
+            file.value.progress = 100;
 
             setTimeout(() => {
                 deleteFile2(hash)
@@ -45,14 +54,17 @@ export const useFile = (hash: string) => {
     }
 
     const downloadResultFile = async (index = 0) => {
-        if (file.status !== FILE_STATUS.COMPLETED || !file.result || file.result.length - 1 < index) {
+        if (!file.value) {
+            return;
+        }
+        if (file.value.status !== FILE_STATUS.COMPLETED || !file.value.result || file.value.result.length - 1 < index) {
             return;
         }
 
         const headers = {
             Accept: 'application/octet-stream',
         }
-        const fileResult = file.result[index];
+        const fileResult = file.value.result[index];
 
         setProcessing('download', true);
 
@@ -78,7 +90,11 @@ export const useFile = (hash: string) => {
     }
 
     const setValue = <K extends keyof UploadFile> (key: K, value: UploadFile[K]) => {
-        file[key] = value;
+        if (!file.value) {
+            return;
+        }
+
+        file.value[key] = value;
     }
 
     const setProcessing = (key: string, value: boolean) => {

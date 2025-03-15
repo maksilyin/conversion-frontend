@@ -3,8 +3,10 @@
 const { loadFormats } = useFormats();
 const { loadLocales } = useLocale();
 
-await loadFormats();
-await loadLocales();
+await Promise.all([
+    loadFormats().then(() => undefined),
+    loadLocales().then(() => undefined)
+]);
 
 </script>
 

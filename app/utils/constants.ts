@@ -1,4 +1,5 @@
 export const FILE_STATUS = {
+    ADD: -2,
     PREPARE: -1,
     CREATED: 0,
     LOADING: 1,

@@ -23,16 +23,21 @@ export default {
     show_more: 'Показать еще',
     hide: 'Скрыть',
     drop_right_here: 'Бросьте файлы сюда!',
-    drug_drop: 'Перетащите',
-    images: 'изображения',
-    video: 'видео',
-    or_any: ' или любые',
-    files: 'файлы',
+    drag_drop: "Перетащите",
+    drag_drop_images: " изображения",
+    drag_drop_split: ",",
+    drag_drop_new_line: "<br>",
+    drag_drop_video: " видео",
+    or_any: " или любые",
+    drag_drop_files: " файлы",
     drop_max_size: 'Перетащите файлы сюда. Максимальный размер — 2.5 ГБ',
     choose_files: 'Выберите файлы',
     from_dropbox: 'Из Dropbox',
     from_google: 'Из Google',
     remove: 'Удалить',
+    remove_all: 'Удалить все',
+    download: 'Скачать',
+    download_all: 'Скачать все',
 
     titles: {
         convert: 'Конвертировать файлы в #FORMAT#',
@@ -198,7 +203,6 @@ export default {
         presentation: 'Презентации',
         vector: 'Векторы',
     },
-
     load_more: 'Загрузить еще',
     search: 'Поиск...',
     privacy_policy: 'Политика конфиденциальности',
@@ -263,5 +267,6 @@ export default {
     modal: {
         limit_reg: 'Вы достигли максимального объема загрузки. Зарегистрируйтесь, чтобы увеличить лимит',
         limit: 'Вы загрузили максимальный объем файлов, доступный сейчас. Дальнейшая загрузка недоступна.'
-    }
+    },
+    footer_about: 'Загружайте файлы и конвертируйте их в нужный формат за считанные секунды. Максимальное качество, удобство и безопасность.',
 }

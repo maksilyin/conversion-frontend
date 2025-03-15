@@ -5,7 +5,7 @@ import { FILE_STATUS } from "~/utils/constants"
 import DrugAndDrop from "~/components/functional/fileUploader/DrugAndDrop.vue";
 import {useI18n} from "vue-i18n";
 import TaskLimitModal from "~/components/modals/TaskLimitModal.vue";
-const {uuid, createTask, startTask, taskProgress, status} = useTask();
+const {uuid, createTask, startTask, taskProgress, status, task} = useTask();
 
 const props = defineProps({
     type: {
@@ -28,11 +28,11 @@ const props = defineProps({
 const { public: { TASK_SIZE_LIMIT } } = useRuntimeConfig();
 const { t } = useI18n();
 const modal = useModal();
-const { setInputFiles, uploadFile, files, setFileStatus, createFile } = useUploader()
+const { setInputFiles, uploadFile, files, setFileStatus, createFile, addCreatedFile } = useUploader()
 const isShowProgress = ref(false);
 const isCreatingTask = ref(false);
 const fileInput = ref(null);
-const totalUploadedSize = ref(0)
+const totalUploadedSize = ref(0);
 
 const onSelectFile = async () => {
     setInputFiles(Array.from(fileInput.value.files));
@@ -59,18 +59,20 @@ const uploadFiles = () => {
 }
 
 const createAndUploadFile = async (file) => {
-    setFileStatus(file.hash, FILE_STATUS.PREPARE);
+    file.status = FILE_STATUS.PREPARE
     createFile({
         task: uuid.value,
         size: file.size,
         extension: file.extension,
         filename: file.filename,
     })
-        .then(() => {
-            uploadFile(file.file, file.hash, uuid.value, props.chunkSize, props.maxRetries);
+        .then((hash) => {
+            addCreatedFile(hash, file.index);
+            uploadFile(file.file, hash, uuid.value, props.chunkSize, props.maxRetries);
         })
         .catch(e => {
-            console.log(e)
+            file.status = FILE_STATUS.ERROR
+            file.message = e.message
         })
 }
 
@@ -108,7 +110,7 @@ const send = () => {
 }
 
 const filesToUpload = computed(() => {
-    return files.value.filter(file => file.status === FILE_STATUS.CREATED);
+    return files.value.filter(file => file.status === FILE_STATUS.ADD);
 });
 
 const useLimitSize = (size) => {

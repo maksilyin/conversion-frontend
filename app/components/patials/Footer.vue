@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import ThemeSwitch from "../ui/themeSwitch.vue";
 import LangSwitcher from "../ui/LangSwitcher.vue";
 import {useI18n} from "vue-i18n";
 const { t } = useI18n();
@@ -60,10 +59,10 @@ const menuCols = [
 </script>
 
 <template>
-    <div class="pt-10 pb-5 bg-black-300 text-white">
+    <div class="pt-10 pb-5 bg-black-300 text-gray-200">
         <UContainer className="mt-10 border-t border-gray-100 dark:border-gray-800">
-            <div class="grid grid-cols md:grid-cols-3 pb-8 md:pb-10 gap-8 md:gap-12">
-                <div class="">
+            <div class="flex flex-wrap pb-5 gap-8 md:gap-12">
+                <div class="sm:w-1/3 mr-auto">
                     <NuxtLinkLocale :to="'/'" class="w-44 dark:hidden">
                         <NuxtImg
                             src="/img/logo-white.svg"
@@ -71,13 +70,17 @@ const menuCols = [
                             class="max-w-[300px]"
                         />
                     </NuxtLinkLocale>
+                    <p class="mt-5 text-sm">{{$t('footer_about')}}</p>
+                    <div class="text-center text-sm w-48 mt-6">
+                        <LangSwitcher />
+                    </div>
                 </div>
-                <div class="flex flex-col gap-2" v-for="(menuCol, index) in menuCols" :key="index">
+                <div class="flex flex-col gap-2 sm:w-1/4" v-for="(menuCol, index) in menuCols" :key="index">
                     <div class="uppercase font-medium mb-2">
                         {{menuCol.name}}
                     </div>
                     <NuxtLinkLocale
-                        class="transition hover:text-main-100"
+                        class="transition text-sm hover:text-main-100"
                         v-for="menuItem in menuCol.items" :key="menuItem.name + menuItem.url"
                         :to="menuItem.url"
                     >
@@ -85,13 +88,12 @@ const menuCols = [
                     </NuxtLinkLocale>
                 </div>
             </div>
-            <div class="grid grid-cols md:grid-cols-2 items-center">
-                <div class="text-sm text-center md:text-left order-2 md:order-none">
-                    Copyright © {{new Date().getFullYear()}} All rights reserved.
-                </div>
-                <div class="text-center text-sm md:ml-auto w-48 mb-8 md:mb-0">
-                    <LangSwitcher />
-                </div>
+        </UContainer>
+    </div>
+    <div class="bg-black text-gray-200 py-5">
+        <UContainer className="pt-0">
+            <div class="text-sm text-center">
+                Copyright © {{new Date().getFullYear()}} All rights reserved.
             </div>
         </UContainer>
     </div>

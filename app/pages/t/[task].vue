@@ -10,6 +10,10 @@ import DecorBg from "~/components/design/DecorBg.vue";
 const router = useRouter();
 const route = useRoute();
 
+definePageMeta({
+    name: 'task'
+})
+
 const props = defineProps({
     category: {
         type: String,
@@ -27,7 +31,7 @@ const subtitle = t(`subtitles.index`);
 const taskId = Array.isArray(route.params.task) ? route.params.task[0] : route.params.task;
 await loadTask(taskId);
 
-if (payload.value?.files) {
+if (payload.value?.files && Array.isArray(payload.value?.files)) {
     setFromPayload(payload.value.files);
 }
 
@@ -52,9 +56,9 @@ onBeforeRouteLeave(() => {
                         <span v-html="title"></span>
                     </template>
                     <template #subtitle>
-                        <div class="max-w-4xl mx-auto">
+                        <span class="block max-w-4xl mx-auto">
                             {{subtitle}}
-                        </div>
+                        </span>
                     </template>
                 </TopBlock>
             </div>

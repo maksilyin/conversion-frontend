@@ -1,7 +1,7 @@
 export default {
     'file.create': {
         method: 'post',
-        url: 'file/create/',
+        url: 'file/',
     },
     'file.upload': {
         method: 'post',

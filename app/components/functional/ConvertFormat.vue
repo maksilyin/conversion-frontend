@@ -50,9 +50,9 @@ initConvertChain(formatDetail.value);
                         <span v-html="title"></span>
                     </template>
                     <template #subtitle>
-                        <div class="max-w-4xl mx-auto">
+                        <span class="block max-w-4xl mx-auto">
                             {{subtitle}}
-                        </div>
+                        </span>
                     </template>
                 </TopBlock>
             </div>

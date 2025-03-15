@@ -1,10 +1,14 @@
 import type {Task} from "~/types/Task";
 import {useEcho} from "~/composables/useEcho";
+import {useI18n} from "vue-i18n";
 
 const task = ref<Task | null>(null);
-const isStarting = ref(false);
+const isProcessing = ref (false);
+const isDeleted = ref(false);
+let echo: any = false;
 
 export const useTask = (taskUuid: string | null = null) => {
+    const { t } = useI18n();
     const toast = useToast();
     const api = useApi();
     const uuid = computed(() => {
@@ -20,7 +24,7 @@ export const useTask = (taskUuid: string | null = null) => {
     });
 
     const isProcessingTask = computed(() => {
-        return status.value === 'pending' || status.value === 'processing' || isStarting.value
+        return status.value === 'pending' || status.value === 'processing' || isProcessing.value
     });
 
     const taskProgress = computed(() => {
@@ -42,47 +46,67 @@ export const useTask = (taskUuid: string | null = null) => {
         return progress;
     })
 
-    let echo: any;
-
     onMounted(() => {
-        const { Echo } = useEcho();
-        echo = Echo;
-
-        if (task.value) {
+        if (!echo) {
             startEcho();
         }
     })
 
+    const setEcho = () => {
+        console.log('setEcho')
+        const {Echo} = useEcho();
+        echo = Echo;
+    }
+
     const startEcho = () => {
-        echo.channel('task.' + uuid.value).listen('.TaskUpdated', (e: Task) => {
-            console.log(e)
+        if (!uuid.value) {
+            return;
+        }
+        if (!echo) {
+            setEcho()
+        }
+        const channelName = 'task.' + uuid.value;
+
+        if (echo.connector.channels[channelName]) {
+            console.log('Echo already subscribed to', channelName);
+            return;
+        }
+
+        echo.channel(channelName).listen('.TaskUpdated', (e: Task) => {
             task.value = e;
-        })
+        });
     }
 
     const createTask = async (type: string) => {
-        task.value = await api.callApi('task.create', {type});
+        try {
+            task.value = await api.callApi('task.create', {type});
 
-        if (task.value) {
-            startEcho();
+            if (task.value) {
+                startEcho();
+            }
+        }
+        catch (e: any) {
+            showError(e.message)
         }
     }
 
     const startTask = async (sendData: any) => {
         try {
-            isStarting.value = true;
+            isProcessing.value = true;
             await api.callApi('task.send', {
                 task: uuid.value,
                 ...sendData
             });
+            isDeleted.value = false;
         }
         catch (e: any) {
-            toast.add({ title: 'Error', description: e.message, color: 'red' })
+            showError(e.message)
         }
     }
 
     const setTask = (payloadTask: Task) => {
         task.value = payloadTask;
+        isDeleted.value = false;
     }
 
     const loadTask = async (uuid:string) => {
@@ -97,11 +121,26 @@ export const useTask = (taskUuid: string | null = null) => {
         const params = {
             task: uuid.value,
         };
-        await api.callApi<string>('task.clear', params);
+        isProcessing.value = true;
+
+        api.callApi<string>('task.delete', params)
+            .then(() => {
+                isDeleted.value = true;
+            })
+            .catch(e => {
+                showError(e.message)
+            })
+            .finally(() => {
+                isProcessing.value = false;
+            })
+    }
+
+    const showError = (message: string) => {
+        toast.add({ title: t('error'), description: message, color: 'red' })
     }
 
     watch(status, () => {
-        isStarting.value = false;
+        isProcessing.value = false;
     })
 
     return {
@@ -113,9 +152,11 @@ export const useTask = (taskUuid: string | null = null) => {
         startEcho,
         startTask,
         deleteTask,
+        clearTask,
         payload,
         isProcessingTask,
         status,
         taskProgress,
+        isDeleted,
     }
 }

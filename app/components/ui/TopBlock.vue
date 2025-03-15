@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import Breadcrumbs from "~/components/ui/Breadcrumbs.vue";
+import type { BreadcrumbLink } from '#ui/types';
 
 const props = defineProps({
     breadcrumbs: {

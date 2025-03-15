@@ -1,4 +1,3 @@
-import {v4 as uuidv4} from 'uuid';
 import { FILE_STATUS } from "~/utils/constants"
 import type {UploadFile} from "~/types/UploadFile";
 import type {ChunkResult} from "~/types/ChunkResult";
@@ -16,14 +15,15 @@ const defaultParams:UploaderParams = {
 }
 
 const files: Record<string, UploadFile> = reactive({});
-const filesList: UploadFile[] = reactive([]);
+const filesToUpload: UploadFile[] = reactive([]);
 const defaultFileParams = ref({});
 const isDownloadZipLoading = ref(false);
+let fileIndex = 0;
 export const useUploader = () => {
     const api = useApi();
-
-    const upload = async (formData: FormData):Promise<ChunkResult> => {
-        return await api.callApi('file.upload', formData);
+    const { getFirstSiblingsFormat } = useFormats();
+    const upload = (formData: FormData):Promise<ChunkResult> => {
+        return api.callApi('file.upload', formData);
     }
     const deleteFile = async (hash: string, uuid: string) => {
         if (hash in files) {
@@ -96,11 +96,11 @@ export const useUploader = () => {
         })
     }
 
-    const createFile = async (data: object) => {
+    const createFile = (data: object) => {
         const params = {
             ...data
         };
-        return await api.callApi<string>('file.create', params);
+        return api.callApi<string>('file.create', params);
     }
 
     const setInputFiles = (inputFiles: File[]) => {
@@ -110,7 +110,7 @@ export const useUploader = () => {
                 size: file.size,
                 filename: file.name,
                 progress: 0,
-                status: FILE_STATUS.CREATED,
+                status: FILE_STATUS.ADD,
                 mimetype: file.type,
             })
         });
@@ -118,26 +118,47 @@ export const useUploader = () => {
 
     const setFromPayload = (data: UploadFile[]) => {
         data.forEach(file => {
+            if (!file.params) {
+                file.params = defaultFileParams.value
+            }
             setFile(file.hash, {
                 ...file,
+                index: getIndex(),
                 progress: 100,
             })
         })
     }
 
     const addFile = (params: any = {}) => {
-        const hash = uuidv4();
-
         if (!params?.params) {
             params.params = Object.assign({}, defaultFileParams.value);
         }
 
-        return setFile(hash, {
-            hash,
+        const fileData = {
             progress: 0,
-            status: FILE_STATUS.CREATED,
+            index: getIndex(),
+            status: FILE_STATUS.ADD,
             ...params,
-        })
+        }
+
+        filesToUpload.push(fileData)
+
+        const arrayIndex = filesToUpload.findIndex(file => file.index === fileData.index);
+
+        return filesToUpload[arrayIndex];
+    }
+
+    const getIndex = () => {
+        return fileIndex++;
+    }
+
+    const addCreatedFile = (hash: string, index: number) => {
+        const arrayIndex = filesToUpload.findIndex(file => file.index === index);
+        const file = filesToUpload.splice(arrayIndex, 1)[0];
+        file.status = FILE_STATUS.CREATED
+        file.hash = hash;
+
+        return setFile(hash, file);
     }
 
     const setFile = (hash: string, params: UploadFile) => {
@@ -178,7 +199,7 @@ export const useUploader = () => {
     }
 
     const filesArray = computed(() => {
-        return Object.values(files);
+        return [...Object.values(files), ...filesToUpload].sort((a, b) => a.index - b.index);
     })
 
     const uploadFile = async (file: File, hash: string, uuid: string, chunkSize: number, maxRetries: number) => {
@@ -214,6 +235,16 @@ export const useUploader = () => {
                     files[hash].extension = res.extension;
                     files[hash].mimetype = res.mimetype;
                     files[hash].size = res.size || 0;
+                    files[hash].filename = file.name;
+
+                    if (res.extension && !files[hash].params.convert?.length) {
+                        const firstFormat = getFirstSiblingsFormat(res.extension);
+
+                        if (firstFormat) {
+                            files[hash].params.convert = [firstFormat]
+                        }
+                    }
+
                     setFileStatus(hash, FILE_STATUS.UPLOADED);
                 }
             }
@@ -259,6 +290,7 @@ export const useUploader = () => {
         deleteFile,
         setFileParams,
         getFile,
+        setFile,
         addParam,
         setFromPayload,
         downloadResult,
@@ -268,6 +300,7 @@ export const useUploader = () => {
         isDownloadZipLoading,
         setFileStatus,
         createFile,
+        addCreatedFile,
         deleteFile2,
     }
 }

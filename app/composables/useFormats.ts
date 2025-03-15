@@ -190,6 +190,46 @@ export const useFormats = (extension: string[] | string = '') => {
         return formatMap.value[extension]
     }
 
+    const getFileTypeByExtension = (extension: string) => {
+        for (const fileType of formats.value) {
+            for (const format of fileType.formats) {
+                if (format.extension.toLowerCase() === extension.toLowerCase()) {
+                    return fileType;
+                }
+            }
+        }
+
+        return null;
+    };
+
+    const getSiblingsFormats = (extension: string) => {
+        for (const fileType of formats.value) {
+            for (const format of fileType.formats) {
+                if (format.extension.toLowerCase() === extension.toLowerCase()) {
+                    return fileType.formats;
+                }
+            }
+        }
+
+        return null;
+    };
+
+    const getFirstSiblingsFormat = (extension: string) => {
+        const siblingsFormats = getSiblingsFormats(extension);
+
+        if (siblingsFormats) {
+            const format = siblingsFormats.find(formatItem => {
+                return formatItem.extension.toLowerCase() !== extension.toLowerCase()
+            })
+
+            if (format) {
+                return format.extension
+            }
+        }
+
+        return null;
+    }
+
     return {
         formats,
         loadFormats,
@@ -203,5 +243,8 @@ export const useFormats = (extension: string[] | string = '') => {
         loadDetailTypeFile,
         getExtensionByMimeType,
         getFileFormat,
+        getFileTypeByExtension,
+        getSiblingsFormats,
+        getFirstSiblingsFormat,
     }
 }

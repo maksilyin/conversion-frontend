@@ -92,7 +92,6 @@ export const useGooglePicker = (): Picker => {
 
         axios.get(`https://www.googleapis.com/drive/v2/files/${dataFile.id}`, {headers})
             .then(async res => {
-                console.log(res)
                 const { data } = res;
                 file.extension = data.fileExtension;
 
@@ -102,7 +101,11 @@ export const useGooglePicker = (): Picker => {
                 })
 
                 file.file = new File([blobRes.data], file.filename, {type: blobRes.data.type});
-                file.status = FILE_STATUS.CREATED;
+                file.status = FILE_STATUS.ADD;
+            })
+            .catch((e: any) => {
+                file.status = FILE_STATUS.ERROR;
+                file.message = e.message
             })
     }
 
