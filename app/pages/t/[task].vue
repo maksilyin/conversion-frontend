@@ -56,9 +56,7 @@ onBeforeRouteLeave(() => {
                         <span v-html="title"></span>
                     </template>
                     <template #subtitle>
-                        <span class="block max-w-4xl mx-auto">
-                            {{subtitle}}
-                        </span>
+                        <span class="block max-w-4xl mx-auto" v-html="subtitle"></span>
                     </template>
                 </TopBlock>
             </div>

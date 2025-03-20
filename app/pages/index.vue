@@ -15,6 +15,10 @@ const props = defineProps({
     }
 })
 
+definePageMeta({
+  key: () => Date.now(),
+});
+
 const { t } = useI18n();
 const { formats } = useFormats();
 const { uuid } = useTask();
@@ -29,7 +33,7 @@ useSeoMeta({
 </script>
 
 <template>
-    <div key="index">
+    <div>
         <div class="relative bg-grey-light">
             <DecorBg/>
             <div class="relative z-1">

@@ -53,7 +53,6 @@ export const useTask = (taskUuid: string | null = null) => {
     })
 
     const setEcho = () => {
-        console.log('setEcho')
         const {Echo} = useEcho();
         echo = Echo;
     }
@@ -68,11 +67,11 @@ export const useTask = (taskUuid: string | null = null) => {
         const channelName = 'task.' + uuid.value;
 
         if (echo.connector.channels[channelName]) {
-            console.log('Echo already subscribed to', channelName);
             return;
         }
 
         echo.channel(channelName).listen('.TaskUpdated', (e: Task) => {
+            console.log(e)
             task.value = e;
         });
     }
@@ -110,7 +109,7 @@ export const useTask = (taskUuid: string | null = null) => {
     }
 
     const loadTask = async (uuid:string) => {
-        task.value = await api.fetchData('task', { task_id: uuid });
+        task.value = await api.callApi('task', { task_id: uuid });
     }
 
     const deleteTask = () => {

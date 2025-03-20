@@ -17,7 +17,7 @@ export default {
     },
     'file.download.all': {
         method: 'get',
-        url: 'file/download/{task}/all/',
+        url: 'file/download/{task}/',
     },
     'task': {
         method: 'get',

@@ -42,9 +42,10 @@ export default defineNuxtConfig({
   },
   sitemap: {
     sources: [
-      //process.env.APP_URL + '/api/sitemap/'
-      'http://nginx/api/sitemap/'
+      process.env.APP_URL + '/api/sitemap/'
+      //'http://nginx/api/sitemap/'
     ],
   },
   i18n: i18nConfig,
+  nitro: { compressPublicAssets: true, prerender: { failOnError: false, routes: ['sitemap.xml'], }, }
 })
