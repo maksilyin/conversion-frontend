@@ -4,10 +4,7 @@ import FormatSelect from "~/components/ui/FormatSelect.vue";
 import FileInfo from "~/components/functional/fileUploader/FileInfo.vue";
 import {useI18n} from "vue-i18n";
 import UploadFileButton from "~/components/ui/UploadFileButton.vue";
-
-definePageMeta({
-  key: () => Date.now(),
-});
+import RoundedBlock from "~/components/ui/RoundedBlock.vue";
 
 const props = defineProps({
     convertFormat: {
@@ -88,7 +85,7 @@ onBeforeRouteLeave(() => {
 </script>
 
 <template>
-    <ClientOnly>
+    <ClientOnly fallbackTag="span">
         <FileUploader :key="Date.now()" type="convert" :params="params" :chunkSize="parseInt(CHUNK_SIZE)">
             <template #files>
                 <div v-if="status !== TASK_STATUS.LOCK && status !== TASK_STATUS.CLEAR" class="md:hidden pb-2">
@@ -126,10 +123,29 @@ onBeforeRouteLeave(() => {
                 <FormatSelect v-model="allConvert" :label="t('convert_all')"/>
             </template>
         </FileUploader>
+        <template #fallback>
+            <UContainer class="pb-20">
+                <RoundedBlock :shadow="true" class="w-full dashed-gray !bg-gray-50 relative">
+                    <div class="h-[340px] flex flex-col items-center justify-center w-full relative z-1">
+                        <USkeleton class="w-[100px] h-[100px] rounded-full" />
+                        <div class="mt-5 sm:mb-5 text-center flex flex-col items-center relative">
+                            <USkeleton class="w-[343px] h-[24px] mb-[8px]" />
+                            <USkeleton class="w-[320px] h-[24px]" />
+                            <UIcon name="svg-spinners:bars-scale-fade" class="text-orange-main w-14 h-14 absolute 70" />
+                        </div>
+                        <div class="flex gap-2 flex-col md:flex-row pt-5 pb-6">
+                            <USkeleton class="w-[296px] h-[56px] rounded-md" />
+                            <USkeleton class="w-[56px] h-[56px] rounded-md" />
+                            <USkeleton class="w-[56px] h-[56px] rounded-md" />
+                        </div>
+                        <USkeleton class="w-[340px] h-[16px]" />
+                    </div>
+                </RoundedBlock>
+            </UContainer>
+        </template>
     </ClientOnly>
     <UNotifications />
 </template>
 
 <style scoped>
-
 </style>

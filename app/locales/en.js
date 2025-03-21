@@ -180,7 +180,7 @@ export default {
         about: 'About',
         faq: 'FAQ',
         privacy: 'Privacy Policy',
-        security: 'Безопасность',
+        security: 'Security',
         terms_service: 'Terms Of Service',
         convert: 'Converter',
         footer: {
