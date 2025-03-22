@@ -124,6 +124,7 @@ watch(isOpenModal, newValue => {
     </div>
     <UPopover :ui="{container: 'group z-[200]'}" v-if="!hiddenSelect" :popper="{ arrow: true }" v-model:open="isOpenModal">
         <div class="flex items-center gap-2" @click="handleDropdown">
+            {{ isOpenModal }}
             {{ label }}
             <span class="w-[70px] md:w-[80px] border rounded border-gray-300 text-xs px-2 md:px-3 py-1 md:py-2 inline-flex items-center justify-between cursor-pointer min-w-[60px] gap-2 transition hover:border-primary-500 hover:text-primary-500" @click="isOpenModal=true">
                 <span class="mx-auto">{{ selectedFormat.toUpperCase() }}</span>

@@ -125,15 +125,15 @@ onBeforeRouteLeave(() => {
         </FileUploader>
         <template #fallback>
             <UContainer class="pb-20">
-                <RoundedBlock :shadow="true" class="w-full dashed-gray !bg-gray-50 relative">
-                    <div class="h-[340px] flex flex-col items-center justify-center w-full relative z-1">
-                        <USkeleton class="w-[100px] h-[100px] rounded-full" />
+                <RoundedBlock :shadow="true" class="w-full dashed !bg-gray-50 relative">
+                    <div class="h-[296px] flex flex-col items-center justify-center w-full relative z-1">
+                        <USkeleton class="w-[80px] h-[80px] rounded-full" />
                         <div class="mt-5 sm:mb-5 text-center flex flex-col items-center relative">
                             <USkeleton class="w-[343px] h-[24px] mb-[8px]" />
                             <USkeleton class="w-[320px] h-[24px]" />
-                            <UIcon name="svg-spinners:bars-scale-fade" class="text-orange-main w-14 h-14 absolute 70" />
+                            <UIcon name="svg-spinners:bars-scale-fade" class="w-10 h-10 absolute opacity-70" />
                         </div>
-                        <div class="flex gap-2 flex-col md:flex-row pt-5 pb-6">
+                        <div class="flex gap-2 flex-col md:flex-row pt-5">
                             <USkeleton class="w-[296px] h-[56px] rounded-md" />
                             <USkeleton class="w-[56px] h-[56px] rounded-md" />
                             <USkeleton class="w-[56px] h-[56px] rounded-md" />

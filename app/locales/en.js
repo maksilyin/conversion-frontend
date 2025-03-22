@@ -259,6 +259,7 @@ export default {
         }
     },
     error: {
+        notify: 'Error',
         file: {
             limit: 'Total uploaded size exceeds the allowed limit'
         }

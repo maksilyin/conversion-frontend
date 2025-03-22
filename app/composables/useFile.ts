@@ -4,6 +4,8 @@ import {downloadFile} from "~/utils/functions";
 
 export const useFile = (hash: string) => {
     const api = useApi();
+    const { t } = useI18n();
+    const toast = useToast();
     const { files, deleteFile2 } = useUploader();
     const { uuid } = useTask();
     const isProcessingFile = ref(false);
@@ -45,8 +47,8 @@ export const useFile = (hash: string) => {
                 deleteFile2(hash)
             }, 100)
         }
-        catch (e) {
-            console.log(e)
+        catch (e:any) {
+            showError(e.message)
         }
         finally {
             setProcessing('remove', false);
@@ -75,7 +77,7 @@ export const useFile = (hash: string) => {
             const blob = new Blob([res], {type: fileResult.mimetype});
             downloadFile(blob, fileResult.originalName);
         }).catch(e => {
-            console.log(e)
+            showError(e.message)
         }).finally(() => {
             setProcessing('download', false);
         })
@@ -126,6 +128,10 @@ export const useFile = (hash: string) => {
             ...processing
         }
     })
+
+    const showError = (message: string) => {
+        toast.add({ title: t('error.notify'), description: message, color: 'red' })
+    }
 
     return {
         removeFile,

@@ -25,7 +25,7 @@ export default {
     },
     'task.create': {
         method: 'post',
-        url: 'task/create/',
+        url: 'task/',
     },
     'task.send': {
         method: 'put',

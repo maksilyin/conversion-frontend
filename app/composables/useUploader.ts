@@ -21,6 +21,8 @@ const isDownloadZipLoading = ref(false);
 let fileIndex = 0;
 export const useUploader = () => {
     const api = useApi();
+    const { t } = useI18n();
+    const toast = useToast();
     const { getFirstSiblingsFormat } = useFormats();
     const upload = (formData: FormData):Promise<ChunkResult> => {
         return api.callApi('file.upload', formData);
@@ -47,8 +49,8 @@ export const useUploader = () => {
                     delete files[hash];
                 }, 100)
             }
-            catch (e) {
-                console.log(e)
+            catch (e: any) {
+                showError(e.message)
             }
         }
     }
@@ -74,7 +76,7 @@ export const useUploader = () => {
                 const blob = new Blob([res], {type: fileResult.mimetype});
                 downloadFile(blob, fileResult.originalName);
             }).catch(e => {
-                console.log(e)
+                showError(e.message)
             })
         }
     }
@@ -88,9 +90,9 @@ export const useUploader = () => {
             task: uuid,
         }, headers, 'blob').then((res) => {
             const blob = new Blob([res]);
-            downloadFile(blob, 'archive.zip');
+            downloadFile(blob, 'fastconvert.co.archive.zip');
         }).catch(e => {
-            console.log(e)
+            showError(e.message)
         }).finally(() => {
             isDownloadZipLoading.value = false;
         })
@@ -280,6 +282,10 @@ export const useUploader = () => {
 
     const deleteFile2 = (hash: string) => {
         delete files[hash];
+    }
+
+    const showError = (message: string) => {
+        toast.add({ title: t('error.notify'), description: message, color: 'red' })
     }
 
     return {

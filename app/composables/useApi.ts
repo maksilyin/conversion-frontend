@@ -1,6 +1,8 @@
 import axios, { type ResponseType } from 'axios';
 import type {Endpoints, Params} from '~/types/Api';
 import endpointsModule from "~/Endpoints";
+import type { H3Event } from 'h3';
+import { getRequestHeader } from 'h3'
 
 const endpoints: Endpoints = endpointsModule;
 
@@ -31,11 +33,13 @@ export const useApi = () => {
                 [method === 'get' ? 'params' : 'data']: params,
                 headers,
                 responseType,
+                withCredentials: true,
             });
 
             return response.data as T;
         }
         catch (error) {
+            console.log(error)
             if (axios.isAxiosError(error) && error.response?.status === 404) {
                 throw createError({
                     statusCode: 404,
@@ -53,6 +57,13 @@ export const useApi = () => {
         const { ssrContext } = useNuxtApp();
 
         if (ssrContext) {
+            const event = ssrContext.event as H3Event
+            const cookie = getRequestHeader(event, 'cookie')
+
+            if (cookie) {
+                headers['cookie'] = cookie
+            }
+
             const {data, error} = await useAsyncData<T>(key, () => callApi<T>(key, params, headers));
 
             if (error.value) {

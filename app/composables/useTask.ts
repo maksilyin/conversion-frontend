@@ -109,7 +109,7 @@ export const useTask = (taskUuid: string | null = null) => {
     }
 
     const loadTask = async (uuid:string) => {
-        task.value = await api.callApi('task', { task_id: uuid });
+        task.value = await api.fetchData('task', { task_id: uuid });
     }
 
     const deleteTask = () => {
@@ -135,7 +135,7 @@ export const useTask = (taskUuid: string | null = null) => {
     }
 
     const showError = (message: string) => {
-        toast.add({ title: t('error'), description: message, color: 'red' })
+        toast.add({ title: t('error.notify'), description: message, color: 'red' })
     }
 
     watch(status, () => {

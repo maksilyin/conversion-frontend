@@ -63,7 +63,7 @@ const handleFiles = (files) => {
                     <RoundedBlock :shadow="true" class="w-full dashed" @click="labelInput.click()">
                         <div class="group flex flex-col items-center justify-center w-full">
                             <!--<img class="h-[60px] md:w-[150px] md:h-[83px]" :src="iconUpload" alt="">-->
-                            <UIcon name="tabler:cloud-upload" class="w-[100px] h-[100px] text-gray-500 opacity-70"/>
+                            <UIcon name="tdesign:cloud-upload" class="w-[80px] h-[80px] text-gray-500 opacity-90"/>
                             <div class="mt-5 sm:mb-5 text-lg md:text-2xl text-center">
                                     <span class="font-bold text-black">
                                         <span v-html="t('drag_drop')"></span>
@@ -73,7 +73,7 @@ const handleFiles = (files) => {
                                         <span class="text-orange-main">{{$t('drag_drop_files')}}</span>
                                     </span>
                             </div>
-                            <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                            <div class="flex flex-col items-center justify-center pt-5">
                                 <div class="lg:flex gap-2">
                                     <UploadFileButton>
                                         <IButton

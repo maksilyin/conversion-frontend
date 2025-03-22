@@ -169,7 +169,7 @@ onBeforeMount(() => {
         </div>
     </UContainer>
     <FileInput v-if="!files.length"/>
-    <div v-else class="sticky z-[100] bottom-0 bg-white pb-0 pt-3 md:pb-5 md:pt-5 border-t">
+    <div v-else class="sticky z-[54] bottom-0 bg-white pb-0 pt-3 md:pb-5 md:pt-5 border-t">
         <UContainer class="px-0 sm:px-0">
             <div v-if="isShowProgress || status === 'complete'" class="flex justify-center">
                 <div v-if="isShowProgress" class="absolute w-full left-0 top-0">

@@ -8,17 +8,6 @@ import DecorBg from "~/components/design/DecorBg.vue";
 import ConvertList from "~/components/Blocks/ConvertList.vue";
 import CategoryCardList from "~/components/Blocks/CategoryCardList.vue";
 
-const props = defineProps({
-    category: {
-        type: String,
-        required: true
-    }
-})
-
-definePageMeta({
-  key: () => Date.now(),
-});
-
 const { t } = useI18n();
 const { formats } = useFormats();
 const { uuid } = useTask();
