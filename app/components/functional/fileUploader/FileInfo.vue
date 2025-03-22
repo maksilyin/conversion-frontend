@@ -40,7 +40,7 @@ const {
     removeFile,
     downloadResultFile,
     processingFile,
-} = useFile(props.file.hash);
+} = useFile(props.file);
 const indexResult = 0;
 const { fileIcon } = useMimeTypes(props.file.mimetype);
 const { getExtensionByMimeType, getFileFormat, getFileTypeByExtension } = useFormats();
@@ -187,13 +187,13 @@ const remove = () => {
         </div>
         <div class="flex items-center gap-5">
             <div class="w-[60px] h-[60px] flex-shrink-0 relative hidden md:block">
-                <img class="w-full h-full object-cover object-center" v-if="image" :src="image" alt="">
                 <img
-                    v-else-if="converterIconsV2[fileType]"
+                    v-if="converterIconsV2[fileType]"
                     :src="converterIconsV2[fileType]"
                     class="w-full h-full object-contain"
                     alt=""
                 />
+                <img v-else-if="image" class="w-full h-full object-cover object-center" :src="image" alt="">
                 <FileIcon
                     v-else-if="extension"
                     class="w-full h-full"
@@ -248,7 +248,7 @@ const remove = () => {
                         <UButton
                             class="text-xs"
                             color="red"
-                            @click="removeFile"
+                            @click="remove"
                             :disabled="processingFile.remove || isProcessingTask || (status !== FILE_STATUS.ERROR && status < FILE_STATUS.UPLOADED)"
                         >
                             <template #trailing>

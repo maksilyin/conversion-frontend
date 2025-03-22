@@ -71,7 +71,6 @@ export const useTask = (taskUuid: string | null = null) => {
         }
 
         echo.channel(channelName).listen('.TaskUpdated', (e: Task) => {
-            console.log(e)
             task.value = e;
         });
     }

@@ -34,14 +34,14 @@ const emit = defineEmits(['update:modelValue'])
 const showTab = ref('image');
 const selected = ref([...props.modelValue])
 const isOpenModal = ref(false);
-const isOpenModalToggle = ref(false);
+let isOpenModalToggle = false;
 const searchQuery = ref('');
 
 const setItem = (value: string) => {
     if (!props.multiple) {
         selected.value = [value]
         isOpenModal.value = false;
-        isOpenModalToggle.value = false
+        isOpenModalToggle = false
     }
     else {
         const newValue = Object.assign([], selected.value);
@@ -76,8 +76,10 @@ const checkItem = (value: string) => {
 }
 
 const handleDropdown = () => {
-    isOpenModalToggle.value = !isOpenModalToggle.value
-    isOpenModal.value = !isOpenModalToggle.value
+    isOpenModalToggle = !isOpenModalToggle
+    setTimeout(()=> {
+        isOpenModal.value = isOpenModalToggle
+    })
 }
 
 const formatList = computed(() => {
@@ -105,14 +107,12 @@ const formatList = computed(() => {
     return filteredFormats.value;
 })
 
-watch(() => props.modelValue, newValue => {
- //   selected.value = newValue;
-})
-
 watch(isOpenModal, newValue => {
-    if (!newValue && isOpenModalToggle.value) {
-        isOpenModalToggle.value = false
-    }
+    setTimeout(() => {
+        if (!isOpenModal.value) {
+            isOpenModalToggle = false
+        }
+    }, 100)
 })
 
 </script>
@@ -124,7 +124,6 @@ watch(isOpenModal, newValue => {
     </div>
     <UPopover :ui="{container: 'group z-[200]'}" v-if="!hiddenSelect" :popper="{ arrow: true }" v-model:open="isOpenModal">
         <div class="flex items-center gap-2" @click="handleDropdown">
-            {{ isOpenModal }}
             {{ label }}
             <span class="w-[70px] md:w-[80px] border rounded border-gray-300 text-xs px-2 md:px-3 py-1 md:py-2 inline-flex items-center justify-between cursor-pointer min-w-[60px] gap-2 transition hover:border-primary-500 hover:text-primary-500" @click="isOpenModal=true">
                 <span class="mx-auto">{{ selectedFormat.toUpperCase() }}</span>

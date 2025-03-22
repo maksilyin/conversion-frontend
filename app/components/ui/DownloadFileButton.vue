@@ -53,7 +53,7 @@ const isProcessing = computed(() => {
                     <span class="flex">
                         <UTooltip
                             :text="$t('download')"
-                            :openDelay="1000" :popper="{ placement: 'top-left', arrow: true }"
+                            :openDelay="1000" :popper="{ placement: 'top', arrow: true }"
                         >
                             <UButton
                                 color="blue"
