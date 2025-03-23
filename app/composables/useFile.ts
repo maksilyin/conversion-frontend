@@ -78,7 +78,7 @@ export const useFile = (uploadFile: UploadFile|null = null, hash: string | boole
 
         api.callApi<BlobPart>('file.download', {
             task: uuid.value,
-            hash: hash,
+            hash: file.value.hash,
         }, headers, 'blob').then((res) => {
             const blob = new Blob([res], {type: fileResult.mimetype});
             downloadFile(blob, fileResult.originalName);
