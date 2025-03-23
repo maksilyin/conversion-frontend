@@ -67,7 +67,7 @@ const extension = computed(() => {
 });
 
 const resultExtension = computed(() => {
-    if (result.value) {
+    if (result.value && result.value.status) {
         return result.value?.extension
             ? result.value?.extension
             : getExtensionByMimeType(result.value.mimetype);
@@ -97,7 +97,7 @@ const size = computed(() => {
 })
 
 const resultSize = computed(() => {
-    if (result.value) {
+    if (result.value && result.value.status) {
         return formatSize(result.value.size);
     }
 

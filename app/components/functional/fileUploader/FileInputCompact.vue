@@ -18,19 +18,27 @@ const props = defineProps({
     },
     for: {
         default: 'input-file'
+    },
+    isDisabled: {
+        type: Boolean,
+        default: false,
     }
 })
 
 const isAllCompleted = computed(() => {
-    let res = true;
+    let completed = false;
+    let uploaded = false;
 
     files.value.forEach(file => {
-        if (file.status !== FILE_STATUS.COMPLETED) {
-            res = false
+        if (file.status === FILE_STATUS.COMPLETED) {
+            completed = true;
+        }
+        else if (file.status === FILE_STATUS.UPLOADED) {
+            uploaded = true;
         }
     })
 
-    return res;
+    return completed && !uploaded;
 })
 
 const emits = defineEmits(['send']);
@@ -75,7 +83,7 @@ const send = async () => {
                 v-else
                 class="text-md justify-center h-12 bg-blue-dark-100 transition duration-500 rounded-none md:rounded-md hover:bg-blue-dark ml-auto px-6 w-full md:w-auto"
                 @click="send"
-                :disabled="isSomeProcessing"
+                :disabled="isSomeProcessing || isDisabled"
             >
                 <span class="inline-block py-3 md:py-0">
                     {{$t('convert')}}

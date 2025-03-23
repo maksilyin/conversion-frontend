@@ -62,6 +62,7 @@ const createAndUploadFile = async (file) => {
     file.status = FILE_STATUS.PREPARE
     createFile({
         task: uuid.value,
+        index: file.index,
         size: file.size,
         extension: file.extension,
         filename: file.filename,
@@ -81,18 +82,23 @@ function openModal() {
 }
 
 const sendData = computed(() => {
-    return {
-        task: uuid.value,
-        type: props.type,
-        payload: {
-            files: getFilesForPayload()
+    const files = getFilesForPayload();
+
+    if (files.length) {
+        return {
+            task: uuid.value,
+            type: props.type,
+            payload: {
+                files: files
+            }
         }
     }
+    return false;
 })
 
 const getFilesForPayload = () => {
     let filesFiltered = files.value.filter(file => {
-        return file.status !== FILE_STATUS.DELETE
+        return file.status === FILE_STATUS.UPLOADED
     })
 
     return filesFiltered.map(file => {
@@ -106,7 +112,9 @@ const getFilesForPayload = () => {
 }
 
 const send = () => {
-    startTask(sendData.value);
+    if (sendData.value) {
+        startTask(sendData.value);
+    }
 }
 
 const filesToUpload = computed(() => {
@@ -176,7 +184,7 @@ onBeforeMount(() => {
                     <UProgress size="sm" color="blue" :value="taskProgress"></UProgress>
                 </div>
             </div>
-            <FileInputCompact @send="send">
+            <FileInputCompact @send="send" :is-disabled="!sendData">
                 <slot name="compact"></slot>
             </FileInputCompact>
         </UContainer>

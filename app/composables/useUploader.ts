@@ -120,9 +120,6 @@ export const useUploader = () => {
 
     const setFromPayload = (data: UploadFile[]) => {
         data.forEach(file => {
-            if (!file.params) {
-                file.params = defaultFileParams.value
-            }
             setFile(file.hash, {
                 ...file,
                 index: getIndex(),
@@ -132,10 +129,6 @@ export const useUploader = () => {
     }
 
     const addFile = (params: any = {}) => {
-        if (!params?.params) {
-            params.params = Object.assign({}, defaultFileParams.value);
-        }
-
         const fileData = {
             progress: 0,
             index: getIndex(),
@@ -238,14 +231,6 @@ export const useUploader = () => {
                     files[hash].mimetype = res.mimetype;
                     files[hash].size = res.size || 0;
                     files[hash].filename = file.name;
-
-                    if (res.extension && !files[hash].params.convert?.length) {
-                        const firstFormat = getFirstSiblingsFormat(res.extension);
-
-                        if (firstFormat) {
-                            files[hash].params.convert = [firstFormat]
-                        }
-                    }
 
                     setFileStatus(hash, FILE_STATUS.UPLOADED);
                 }

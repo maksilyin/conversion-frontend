@@ -15,6 +15,7 @@ const props = defineProps({
 
 const { files, deleteFile, downloadResult, addParam, setFromPayload, setDefaultFileParams, unmount } = useUploader();
 const { uuid, payload, status, deleteTask, isProcessingTask, isDeleted, clearTask } = useTask();
+const { getFirstSiblingsFormat } = useFormats();
 const { t } = useI18n();
 const router = useRouter();
 const route = useRoute();
@@ -36,6 +37,21 @@ const redirectToMain = () => {
     else {
         router.push(localePath('/'))
     }
+}
+
+const setFileParams = () => {
+    files.value.forEach(file => {
+        if (!file.params) {
+            file.params = Object.assign({}, params);
+        }
+        if (file.status === FILE_STATUS.UPLOADED && file.extension && 'convert' in file.params && !file.params.convert?.length) {
+            const firstFormat = getFirstSiblingsFormat(file.extension);
+
+            if (firstFormat) {
+                file.params.convert = [firstFormat]
+            }
+        }
+    })
 }
 
 watch(allConvert, newValue => {
@@ -71,10 +87,21 @@ watch(files, (newValue) => {
     }
 })
 
+watch(
+    () => files.value.map(f => f.status),
+    () => {
+        setFileParams()
+    }
+);
+
 watch(isDeleted, (newValue: boolean) => {
     if (newValue) {
         redirectToMain();
     }
+})
+
+onMounted(() => {
+    setFileParams();
 })
 
 onBeforeRouteLeave(() => {

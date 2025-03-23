@@ -12,6 +12,7 @@ export type UploadFile = {
     mimetype: string,
     externalPath?: string,
     result?: [{
+        status: boolean,
         extension: string,
         filename: string
         mimetype: string
