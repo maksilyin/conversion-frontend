@@ -63,6 +63,7 @@ export default {
             spreadsheet: 'Chuyển đổi bảng tính',
             presentation: 'Chuyển đổi bài thuyết trình',
             vector: 'Chuyển đổi hình ảnh vector',
+            ebook: "Chuyển đổi sách điện tử",
         },
         index: 'Công cụ chuyển đổi tệp trực tuyến'
     },
@@ -82,6 +83,7 @@ export default {
             spreadsheet: 'Công cụ chuyển đổi trực tuyến miễn phí để chuyển đổi bảng tính.',
             presentation: 'Công cụ chuyển đổi trực tuyến miễn phí để chuyển đổi bài thuyết trình.',
             vector: 'Công cụ chuyển đổi trực tuyến miễn phí để chuyển đổi hình ảnh vector.',
+            ebook: "Chuyển đổi sách điện tử của bạn sang các định dạng phổ biến như EPUB, MOBI, PDF và hơn thế nữa.",
         },
         index: 'Chuyển đổi tệp nhanh chóng và an toàn. Hỗ trợ hơn 200 định dạng.',
         categories_list: 'Chọn loại tệp bạn muốn chuyển đổi. Dịch vụ của chúng tôi hỗ trợ nhiều định dạng khác nhau cho hình ảnh, tài liệu, âm thanh, video và các tệp khác.',
@@ -98,6 +100,7 @@ export default {
             spreadsheet: 'bảng tính',
             presentation: 'bài thuyết trình',
             vector: 'hình ảnh vector',
+            ebook: "sách điện tử",
         },
         rpm: {
             image: 'hình ảnh',
@@ -109,6 +112,7 @@ export default {
             spreadsheet: 'bảng tính',
             presentation: 'bài thuyết trình',
             vector: 'hình ảnh vector',
+            ebook: "sách điện tử",
         }
     },
     advantages: {

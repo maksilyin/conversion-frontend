@@ -62,7 +62,8 @@ export default {
             font: "Converti caratteri",
             spreadsheet: "Converti fogli di calcolo",
             presentation: "Converti presentazioni",
-            vector: "Converti immagini vettoriali"
+            vector: "Converti immagini vettoriali",
+            ebook: "Convertire libri elettronici",
         },
         index: "Convertitore di file online"
     },
@@ -81,7 +82,8 @@ export default {
             font: "Convertitore online gratuito per la conversione di caratteri.",
             spreadsheet: "Convertitore online gratuito per la conversione di fogli di calcolo.",
             presentation: "Convertitore online gratuito per la conversione di presentazioni.",
-            vector: "Convertitore online gratuito per la conversione di immagini vettoriali."
+            vector: "Convertitore online gratuito per la conversione di immagini vettoriali.",
+            ebook: "Converti i tuoi libri elettronici in formati popolari come EPUB, MOBI, PDF e altri.",
         },
         index: "Converti file in modo rapido e sicuro. Supporta oltre 200 formati.",
         categories_list: "Scegli il tipo di file che vuoi convertire. Il nostro servizio supporta vari formati per immagini, documenti, audio, video e altro.",
@@ -97,7 +99,8 @@ export default {
             font: "caratteri",
             spreadsheet: "fogli di calcolo",
             presentation: "presentazioni",
-            vector: "file vettoriali"
+            vector: "file vettoriali",
+            ebook: "libri elettronici",
         },
         rpm: {
             image: "immagine",
@@ -108,7 +111,8 @@ export default {
             font: "carattere",
             spreadsheet: "foglio di calcolo",
             presentation: "presentazione",
-            vector: "file vettoriale"
+            vector: "file vettoriale",
+            ebook: "libro elettronico",
         }
     },
     advantages: {

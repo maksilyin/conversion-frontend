@@ -63,6 +63,7 @@ export default {
             spreadsheet: 'Muunna taulukoita',
             presentation: 'Muunna esityksiä',
             vector: 'Muunna vektorikuvia',
+            ebook: "Muunna e-kirjat",
         },
         index: 'Verkkotiedostojen muunnin'
     },
@@ -82,6 +83,7 @@ export default {
             spreadsheet: 'Ilmainen verkkotyökalu taulukoiden muuntamiseen.',
             presentation: 'Ilmainen verkkotyökalu esitysten muuntamiseen.',
             vector: 'Ilmainen verkkotyökalu vektorikuvien muuntamiseen.',
+            ebook: "Muunna e-kirjasi suosittuihin muotoihin, kuten EPUB, MOBI, PDF ja muihin.",
         },
         index: 'Muunna tiedostoja nopeasti ja turvallisesti. Yli 200 muodon tuki.',
         categories_list: 'Valitse tiedostotyyppi, jota haluat muuntaa. Palvelumme tukee erilaisia muotoja kuville, asiakirjoille, äänelle, videolle ja muille tiedostoille.',
@@ -98,6 +100,7 @@ export default {
             spreadsheet: 'taulukkoa',
             presentation: 'esitystä',
             vector: 'vektorikuvaa',
+            ebook: "e-kirjoja",
         },
         rpm: {
             image: 'kuvaa',
@@ -109,6 +112,7 @@ export default {
             spreadsheet: 'taulukkoa',
             presentation: 'esitystä',
             vector: 'vektorikuvaa',
+            ebook: "e-kirjan",
         }
     },
     advantages: {

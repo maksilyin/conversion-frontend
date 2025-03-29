@@ -62,7 +62,8 @@ export default {
             font: "Konwertuj czcionki",
             spreadsheet: "Konwertuj arkusze kalkulacyjne",
             presentation: "Konwertuj prezentacje",
-            vector: "Konwertuj obrazy wektorowe"
+            vector: "Konwertuj obrazy wektorowe",
+            ebook: "Konwertuj e-booki",
         },
         index: "Internetowy konwerter plików"
     },
@@ -81,7 +82,8 @@ export default {
             font: "Bezpłatny konwerter online do konwersji czcionek.",
             spreadsheet: "Bezpłatny konwerter online do konwersji arkuszy kalkulacyjnych.",
             presentation: "Bezpłatny konwerter online do konwersji prezentacji.",
-            vector: "Bezpłatny konwerter online do konwersji obrazów wektorowych."
+            vector: "Bezpłatny konwerter online do konwersji obrazów wektorowych.",
+            ebook: "Konwertuj swoje e-booki do popularnych formatów, takich jak EPUB, MOBI, PDF i inne.",
         },
         index: "Konwertuj pliki szybko i bezpiecznie. Obsługa ponad 200 formatów.",
         categories_list: "Wybierz typ pliku, który chcesz przekonwertować. Nasza usługa obsługuje różne formaty dla obrazów, dokumentów, plików audio, wideo i innych plików.",
@@ -97,7 +99,8 @@ export default {
             font: "czcionek",
             spreadsheet: "arkuszy kalkulacyjnych",
             presentation: "prezentacji",
-            vector: "plików wektorowych"
+            vector: "plików wektorowych",
+            ebook: "e-booków",
         },
         rpm: {
             image: "obraz",
@@ -108,7 +111,8 @@ export default {
             font: "czcionka",
             spreadsheet: "arkusz kalkulacyjny",
             presentation: "prezentacja",
-            vector: "plik wektorowy"
+            vector: "plik wektorowy",
+            ebook: "e-booka",
         }
     },
     advantages: {

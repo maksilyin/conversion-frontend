@@ -62,7 +62,8 @@ export default {
             font: "Převést písma",
             spreadsheet: "Převést tabulky",
             presentation: "Převést prezentace",
-            vector: "Převést vektorové obrázky"
+            vector: "Převést vektorové obrázky",
+            ebook: "Převést elektronické knihy",
         },
         index: "Online převodník souborů"
     },
@@ -81,7 +82,8 @@ export default {
             font: "Bezplatný online převodník písem.",
             spreadsheet: "Bezplatný online převodník tabulek.",
             presentation: "Bezplatný online převodník prezentací.",
-            vector: "Bezplatný online převodník vektorových obrázků."
+            vector: "Bezplatný online převodník vektorových obrázků.",
+            ebook: "Převádějte své elektronické knihy do populárních formátů, jako jsou EPUB, MOBI, PDF a další.",
         },
         index: "Převádějte dokumenty, obrázky, videa a další formáty souborů během několika sekund. <br> Podporuje více než 200 formátů s plným zabezpečením dat.",
         categories_list: "Vyberte typ souboru, který chcete převést. Náš nástroj podporuje různé formáty pro obrázky, dokumenty, audio, video a další.",
@@ -97,7 +99,8 @@ export default {
             font: "písem",
             spreadsheet: "tabulek",
             presentation: "prezentací",
-            vector: "vektorových souborů"
+            vector: "vektorových souborů",
+            ebook: "elektronických knih",
         },
         rpm: {
             image: "obrázku",
@@ -108,7 +111,8 @@ export default {
             font: "písma",
             spreadsheet: "tabulky",
             presentation: "prezentace",
-            vector: "vektorového souboru"
+            vector: "vektorového souboru",
+            ebook: "elektronické knihy",
         }
     },
     advantages: {

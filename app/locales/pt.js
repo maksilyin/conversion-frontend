@@ -62,7 +62,8 @@ export default {
             font: "Converter fontes",
             spreadsheet: "Converter planilhas",
             presentation: "Converter apresentações",
-            vector: "Converter imagens vetoriais"
+            vector: "Converter imagens vetoriais",
+            ebook: "Converter e-books",
         },
         index: "Conversor de arquivos online"
     },
@@ -81,7 +82,8 @@ export default {
             font: "Conversor online gratuito para fontes.",
             spreadsheet: "Conversor online gratuito para planilhas.",
             presentation: "Conversor online gratuito para apresentações.",
-            vector: "Conversor online gratuito para imagens vetoriais."
+            vector: "Conversor online gratuito para imagens vetoriais.",
+            ebook: "Converta seus e-books para formatos populares, como EPUB, MOBI, PDF e outros.",
         },
         index: "Converta arquivos de forma rápida e segura. Suporte para mais de 200 formatos.",
         categories_list: "Escolha o tipo de arquivo que deseja converter. Nosso serviço suporta vários formatos para imagens, documentos, áudio, vídeo e outros arquivos.",
@@ -97,7 +99,8 @@ export default {
             font: "fontes",
             spreadsheet: "planilhas",
             presentation: "apresentações",
-            vector: "arquivos vetoriais"
+            vector: "arquivos vetoriais",
+            ebook: "e-books",
         },
         rpm: {
             image: "imagem",
@@ -108,7 +111,8 @@ export default {
             font: "fonte",
             spreadsheet: "planilha",
             presentation: "apresentação",
-            vector: "arquivo vetorial"
+            vector: "arquivo vetorial",
+            ebook: "e-book",
         }
     },
     advantages: {

@@ -62,7 +62,8 @@ export default {
             font: "Lettertypen converteren",
             spreadsheet: "Spreadsheets converteren",
             presentation: "Presentaties converteren",
-            vector: "Vectorafbeeldingen converteren"
+            vector: "Vectorafbeeldingen converteren",
+            ebook: "E-boeken converteren",
         },
         index: "Online bestandsconverter"
     },
@@ -81,7 +82,8 @@ export default {
             font: "Gratis online converter voor lettertypen.",
             spreadsheet: "Gratis online converter voor spreadsheets.",
             presentation: "Gratis online converter voor presentaties.",
-            vector: "Gratis online converter voor vectorafbeeldingen."
+            vector: "Gratis online converter voor vectorafbeeldingen.",
+            ebook: "Converteer uw e-boeken naar populaire formaten zoals EPUB, MOBI, PDF en meer.",
         },
         index: "Snel en veilig bestanden converteren. Ondersteuning voor meer dan 200 formaten.",
         categories_list: "Kies het bestandstype dat u wilt converteren. Onze service ondersteunt diverse formaten voor afbeeldingen, documenten, audio, video en meer.",
@@ -97,7 +99,8 @@ export default {
             font: "lettertypen",
             spreadsheet: "spreadsheets",
             presentation: "presentaties",
-            vector: "vectorbestanden"
+            vector: "vectorbestanden",
+            ebook: "e-boeken",
         },
         rpm: {
             image: "afbeelding",
@@ -108,7 +111,8 @@ export default {
             font: "lettertype",
             spreadsheet: "spreadsheet",
             presentation: "presentatie",
-            vector: "vectorbestand"
+            vector: "vectorbestand",
+            ebook: "e-boek",
         }
     },
     advantages: {

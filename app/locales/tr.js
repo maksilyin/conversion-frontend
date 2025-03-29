@@ -63,6 +63,7 @@ export default {
             spreadsheet: 'E-tabloları dönüştür',
             presentation: 'Sunumları dönüştür',
             vector: 'Vektör görüntüleri dönüştür',
+            ebook: "E-kitapları dönüştür",
         },
         index: 'Çevrimiçi dosya dönüştürücü'
     },
@@ -82,6 +83,7 @@ export default {
             spreadsheet: 'E-tabloları dönüştürmek için ücretsiz çevrimiçi dönüştürücü.',
             presentation: 'Sunumları dönüştürmek için ücretsiz çevrimiçi dönüştürücü.',
             vector: 'Vektör görüntüleri dönüştürmek için ücretsiz çevrimiçi dönüştürücü.',
+            ebook: "E-kitaplarınızı EPUB, MOBI, PDF ve diğer popüler formatlara dönüştürün.",
         },
         index: 'Dosyaları hızlı ve güvenli bir şekilde dönüştürün. 200\'den fazla format desteklenir.',
         categories_list: 'Dönüştürmek istediğiniz dosya türünü seçin. Servisimiz görüntüler, belgeler, ses, video ve diğer dosyalar için çeşitli formatları destekler.',
@@ -98,6 +100,7 @@ export default {
             spreadsheet: 'e-tablolar',
             presentation: 'sunumlar',
             vector: 'vektör görüntüler',
+            ebook: "e-kitaplar",
         },
         rpm: {
             image: 'görüntü',
@@ -109,6 +112,7 @@ export default {
             spreadsheet: 'e-tablo',
             presentation: 'sunum',
             vector: 'vektör görüntü',
+            ebook: "e-kitap",
         }
     },
     advantages: {

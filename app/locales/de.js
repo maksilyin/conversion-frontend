@@ -62,7 +62,8 @@ export default {
             font: "Schriftarten konvertieren",
             spreadsheet: "Tabellen konvertieren",
             presentation: "Präsentationen konvertieren",
-            vector: "Vektorbilder konvertieren"
+            vector: "Vektorbilder konvertieren",
+            ebook: "E-Books konvertieren",
         },
         index: "Online-Dateikonverter"
     },
@@ -81,7 +82,8 @@ export default {
             font: "Kostenloser Online-Konverter zur Schriftartenkonvertierung.",
             spreadsheet: "Kostenloser Online-Konverter zur Tabellenkonvertierung.",
             presentation: "Kostenloser Online-Konverter zur Präsentationskonvertierung.",
-            vector: "Kostenloser Online-Konverter zur Vektorgrafikkonvertierung."
+            vector: "Kostenloser Online-Konverter zur Vektorgrafikkonvertierung.",
+            ebook: "Konvertieren Sie Ihre E-Books in beliebte Formate wie EPUB, MOBI, PDF und mehr.",
         },
         index: "Konvertieren Sie Dateien schnell und sicher. Unterstützung für über 200 Formate.",
         categories_list: "Wählen Sie den Dateityp, den Sie konvertieren möchten. Unser Service unterstützt verschiedene Formate für Bilder, Dokumente, Audio, Video und andere Dateien.",
@@ -97,7 +99,8 @@ export default {
             font: "Schriftarten",
             spreadsheet: "Tabellen",
             presentation: "Präsentationen",
-            vector: "Vektordateien"
+            vector: "Vektordateien",
+            ebook: "E-Books",
         },
         rpm: {
             image: "Bild",
@@ -108,7 +111,8 @@ export default {
             font: "Schriftart",
             spreadsheet: "Tabelle",
             presentation: "Präsentation",
-            vector: "Vektordatei"
+            vector: "Vektordatei",
+            ebook: "eines E-Books",
         }
     },
     advantages: {

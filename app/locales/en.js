@@ -62,7 +62,8 @@ export default {
             font: "Convert fonts",
             spreadsheet: "Convert spreadsheets",
             presentation: "Convert presentations",
-            vector: "Convert vector images"
+            vector: "Convert vector images",
+            ebook: "Convert eBooks"
         },
         index: "Online file converter"
     },
@@ -81,7 +82,8 @@ export default {
             font: "Free online converter for font conversion.",
             spreadsheet: "Free online converter for spreadsheet conversion.",
             presentation: "Free online converter for presentation conversion.",
-            vector: "Free online converter for vector image conversion."
+            vector: "Free online converter for vector image conversion.",
+            ebook: "Convert your eBooks to popular formats like EPUB, MOBI, PDF and more."
         },
         index: "Convert documents, images, videos, and other file formats in seconds. <br>Supports over 200 formats with full data security.",
         categories_list: "Choose the type of file you want to convert. Our service supports various formats for images, documents, audio, video, and more.",
@@ -97,7 +99,8 @@ export default {
             font: "fonts",
             spreadsheet: "spreadsheets",
             presentation: "presentations",
-            vector: "vector files"
+            vector: "vector files",
+            ebook: "eBooks",
         },
         rpm: {
             image: "image",
@@ -108,7 +111,8 @@ export default {
             font: "font",
             spreadsheet: "spreadsheet",
             presentation: "presentation",
-            vector: "vector file"
+            vector: "vector file",
+            ebook: "eBook",
         }
     },
     advantages: {

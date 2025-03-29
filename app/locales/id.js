@@ -62,8 +62,9 @@ export default {
             font: "Konversi font",
             spreadsheet: "Konversi spreadsheet",
             presentation: "Konversi presentasi",
-            vector: "Konversi gambar vektor"
-        },
+            vector: "Konversi gambar vektor",
+            ebook: "Konversi Buku Elektronik",
+},
         index: "Konverter file online"
     },
     subtitles: {
@@ -81,7 +82,8 @@ export default {
             font: "Konverter online gratis untuk konversi font.",
             spreadsheet: "Konverter online gratis untuk konversi spreadsheet.",
             presentation: "Konverter online gratis untuk konversi presentasi.",
-            vector: "Konverter online gratis untuk konversi gambar vektor."
+            vector: "Konverter online gratis untuk konversi gambar vektor.",
+            ebook: "Konversi buku elektronik Anda ke format populer seperti EPUB, MOBI, PDF, dan lainnya.",
         },
         index: "Konversi dokumen, gambar, video, dan format file lainnya dalam hitungan detik. <br> Mendukung lebih dari 200 format dengan keamanan data penuh.",
         categories_list: "Pilih jenis file yang ingin Anda konversi. Layanan kami mendukung berbagai format untuk gambar, dokumen, audio, video, dan lainnya.",
@@ -97,7 +99,8 @@ export default {
             font: "font",
             spreadsheet: "file spreadsheet",
             presentation: "presentasi",
-            vector: "file vektor"
+            vector: "file vektor",
+            ebook: "buku elektronik",
         },
         rpm: {
             image: "gambar",
@@ -108,7 +111,8 @@ export default {
             font: "font",
             spreadsheet: "spreadsheet",
             presentation: "presentasi",
-            vector: "file vektor"
+            vector: "file vektor",
+            ebook: "buku elektronik",
         }
     },
     advantages: {

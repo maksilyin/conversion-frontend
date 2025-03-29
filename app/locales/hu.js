@@ -62,7 +62,8 @@ export default {
             font: "Betűtípusok konvertálása",
             spreadsheet: "Táblázatok konvertálása",
             presentation: "Prezentációk konvertálása",
-            vector: "Vektorképek konvertálása"
+            vector: "Vektorképek konvertálása",
+            ebook: "E-könyvek konvertálása",
         },
         index: "Online fájlkonverter"
     },
@@ -81,7 +82,8 @@ export default {
             font: "Ingyenes online betűtípus-konverter.",
             spreadsheet: "Ingyenes online táblázat-konverter.",
             presentation: "Ingyenes online prezentáció-konverter.",
-            vector: "Ingyenes online vektorkép-konverter."
+            vector: "Ingyenes online vektorkép-konverter.",
+            ebook: "Konvertálja e-könyveit népszerű formátumokba, például EPUB, MOBI, PDF és egyéb.",
         },
         index: "Konvertálja fájljait gyorsan és biztonságosan. Több mint 200 formátum támogatása.",
         categories_list: "Válassza ki az átalakítani kívánt fájltípust. Szolgáltatásunk támogatja a különféle formátumokat képekhez, dokumentumokhoz, hanghoz, videóhoz és egyebekhez.",
@@ -97,7 +99,8 @@ export default {
             font: "betűtípusok",
             spreadsheet: "táblázatok",
             presentation: "prezentációk",
-            vector: "vektorfájlok"
+            vector: "vektorfájlok",
+            ebook: "e-könyvek",
         },
         rpm: {
             image: "kép",
@@ -108,7 +111,8 @@ export default {
             font: "betűtípus",
             spreadsheet: "táblázat",
             presentation: "prezentáció",
-            vector: "vektorfájl"
+            vector: "vektorfájl",
+            ebook: "e-könyv",
         }
     },
     advantages: {

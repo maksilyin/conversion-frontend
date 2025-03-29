@@ -63,6 +63,7 @@ export default {
             spreadsheet: '스프레드시트 변환',
             presentation: '프레젠테이션 변환',
             vector: '벡터 이미지 변환',
+            ebook: "전자책 변환",
         },
         index: '온라인 파일 변환기'
     },
@@ -82,6 +83,7 @@ export default {
             spreadsheet: '스프레드시트를 변환하는 무료 온라인 변환기.',
             presentation: '프레젠테이션을 변환하는 무료 онлайн 변환기.',
             vector: '벡터 이미지를 변환하는 무료 온라인 변환기.',
+            ebook: "전자책을 EPUB, MOBI, PDF 등 인기 있는 형식으로 변환하세요.",
         },
         index: '파일을 빠르고 안전하게 변환하세요. 200개 이상의 형식을 지원합니다.',
         categories_list: '변환하고 싶은 파일 유형을 선택하세요. 저희 서비스는 이미지, 문서, 오디오, 비디오 등 다양한 형식을 지원합니다.',
@@ -98,6 +100,7 @@ export default {
             spreadsheet: '개 스프레드시트',
             presentation: '개 프레젠테이션',
             vector: '개 벡터 파일',
+            ebook: "전자책",
         },
         rpm: {
             image: '개 이미지',
@@ -109,6 +112,7 @@ export default {
             spreadsheet: '개 스프레드시트',
             presentation: '개 프레젠테이션',
             vector: '개 벡터 파일',
+            ebook: "전자책",
         }
     },
     advantages: {

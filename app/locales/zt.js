@@ -63,6 +63,7 @@ export default {
             spreadsheet: '轉換試算表',
             presentation: '轉換簡報',
             vector: '轉換向量圖形',
+            ebook: "轉換電子書",
         },
         index: '線上檔案轉換器'
     },
@@ -82,6 +83,7 @@ export default {
             spreadsheet: '免費線上試算表轉換器。',
             presentation: '免費線上簡報轉換器。',
             vector: '免費線上向量圖形轉換器。',
+            ebook: "將您的電子書轉換為 EPUB、MOBI、PDF 等流行格式。",
         },
         index: '快速、安全地轉換檔案。支援超過 200 種格式。',
         categories_list: '選擇您想轉換的檔案類型。我們的服務支援圖片、文件、音頻、影片等多種格式。',
@@ -98,6 +100,7 @@ export default {
             spreadsheet: '個試算表',
             presentation: '個簡報',
             vector: '個向量檔案',
+            ebook: "電子書",
         },
         rpm: {
             image: '張圖片',
@@ -109,6 +112,7 @@ export default {
             spreadsheet: '個試算表',
             presentation: '個簡報',
             vector: '個向量檔案',
+            ebook: "電子書",
         }
     },
     advantages: {

@@ -63,6 +63,7 @@ export default {
             spreadsheet: '转换表格',
             presentation: '转换演示文稿',
             vector: '转换矢量图',
+            ebook: "转换电子书",
         },
         index: '在线文件转换器'
     },
@@ -82,6 +83,7 @@ export default {
             spreadsheet: '免费在线表格转换器。',
             presentation: '免费在线演示文稿转换器。',
             vector: '免费在线矢量图转换器。',
+            ebook: "将您的电子书转换为 EPUB、MOBI、PDF 等流行格式。",
         },
         index: '快速、安全地转换文件。支持超过200种格式。',
         categories_list: '选择您想要转换的文件类型。我们的服务支持图片、文档、音频、视频等多种格式。',
@@ -98,6 +100,7 @@ export default {
             spreadsheet: '个表格',
             presentation: '个演示文稿',
             vector: '个矢量文件',
+            ebook: "电子书",
         },
         rpm: {
             image: '张图片',
@@ -109,6 +112,7 @@ export default {
             spreadsheet: '个表格',
             presentation: '个演示文稿',
             vector: '个矢量文件',
+            ebook: "电子书",
         }
     },
     advantages: {

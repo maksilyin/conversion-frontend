@@ -63,6 +63,7 @@ export default {
             spreadsheet: 'スプレッドシートを変換',
             presentation: 'プレゼンテーションを変換',
             vector: 'ベクター画像を変換',
+            ebook: "電子書籍を変換する",
         },
         index: 'オンライン変換ツール'
     },
@@ -82,6 +83,7 @@ export default {
             spreadsheet: 'スプレッドシートを変換する無料オンライン変換ツール。',
             presentation: 'プレゼンテーションを変換する無料オンライン変換ツール。',
             vector: 'ベクター画像を変換する無料オンライン変換ツール。',
+            ebook: "あなたの電子書籍をEPUB、MOBI、PDFなどの人気フォーマットに変換しましょう。",
         },
         index: 'ファイルを迅速かつ安全に変換。200以上の形式をサポート。',
         categories_list: '変換したいファイルの種類を選択してください。当サービスは画像、ドキュメント、音声、動画、その他のファイル向けにさまざまな形式をサポートしています。',
@@ -98,6 +100,7 @@ export default {
             spreadsheet: 'スプレッドシート',
             presentation: 'プレゼンテーション',
             vector: 'ベクター画像',
+            ebook: "電子書籍",
         },
         rpm: {
             image: '画像',
@@ -109,6 +112,7 @@ export default {
             spreadsheet: 'スプレッドシート',
             presentation: 'プレゼンテーション',
             vector: 'ベクター画像',
+            ebook: "電子書籍",
         }
     },
     advantages: {

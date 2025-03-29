@@ -62,7 +62,8 @@ export default {
             font: "Konverter skrifttyper",
             spreadsheet: "Konverter regneark",
             presentation: "Konverter presentasjoner",
-            vector: "Konverter vektorbilder"
+            vector: "Konverter vektorbilder",
+            ebook: "Konvertere e-bøker",
         },
         index: "Online filkonverter"
     },
@@ -81,7 +82,8 @@ export default {
             font: "Gratis online konverter for å konvertere skrifttyper.",
             spreadsheet: "Gratis online konverter for å konvertere regneark.",
             presentation: "Gratis online konverter for å konvertere presentasjoner.",
-            vector: "Gratis online konverter for å konvertere vektorbilder."
+            vector: "Gratis online konverter for å konvertere vektorbilder.",
+            ebook: "Konverter e-bøkene dine til populære formater som EPUB, MOBI, PDF og andre.",
         },
         index: "Konverter filer raskt og sikkert. Støtte for over 200 formater.",
         categories_list: "Velg filtypen du vil konvertere. Vår tjeneste støtter ulike formater for bilder, dokumenter, lyd, video og andre filer.",
@@ -97,7 +99,8 @@ export default {
             font: "skrifttyper",
             spreadsheet: "regneark",
             presentation: "presentasjoner",
-            vector: "vektorbilder"
+            vector: "vektorbilder",
+            ebook: "e-bøker",
         },
         rpm: {
             image: "bilde",
@@ -108,7 +111,8 @@ export default {
             font: "skrifttype",
             spreadsheet: "regneark",
             presentation: "presentasjon",
-            vector: "vektorbilde"
+            vector: "vektorbilde",
+            ebook: "e-bok",
         }
     },
     advantages: {

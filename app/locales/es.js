@@ -62,7 +62,8 @@ export default {
             font: "Convertir fuentes",
             spreadsheet: "Convertir hojas de cálculo",
             presentation: "Convertir presentaciones",
-            vector: "Convertir imágenes vectoriales"
+            vector: "Convertir imágenes vectoriales",
+            ebook: "Convertir libros electrónicos",
         },
         index: "Convertidor de archivos en línea"
     },
@@ -81,7 +82,8 @@ export default {
             font: "Convertidor en línea gratuito para la conversión de fuentes.",
             spreadsheet: "Convertidor en línea gratuito para la conversión de hojas de cálculo.",
             presentation: "Convertidor en línea gratuito para la conversión de presentaciones.",
-            vector: "Convertidor en línea gratuito para la conversión de imágenes vectoriales."
+            vector: "Convertidor en línea gratuito para la conversión de imágenes vectoriales.",
+            ebook: "Convierte tus libros electrónicos a formatos populares como EPUB, MOBI, PDF y otros.",
         },
         index: "Convierte archivos rápida y seguramente. Compatible con más de 200 formatos.",
         categories_list: "Elige el tipo de archivo que deseas convertir. Nuestro servicio admite diversos formatos para imágenes, documentos, audio, video y más.",
@@ -97,7 +99,8 @@ export default {
             font: "fuentes",
             spreadsheet: "hojas de cálculo",
             presentation: "presentaciones",
-            vector: "archivos vectoriales"
+            vector: "archivos vectoriales",
+            ebook: "libros electrónicos",
         },
         rpm: {
             image: "imagen",
@@ -108,7 +111,8 @@ export default {
             font: "fuente",
             spreadsheet: "hoja de cálculo",
             presentation: "presentación",
-            vector: "archivo vectorial"
+            vector: "archivo vectorial",
+            ebook: "libro electrónico",
         }
     },
     advantages: {

@@ -63,6 +63,7 @@ export default {
             spreadsheet: 'Konvertera kalkylblad',
             presentation: 'Konvertera presentationer',
             vector: 'Konvertera vektorbilder',
+            ebook: "Konvertera e-böcker",
         },
         index: 'Online-filkonverterare'
     },
@@ -82,6 +83,7 @@ export default {
             spreadsheet: 'Gratis online-konverterare för att konvertera kalkylblad.',
             presentation: 'Gratis online-konverterare för att konvertera presentationer.',
             vector: 'Gratis online-konverterare för att konvertera vektorbilder.',
+            ebook: "Konvertera dina e-böcker till populära format som EPUB, MOBI, PDF och andra.",
         },
         index: 'Konvertera filer snabbt och säkert. Stöd för över 200 format.',
         categories_list: 'Välj den typ av fil du vill konvertera. Vår tjänst stöder olika format för bilder, dokument, ljud, video och andra filer.',
@@ -98,6 +100,7 @@ export default {
             spreadsheet: 'kalkylblad',
             presentation: 'presentationer',
             vector: 'vektorbilder',
+            ebook: "e-böcker",
         },
         rpm: {
             image: 'bild',
@@ -109,6 +112,7 @@ export default {
             spreadsheet: 'kalkylblad',
             presentation: 'presentation',
             vector: 'vektorbild',
+            ebook: "e-bok",
         }
     },
     advantages: {

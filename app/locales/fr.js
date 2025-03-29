@@ -62,7 +62,8 @@ export default {
             font: "Convertir des polices",
             spreadsheet: "Convertir des feuilles de calcul",
             presentation: "Convertir des présentations",
-            vector: "Convertir des images vectorielles"
+            vector: "Convertir des images vectorielles",
+            ebook: "Convertir des livres électroniques",
         },
         index: "Convertisseur de fichiers en ligne"
     },
@@ -81,7 +82,8 @@ export default {
             font: "Convertisseur en ligne gratuit pour la conversion de polices.",
             spreadsheet: "Convertisseur en ligne gratuit pour la conversion de feuilles de calcul.",
             presentation: "Convertisseur en ligne gratuit pour la conversion de présentations.",
-            vector: "Convertisseur en ligne gratuit pour la conversion d'images vectorielles."
+            vector: "Convertisseur en ligne gratuit pour la conversion d'images vectorielles.",
+            ebook: "Convertissez vos livres électroniques dans des formats populaires comme EPUB, MOBI, PDF et autres.",
         },
         index: "Convertissez vos fichiers rapidement et en toute sécurité. Prise en charge de plus de 200 formats.",
         categories_list: "Choisissez le type de fichier que vous souhaitez convertir. Notre service prend en charge divers formats pour les images, documents, fichiers audio, vidéos et bien plus encore.",
@@ -97,7 +99,8 @@ export default {
             font: "polices",
             spreadsheet: "feuilles de calcul",
             presentation: "présentations",
-            vector: "fichiers vectoriels"
+            vector: "fichiers vectoriels",
+            ebook: "livres électroniques",
         },
         rpm: {
             image: "image",
@@ -108,7 +111,8 @@ export default {
             font: "police",
             spreadsheet: "feuille de calcul",
             presentation: "présentation",
-            vector: "fichier vectoriel"
+            vector: "fichier vectoriel",
+            ebook: "livre électronique",
         }
     },
     advantages: {
