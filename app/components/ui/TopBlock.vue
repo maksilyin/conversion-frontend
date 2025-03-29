@@ -22,7 +22,7 @@ const props = defineProps({
                 <h1 class="text-black-500 font-[700] mb-5 mt-2 text-center text-3xl dark:text-white md:text-3xl lg:text-[42px] lg:leading-snug">
                     <slot name="title"></slot>
                 </h1>
-                <p class="text-lg text-black-300 mb-5 text-center dark:text-white lg:leading-snug">
+                <p class="sm:text-lg text-black-300 mb-5 text-center dark:text-white lg:leading-snug">
                     <slot name="subtitle"></slot>
                 </p>
             </div>

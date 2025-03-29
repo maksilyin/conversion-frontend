@@ -6,7 +6,14 @@ export const useLocale = () => {
     const api = useApi();
 
     const loadLocales = async () => {
-        const data = await api.fetchData<Language[]>('lang');
+        const data = await api.fetchData<Language[]>(
+          'lang',
+          {},
+          {},
+          {
+              key: 'locales'
+          }
+        );
 
         if (data) {
             locales.value = data;

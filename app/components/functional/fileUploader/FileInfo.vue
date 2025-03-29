@@ -171,7 +171,7 @@ const remove = () => {
 </script>
 
 <template>
-    <div class="bg-white shadow-black-300/30 shadow-ring-5 rounded-md p-2 pr-3 relative overflow-hidden">
+    <div class="bg-white shadow-black-300/30 shadow-ring-5 rounded-md p-2 sm:pr-3 relative overflow-hidden">
         <div class="mb-2 flex xs:hidden items-center flex-wrap">
             <span class="truncate text-ellipsis overflow-hidden max-w-[50%] block text-xs mr-auto" :title="filename">{{ filename }}</span>
             <div class="text-gray-500 text-xs flex items-center gap-3">
@@ -218,13 +218,13 @@ const remove = () => {
                     </div>
                 </div>
             </div>
-            <div v-if="!hiddenFormats" class="mx-auto w-[100px] flex-shrink-0">
+            <div v-if="!hiddenFormats" class="mr-auto md:mx-auto w-[80px] sm:w-[90px] lg:w-[100px] flex-shrink-0">
                 <div v-if="status >= FILE_STATUS.UPLOADED">
                     <slot></slot>
                 </div>
             </div>
             <div class="w-[124px]">
-                <div class="flex items-center gap-2">
+                <div class="flex items-center gap-2 justify-center">
                     <StatusBadge class="min-w-[100px] justify-center" :status="status"/>
                     <UPopover v-if="errorMessage" mode="hover" :resize="true" :popper="{ placement: 'top', arrow: false }">
                         <template #panel>

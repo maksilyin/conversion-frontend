@@ -30,6 +30,11 @@ const sections = [
                 to: '/convert/video',
             },
             {
+                label: t('tools.ebook'),
+                image: converterIcons.ebook,
+                to: '/convert/ebook',
+            },
+            {
                 label: t('tools.archive'),
                 image: converterIcons.archive,
                 to: '/convert/archive',

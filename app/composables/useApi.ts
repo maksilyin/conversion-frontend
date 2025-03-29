@@ -3,6 +3,7 @@ import type {Endpoints, Params} from '~/types/Api';
 import endpointsModule from "~/Endpoints";
 import type { H3Event } from 'h3';
 import { getRequestHeader } from 'h3'
+import type {FetchParams} from "~/types/FetchParams";
 
 const endpoints: Endpoints = endpointsModule;
 
@@ -53,8 +54,12 @@ export const useApi = () => {
             }
         }
     }
-    const fetchData = async <T>(key: string, params: Params = {}, headers: Record<string, string> = {}) => {
+    const fetchData = async <T>(endpoint: string, params: Params = {}, headers: Record<string, string> = {}, fetchParams: FetchParams = {}) => {
         const { ssrContext } = useNuxtApp();
+
+        if (fetchParams?.useClient && !ssrContext) {
+            return await callApi<T>(endpoint, params, headers);
+        }
 
         if (ssrContext) {
             const event = ssrContext.event as H3Event
@@ -63,22 +68,30 @@ export const useApi = () => {
             if (cookie) {
                 headers['cookie'] = cookie
             }
+        }
 
-            const {data, error} = await useAsyncData<T>(key, () => callApi<T>(key, params, headers));
+        const cacheKey = fetchParams?.key || `${endpoint}-${locale}`;
 
-            if (error.value) {
-                throw createError({
-                    statusCode: 404,
-                    statusMessage: 'Not Found',
-                    fatal: true
-                })
+        const {data, error} = await useAsyncData<T>(
+            cacheKey,
+            () => callApi<T>(endpoint, params, headers),
+            {
+                dedupe: 'defer',
+                default: () => null,
+                lazy: false,
+                server: true,
             }
+        );
 
-            return data.value;
+        if (error.value) {
+            throw createError({
+                statusCode: 404,
+                statusMessage: 'Not Found',
+                fatal: true
+            })
         }
-        else {
-            return await callApi<T>(key, params, headers);
-        }
+
+        return data.value;
     };
 
     return {

@@ -8,6 +8,7 @@ import converterFontIcon from "~/assets/icons/converter_font.svg"
 import converterTableIcon from "~/assets/icons/converter_table.svg"
 import converterPptIcon from "~/assets/icons/converter_ppt.svg"
 import converterVectorIcon from "~/assets/icons/converter_vector.svg"
+import converterEbookIcon from "~/assets/icons/converter_ebook.svg"
 
 import converterImgIconV2 from "~/assets/icons/converter_img_2.svg"
 import converterDocIconV2 from "~/assets/icons/converter_doc_2.svg"
@@ -18,6 +19,7 @@ import converterFontIconV2 from "~/assets/icons/converter_font_2.svg"
 import converterTableIconV2 from "~/assets/icons/converter_table_2.svg"
 import converterPptIconV2 from "~/assets/icons/converter_ppt_2.svg"
 import converterVectorIconV2 from "~/assets/icons/converter_vector_2.svg"
+import converterEbookIconV2 from "~/assets/icons/converter_ebook_2.svg"
 
 export const converterIcons = {
     convert: converterIcon,
@@ -30,6 +32,7 @@ export const converterIcons = {
     spreadsheet: converterTableIcon,
     presentation: converterPptIcon,
     vector: converterVectorIcon,
+    ebook: converterEbookIcon
 }
 
 export const converterIconsV2 = {
@@ -43,4 +46,5 @@ export const converterIconsV2 = {
     spreadsheet: converterTableIconV2,
     presentation: converterPptIconV2,
     vector: converterVectorIconV2,
+    ebook: converterEbookIconV2
 }

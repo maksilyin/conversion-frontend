@@ -7,12 +7,12 @@ const { t } = useI18n();
 </script>
 
 <template>
-    <div class="py-20">
+    <div class="py-14 md:py-20">
         <UContainer>
-            <h2 class="text-center text-black text-4xl font-bold mb-6">
+            <h2 class="text-center text-black text-2xl dark:text-white md:text-4xl font-bold mb-6">
                 {{ $t('titles.tools_convert') }}
             </h2>
-            <p class="text-center text-black-300 mb-16 text-lg">
+            <p class="text-center text-black-300 mb-16 sm:text-lg">
                 {{ $t('subtitles.categories_list') }}
             </p>
             <div class="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 min-h-full">

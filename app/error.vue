@@ -36,7 +36,7 @@ const errorMessage = computed(() => {
     <NuxtLoadingIndicator />
     <NuxtLayout>
         <UContainer class="pb-16">
-            <div v-if="error.statusCode === 404" class="prose mx-auto mt-10 dark:prose-invert">
+            <div v-if="error.statusCode === 404" class="prose mx-auto mt-10 dark:prose-invert pb-10">
                 <h1 class="text-center text-9xl mb-10 text-black-900 dark:text-gray-200">40<span class="text-secondary">4</span></h1>
                 <p class="my-5 text-center text-3xl mb-10 uppercase font-bold">{{$t('page.error.page_not_found')}}</p>
                 <p class="text-center">{{$t('page.error.not_found_text')}}</p>
@@ -52,7 +52,7 @@ const errorMessage = computed(() => {
                     </NuxtLinkLocale>
                 </div>
             </div>
-            <div v-else class="prose mx-auto mt-10 dark:prose-invert">
+            <div v-else class="prose mx-auto mt-10 dark:prose-invert pb-10">
                 <h1 class="text-center text-9xl mb-10 text-black-900 dark:text-gray-200">{{ error.statusCode }}</h1>
                 <p class="my-5 text-center text-3xl mb-10 uppercase font-bold">
                     {{ errorMessage.title }}

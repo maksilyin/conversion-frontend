@@ -170,26 +170,28 @@ onBeforeMount(() => {
 </script>
 
 <template>
-    <DrugAndDrop for="input-file"/>
-    <UContainer>
-        <div v-if="files.length" class="flex flex-col pb-10">
-            <slot name="files"></slot>
-        </div>
-    </UContainer>
-    <FileInput v-if="!files.length"/>
-    <div v-else class="sticky z-[54] bottom-0 bg-white pb-0 pt-3 md:pb-5 md:pt-5 border-t">
-        <UContainer class="px-0 sm:px-0">
-            <div v-if="isShowProgress || status === 'complete'" class="flex justify-center">
-                <div v-if="isShowProgress" class="absolute w-full left-0 top-0">
-                    <UProgress size="sm" color="blue" :value="taskProgress"></UProgress>
-                </div>
+    <div>
+        <DrugAndDrop for="input-file"/>
+        <UContainer>
+            <div v-if="files.length" class="flex flex-col pb-10">
+                <slot name="files"></slot>
             </div>
-            <FileInputCompact @send="send" :is-disabled="!sendData">
-                <slot name="compact"></slot>
-            </FileInputCompact>
         </UContainer>
+        <FileInput v-if="!files.length"/>
+        <div v-else class="sticky z-[54] bottom-0 bg-white pb-0 sm:pb-5 sm:pt-5 border-t">
+            <UContainer class="px-0 sm:px-0">
+                <div v-if="isShowProgress || status === 'complete'" class="flex justify-center">
+                    <div v-if="isShowProgress" class="absolute w-full left-0 top-0">
+                        <UProgress size="sm" color="blue" :value="taskProgress"></UProgress>
+                    </div>
+                </div>
+                <FileInputCompact @send="send" :is-disabled="!sendData">
+                    <slot name="compact"></slot>
+                </FileInputCompact>
+            </UContainer>
+        </div>
+        <input ref="fileInput" @change="onSelectFile" id="input-file" type="file" multiple class="hidden" />
     </div>
-    <input ref="fileInput" @change="onSelectFile" id="input-file" type="file" multiple class="hidden" />
 </template>
 
 <style scoped>

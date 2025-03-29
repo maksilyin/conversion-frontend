@@ -2,7 +2,6 @@ import type {FileFormat, FileType} from "~/types/FileFormat";
 
 const formats = ref<FileType[]>([])
 const formatDetail = ref<FileFormat | null>(null)
-const loading = ref(false);
 
 export const useFormats = (extension: string[] | string = '') => {
     const api = useApi();
@@ -13,7 +12,7 @@ export const useFormats = (extension: string[] | string = '') => {
         if (data) {
             formats.value = data;
         }
-    }
+    };
 
     const loadDetailFormat = async (format: string) => {
         formatDetail.value = await api.fetchData<FileFormat>('formats.detail', {format});

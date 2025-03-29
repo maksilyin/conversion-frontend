@@ -52,10 +52,7 @@ const handleFiles = (files) => {
 
 <template>
     <div class="relative">
-        <!--
-        <div class="absolute bottom-[210px] inset-x-0 w-2/3 h-1/3 -z-[1] rounded-full bg-primary-100 dark:bg-white/20 mx-auto blur-[80px]"></div>
-        -->
-        <UContainer class="pb-20">
+        <UContainer class="pb-14 md:pb-20">
             <div class="">
                 <div
                     class="h-full flex items-center justify-center w-full border-primary-200 transition"

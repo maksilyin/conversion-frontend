@@ -102,10 +102,10 @@ for (let i = 1; i <= count; i++) {
         <UContainer>
             <RoundedBlock>
                 <TitleH2 class="mb-6">{{ title }}</TitleH2>
-                <p class="text-center text-black-300 mb-12 text-lg">{{ subtitle }}</p>
+                <p class="text-center text-black-300 mb-12 sm:text-lg">{{ subtitle }}</p>
                 <div class="grid grid-cols sm:grid-cols-2 lg:grid-cols-3 gap-10">
                     <div class="relative z-1" v-for="(item, index) in items" :key="item.id">
-                        <div class="pb-2 sm:pb-4">
+                        <div class="pb-1 sm:pb-4">
                             <span class="inline-flex items-center justify-center rounded-full">
                                 <img class="h-12 sm:h-16" :src="iconsSvg[index]" alt=""/>
                             </span>

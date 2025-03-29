@@ -1,11 +1,13 @@
 <script setup>
 import {useI18n} from "vue-i18n";
+import {useMediaQuery} from "@vueuse/core";
 
 const { t } = useI18n();
 const openDropdown = ref(false);
-const mobileButton = ref(null);
+const dropdownButton = ref(null);
 const widthDropdown = ref('auto');
 const { isSomeProcessing, isDownloadZipLoading, isProcessingTask } = useProcessing();
+const isMobile = useMediaQuery('(max-width: 640px)')
 
 const props = defineProps({
     downloadZipHandler: {
@@ -19,11 +21,16 @@ const props = defineProps({
 const handleDropdown = () => {
     openDropdown.value = !openDropdown.value;
     setTimeout(() => {
-        if (mobileButton.value) {
-            const headlessui_menu_items = mobileButton.value.querySelector('[id^="headlessui-menu-items"]');
+        if (dropdownButton.value) {
+            const headlessui_menu_items = dropdownButton.value.querySelector('[id^="headlessui-menu-items"]');
 
             if (headlessui_menu_items) {
-                widthDropdown.value = mobileButton.value.clientWidth
+                widthDropdown.value = dropdownButton.value.clientWidth
+
+                if (isMobile.value) {
+                    widthDropdown.value -= 15;
+                }
+
                 headlessui_menu_items.style.width = widthDropdown.value + 'px'
             }
         }
@@ -36,7 +43,7 @@ const items = computed(() => {
             {
                 label: t('remove_all'),
                 icon: isProcessingTask.value ? 'svg-spinners:180-ring-with-bg' : 'heroicons-outline:x-circle',
-                class: 'text-red-500 text-md px-6',
+                class: 'text-red-500 text-md px-3.5',
                 iconClass: 'text-red-500 h-6 w-6',
                 click: props.removeHandler
             }
@@ -47,19 +54,21 @@ const items = computed(() => {
 </script>
 
 <template>
-    <div class="flex gap-2 flex-col md:flex-row">
+    <div class="flex gap-2 flex-col md:flex-row w-full sm:w-auto md:pr-5 lg:pr-0">
         <div>
-            <div ref="mobileButton" class="relative inline-block">
-                <UDropdown :items="items"
-                           v-model:open="openDropdown"
-                           :popper="{ placement: 'bottom-start' }"
-                           :ui="{padding: 'px-0'}"
+            <div ref="dropdownButton" class="relative sm:inline-block">
+                <UDropdown
+                    class="w-full"
+                    :items="items"
+                    v-model:open="openDropdown"
+                    :popper="{ placement: 'bottom-start' }"
+                    :ui="{padding: 'px-0'}"
                 >
-                    <span class="flex">
+                    <span class="flex w-full">
                         <UButton
                             size="xl"
                             :icon="!isDownloadZipLoading ? 'material-symbols:download' : 'svg-spinners:180-ring-with-bg'"
-                            class="text-md rounded-br-none rounded-tr-none justify-center h-12 bg-blue-dark-100 transition duration-500 hover:bg-blue-dark ml-auto px-6"
+                            class="download-btn btn-blue"
                             :label="$t('download_all')"
                             :trailing="false"
                             @click.stop="downloadZipHandler"
@@ -70,7 +79,7 @@ const items = computed(() => {
                                 icon="i-heroicons-chevron-down-20-solid"
                                 color="blue"
                                 size="xl"
-                                class="rounded-bl-none justify-center rounded-tl-none border-l w-12 p-0 text-xs transition duration-500 bg-blue-dark-100 hover:bg-blue-dark"
+                                class="dropdown-btn btn-blue"
                                 :disabled="isSomeProcessing"
                             />
                     </span>
@@ -81,5 +90,12 @@ const items = computed(() => {
 </template>
 
 <style scoped>
-
+.download-btn {
+    @apply justify-center h-12 transition duration-500 rounded-none sm:rounded-tl-md sm:rounded-bl-md
+    sm:ml-auto flex-grow sm:flex-grow-0;
+}
+.dropdown-btn {
+    @apply rounded-none sm:rounded-tr-md flex-shrink-0 sm:rounded-br-md justify-center border-l w-12 p-0 text-xs
+    transition duration-500;
+}
 </style>

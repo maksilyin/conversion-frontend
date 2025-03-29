@@ -17,8 +17,8 @@ const props = defineProps({
     <NuxtLinkLocale
         :to="`/convert/${item.extension}`"
         class="group p-2 block relative shadow-ring-5 shadow-black-300/20 rounded transition duration-200 hover:shadow-ring-10 hover:shadow-black-300/30 hover:scale-105">
-        <span class="flex gap-2 items-center h-full">
-            <span class="w-12 h-12">
+        <span class="flex gap-2 md:items-center h-full flex-col sm:flex-row">
+            <span class="w-12 h-12 flex-shrink-0">
                 <img
                     v-if="item.icon_image"
                     :src="getStoragePath(item.icon_image).src"
@@ -34,7 +34,7 @@ const props = defineProps({
                 />
             </span>
             <span>
-                <span class="block text-lg font-medium text-gray-800">
+                <span class="block text-lg font-medium text-gray-800 hidden sm:block">
                     <span class="">
                         {{item.name}}
                     </span>

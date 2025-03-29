@@ -9,7 +9,7 @@ const props = defineProps({
 
 <template>
     <div
-        class="rounded-[30px] bg-white py-12 px-5 sm:px-12"
+        class="rounded-[30px] bg-white py-12 px-3 sm:px-12"
         :class="{'rounded-block-shadow': shadow}"
     >
         <slot></slot>

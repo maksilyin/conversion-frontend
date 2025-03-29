@@ -11,6 +11,7 @@ const {
 const { t } = useI18n();
 import {FILE_STATUS, TASK_STATUS} from "~/utils/constants"
 import DownloadAllButton from "~/components/ui/DownloadAllButton.vue";
+import {useMediaQuery} from "@vueuse/core";
 
 const props = defineProps({
     data: {
@@ -24,7 +25,7 @@ const props = defineProps({
         default: false,
     }
 })
-
+const isMobile = useMediaQuery('(max-width: 640px)')
 const isAllCompleted = computed(() => {
     let completed = false;
     let uploaded = false;
@@ -50,8 +51,8 @@ const send = async () => {
 </script>
 
 <template>
-    <div class="p-0 md:p-2 bg-white">
-        <div class="flex gap-3 md:gap-2 flex-col md:flex-row items-center">
+    <div class="bg-white">
+        <div class="flex gap-3 sm:gap-2 sm:px-6 lg:px-0 flex-col sm:flex-row items-center">
             <UploadFileButton
                 v-if="status !== TASK_STATUS.LOCK && status !== TASK_STATUS.CLEAR"
                 class="hidden md:flex"
@@ -61,7 +62,7 @@ const send = async () => {
                     <UButton
                         @click.stop
                         icon="clarity:add-line"
-                        class="text-md py-2 px-4 h-10 md:pr-4 justify-center relative bg-blue-dark-100 transition duration-500 rounded-md hover:bg-blue-dark rounded-br-none rounded-tr-none"
+                        class="text-md py-2 px-4 whitespace-nowrap h-10 md:pr-4 justify-center relative bg-blue-dark-100 transition duration-500 rounded-md hover:bg-blue-dark rounded-br-none rounded-tr-none"
                         :disabled="isSomeProcessing"
                     >
                         {{$t('add_more_files')}}
@@ -69,10 +70,13 @@ const send = async () => {
                     </UButton>
                 </label>
             </UploadFileButton>
-            <div class="mx-auto">
+            <div v-if="!isMobile || status !== TASK_STATUS.COMPLETE || !isAllCompleted"
+                 class="mx-auto pt-3 sm:pt-0"
+            >
                 <slot></slot>
             </div>
             <DownloadAllButton
+                class="ml-auto"
                 v-if="status === TASK_STATUS.COMPLETE && isAllCompleted"
                 :is-processing-task="isProcessingTask"
                 :is-processing-zip="isDownloadZipLoading"
@@ -81,7 +85,7 @@ const send = async () => {
             />
             <UButton
                 v-else
-                class="text-md justify-center h-12 bg-blue-dark-100 transition duration-500 rounded-none md:rounded-md hover:bg-blue-dark ml-auto px-6 w-full md:w-auto"
+                class="text-md justify-center h-12 bg-blue-dark-100 transition duration-500 rounded-none sm:rounded-md hover:bg-blue-dark ml-auto px-6 w-full sm:w-auto"
                 @click="send"
                 :disabled="isSomeProcessing || isDisabled"
             >
