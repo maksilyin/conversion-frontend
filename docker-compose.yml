@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-  nuxt:
+  frontend:
     build:
       context: .
       dockerfile: Dockerfile
@@ -10,3 +10,8 @@ services:
       - '3000:3000'
     stdin_open: true
     tty: true
+    networks:
+      - frontend-pub
+networks:
+  frontend-pub:
+    external: true
