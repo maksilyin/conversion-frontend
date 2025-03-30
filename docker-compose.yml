@@ -1,17 +1,12 @@
 version: '3.8'
 
 services:
-  frontend:
+  nuxt:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: frontend-app
+    container_name: nuxt-app
     ports:
       - '3000:3000'
     stdin_open: true
     tty: true
-    networks:
-      - frontend-pub
-networks:
-  frontend-pub:
-    external: true
