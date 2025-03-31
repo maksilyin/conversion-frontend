@@ -204,7 +204,8 @@ export default {
         font: "Fonts",
         spreadsheet: "Spreadsheets",
         presentation: "Presentations",
-        vector: "Vectors"
+        vector: "Vectors",
+        ebook: 'E-books',
     },
     load_more: 'Load more',
     search: 'Search...',

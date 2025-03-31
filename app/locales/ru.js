@@ -206,6 +206,7 @@ export default {
         spreadsheet: 'Таблицы',
         presentation: 'Презентации',
         vector: 'Векторы',
+        ebook: 'Электронные книги',
     },
     load_more: 'Загрузить еще',
     search: 'Поиск...',

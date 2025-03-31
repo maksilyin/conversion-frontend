@@ -15,8 +15,8 @@ const page: Page | null = await api.fetchData<Page>('page', { url });
 
 if (page) {
     useSeoMeta({
-        title: page.seo?.title ? page.seo.title : page.name,
-        description: page.seo.description
+        title: page.seo?.title ? page.seo.title : `${page.name} ${t('meta.title.suffix')}`,
+        description: page.seo?.description ? page.seo.description : `${page.name}. ${t('meta.description.suffix')}`,
     });
 
     initPageChain(page)

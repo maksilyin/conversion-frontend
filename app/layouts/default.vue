@@ -10,7 +10,7 @@ const head = useLocaleHead({
     addSeoAttributes: true
 });
 
-defineOgImage({url: '/img/logo.png', width: 657, height: 232, alt: 'FastConvert'})
+defineOgImage({url: '/img/logo.svg', width: 657, height: 232, alt: 'FastConvert'})
 
 const title = computed(() => {
     const defaultTitle = t('layouts.title');
