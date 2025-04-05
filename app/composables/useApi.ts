@@ -65,10 +65,17 @@ export const useApi = () => {
         if (ssrContext) {
             const event = ssrContext.event as H3Event
             const cookie = getRequestHeader(event, 'cookie')
+            const nuxtApp = useNuxtApp()
 
             if (cookie) {
                 headers['cookie'] = cookie
+                if (nuxtApp?.realIp) {
+                    headers['X-Real-IP'] = <string>nuxtApp.realIp
+                    headers['X-Forwarded-For'] = <string>nuxtApp.realIp
+                }
             }
+
+            console.log(headers)
         }
 
         const cacheKey = fetchParams?.key || `${endpoint}-${locale}`;
