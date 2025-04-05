@@ -157,7 +157,7 @@ watchEffect(() => {
 })
 
 const isShowRemoveButton = computed(() => {
-    return !props.file.result || isError.value
+    return !props.file.result || isError.value || status.value === FILE_STATUS.DELETE
 })
 
 const download = () => {
