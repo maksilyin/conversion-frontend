@@ -40,8 +40,9 @@ export const useApi = () => {
             return response.data as T;
         }
         catch (error) {
-            console.log(error)
-            if (axios.isAxiosError(error) && error.response?.status === 404) {
+            console.error(`Ошибка при запросе ${method.toUpperCase()} ${url}:`, error);
+            throw error;
+            /*if (axios.isAxiosError(error) && error.response?.status === 404) {
                 throw createError({
                     statusCode: 404,
                     statusMessage: 'Not Found',
@@ -51,7 +52,7 @@ export const useApi = () => {
             else {
                 console.error(`Ошибка при запросе ${method.toUpperCase()} ${url}:`, error);
                 throw error;
-            }
+            }*/
         }
     }
     const fetchData = async <T>(endpoint: string, params: Params = {}, headers: Record<string, string> = {}, fetchParams: FetchParams = {}) => {
@@ -85,8 +86,8 @@ export const useApi = () => {
 
         if (error.value) {
             throw createError({
-                statusCode: 404,
-                statusMessage: 'Not Found',
+                statusCode: error.value?.statusCode,
+                statusMessage: error.value?.statusMessage,
                 fatal: true
             })
         }

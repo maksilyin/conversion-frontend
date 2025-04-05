@@ -37,8 +37,8 @@ useSeoMeta({
             </div>
             <Converter/>
         </div>
-        <CategoryCardList/>
         <Advantages/>
+        <CategoryCardList/>
     </div>
 </template>
 

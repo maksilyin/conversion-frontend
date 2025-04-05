@@ -35,7 +35,7 @@ export const useFile = (uploadFile: UploadFile|null = null, hash: string | boole
                     if (!file.value) {
                         return;
                     }
-                    file.value.progress = 70;
+                    file.value.progress = 50;
                 }, 200)
 
                 setProcessing('remove', true);

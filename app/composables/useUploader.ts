@@ -226,7 +226,7 @@ export const useUploader = () => {
                     await uploadNext(res.hash);
                 }
                 else if (res.status) {
-                    setFileProgress(hash, 100)
+                    setFileProgress(hash, 100);
                     files[hash].extension = res.extension;
                     files[hash].mimetype = res.mimetype;
                     files[hash].size = res.size || 0;
@@ -242,7 +242,7 @@ export const useUploader = () => {
                     await uploadNext(hash);
                 }
                 else {
-                    const errorMessage = e?.response?.data?.error || 'Upload failed';
+                    const errorMessage = e?.response?.data?.message || 'Upload failed';
                     setFileStatus(hash, FILE_STATUS.ERROR, errorMessage);
                     console.error(e);
                 }

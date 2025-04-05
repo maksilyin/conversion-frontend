@@ -224,7 +224,7 @@ const remove = () => {
                 </div>
             </div>
             <div class="w-[124px]">
-                <div class="flex items-center gap-2 justify-center">
+                <div class="flex items-center gap-2">
                     <StatusBadge class="min-w-[100px] justify-center" :status="status"/>
                     <UPopover v-if="errorMessage" mode="hover" :resize="true" :popper="{ placement: 'top', arrow: false }">
                         <template #panel>
