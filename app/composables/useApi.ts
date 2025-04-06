@@ -1,4 +1,4 @@
-import axios, { type ResponseType } from 'axios';
+import axios, {type AxiosRequestConfig, type ResponseType} from 'axios';
 import type {Endpoints, Params} from '~/types/Api';
 import endpointsModule from "~/Endpoints";
 import type { H3Event } from 'h3';
@@ -11,7 +11,7 @@ export const useApi = () => {
     const { public: { API_URL } } = useRuntimeConfig();
     const { locale } = useI18n();
     const baseUrl = API_URL ? API_URL.replace('**', '') : '/api/';
-    const callApi = async <T>(key: string, params: Params = {}, headers: Record<string, string> = {}, responseType:ResponseType | undefined = undefined): Promise<T> => {
+    const callApi = async <T>(key: string, params: Params = {}, headers: Record<string, string> = {}, requestParams: Partial<AxiosRequestConfig> = {}): Promise<T> => {
         if (!endpoints[key]) {
             throw new Error(`Endpoint "${key}" не найден`)
         }
@@ -27,15 +27,17 @@ export const useApi = () => {
             }
         })
 
+        const options = {
+            method,
+            url: `${baseUrl}${url}`,
+            [method === 'get' ? 'params' : 'data']: params,
+            headers,
+            withCredentials: true,
+            ...requestParams
+        }
+
         try {
-            const response = await axios({
-                method,
-                url: `${baseUrl}${url}`,
-                [method === 'get' ? 'params' : 'data']: params,
-                headers,
-                responseType,
-                withCredentials: true,
-            });
+            const response = await axios(options);
 
             return response.data as T;
         }
@@ -55,6 +57,11 @@ export const useApi = () => {
             }*/
         }
     }
+
+    const getInstance = () => {
+
+    }
+
     const fetchData = async <T>(endpoint: string, params: Params = {}, headers: Record<string, string> = {}, fetchParams: FetchParams = {}) => {
         const { ssrContext } = useNuxtApp();
 

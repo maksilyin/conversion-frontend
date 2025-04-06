@@ -152,7 +152,7 @@ onBeforeRouteLeave(() => {
             </template>
         </FileUploader>
         <template #fallback>
-            <UContainer class="py-14 md:pb-20">
+            <UContainer class="pb-14 md:pb-20">
                 <RoundedBlock :shadow="true" class="w-full dashed !bg-gray-50 relative">
                     <div class="h-[296px] flex flex-col items-center justify-center w-full relative z-1">
                         <USkeleton class="w-[80px] h-[80px] rounded-full" />

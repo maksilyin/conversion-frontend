@@ -1,5 +1,5 @@
 export const useProcessing = () => {
-    const { isDownloadZipLoading} = useUploader();
+    const { isDownloadZipLoading, downLoadZipProgress} = useUploader();
     const { isProcessingTask } = useTask();
     const isSomeProcessing = computed(() => {
         return isProcessingTask.value || isDownloadZipLoading.value
@@ -9,5 +9,6 @@ export const useProcessing = () => {
         isSomeProcessing,
         isProcessingTask,
         isDownloadZipLoading,
+        downLoadZipProgress,
     }
 }

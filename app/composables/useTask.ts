@@ -99,6 +99,7 @@ export const useTask = (taskUuid: string | null = null) => {
         }
         catch (e: any) {
             showError(e.message)
+            isProcessing.value = false;
         }
     }
 

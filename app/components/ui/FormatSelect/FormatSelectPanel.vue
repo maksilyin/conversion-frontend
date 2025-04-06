@@ -59,7 +59,7 @@ const formatList = computed(() => {
             placeholder="Search..."
         />
     </div>
-    <div class="flex gap-2 xs:p-2 pt-2  w-full h-[330px] md:w-[450px]">
+    <div class="flex gap-2 xs:p-2 pt-2 w-full min-h-[300px] max-h-[365px] md:w-[450px]">
         <div class="w-auto flex-shrink-0 rounded border border-gray-200 p-2">
             <div
                 v-for="formatNavItem in formatList"
@@ -72,16 +72,20 @@ const formatList = computed(() => {
                 <UIcon v-else-if="formatNavItem.icon" :name="formatNavItem.icon" class="w-5 h-5" />{{ formatNavItem.name }}
             </div>
         </div>
-        <div class="w-full rounded border border-gray-200 p-2 overflow-y-auto scrollbar-thumb-rounded-lg scrollbar-track-rounded-lg scrollbar-thin">
-            <div v-for="formatNavItem in formatList" :key="formatNavItem.id" class="grid grid-cols-2 xs:grid-cols-3 gap-1 xs:gap-2" v-show="showTab === formatNavItem.slug">
-                <span
-                    v-for="format in formatNavItem.formats"
-                    @click="clickHandler(format.extension)"
-                    class="cursor-pointer rounded text-sm w-full font-medium text-center text-gray-500 transition border border-gray-300 hover:bg-gray-50 hover:border-gray-400 hover:text-gray-600 py-[6px] px-2"
-                    :class="{'!bg-primary-50 !border-primary-500 !text-primary-600': checkItem(format.extension)}"
-                >
-                    {{ format.extension.toUpperCase() }}
-                </span>
+        <div class="w-full rounded border border-gray-200 overflow-y-auto relative">
+            <div class="absolute inset-0 w-full overflow-auto scrollbar-thin scrollbar-thumb-rounded-lg scrollbar-track-rounded-lg">
+                <div class="p-2">
+                    <div v-for="formatNavItem in formatList" :key="formatNavItem.id" class="grid grid-cols-2 xs:grid-cols-3 gap-1 xs:gap-2" v-show="showTab === formatNavItem.slug">
+                        <span
+                            v-for="format in formatNavItem.formats"
+                            @click="clickHandler(format.extension)"
+                            class="cursor-pointer rounded text-sm w-full font-medium text-center text-gray-500 transition border border-gray-300 hover:bg-gray-50 hover:border-gray-400 hover:text-gray-600 py-[6px] px-2"
+                            :class="{'!bg-primary-50 !border-primary-500 !text-primary-600': checkItem(format.extension)}"
+                        >
+                            {{ format.extension.toUpperCase() }}
+                        </span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

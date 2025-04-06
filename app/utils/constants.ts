@@ -8,6 +8,7 @@ export const FILE_STATUS = {
     UPLOADED: 4,
     PROCESSING: 5,
     COMPLETED: 6,
+    DOWNLOAD: 7,
 };
 
 export const TASK_STATUS = {

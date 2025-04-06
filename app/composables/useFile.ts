@@ -1,6 +1,7 @@
 import {FILE_STATUS} from "~/utils/constants";
 import type {UploadFile} from "~/types/UploadFile";
 import {downloadFile} from "~/utils/functions";
+import type { AxiosProgressEvent, ResponseType } from 'axios'
 
 export const useFile = (uploadFile: UploadFile|null = null, hash: string | boolean = false) => {
     const api = useApi();
@@ -10,6 +11,7 @@ export const useFile = (uploadFile: UploadFile|null = null, hash: string | boole
     const { uuid } = useTask();
     const isProcessingFile = ref(false);
     const file = ref(uploadFile)
+    const downLoadProgress = ref(0);
     const processing = reactive<Record<string, boolean>>({
         download: false,
         remove: false
@@ -73,19 +75,35 @@ export const useFile = (uploadFile: UploadFile|null = null, hash: string | boole
             Accept: 'application/octet-stream',
         }
         const fileResult = file.value.result[index];
-
+        const oldStatus = file.value.status;
         setProcessing('download', true);
+        file.value.status = FILE_STATUS.DOWNLOAD;
 
-        api.callApi<BlobPart>('file.download', {
+        const data = {
             task: uuid.value,
             hash: file.value.hash,
-        }, headers, 'blob').then((res) => {
+        }
+
+        const requestParams: {
+            responseType: ResponseType
+            onDownloadProgress: (e: AxiosProgressEvent) => void
+        } = {
+            responseType: 'blob',
+            onDownloadProgress: (e: AxiosProgressEvent) => {
+                downLoadProgress.value = Math.round((e.loaded * 100) / (e.total || 1))
+            }
+        }
+
+        api.callApi<BlobPart>('file.download', data, headers, requestParams).then((res) => {
             const blob = new Blob([res], {type: fileResult.mimetype});
             downloadFile(blob, fileResult.originalName);
         }).catch(e => {
             showError(e.message)
         }).finally(() => {
             setProcessing('download', false);
+            if (file.value) {
+                file.value.status = oldStatus;
+            }
         })
     }
 
@@ -146,5 +164,6 @@ export const useFile = (uploadFile: UploadFile|null = null, hash: string | boole
         processingFile,
         isDownloadProcessingFile,
         isRemoveProcessingFile,
+        downLoadProgress,
     }
 }

@@ -6,7 +6,7 @@ const { t } = useI18n();
 const openDropdown = ref(false);
 const dropdownButton = ref(null);
 const widthDropdown = ref('auto');
-const { isSomeProcessing, isDownloadZipLoading, isProcessingTask } = useProcessing();
+const { isSomeProcessing, isDownloadZipLoading, isProcessingTask, downLoadZipProgress } = useProcessing();
 const isMobile = useMediaQuery('(max-width: 640px)')
 
 const props = defineProps({
@@ -51,6 +51,10 @@ const items = computed(() => {
     ]
 })
 
+const downloadingText = computed(() => {
+    return isDownloadZipLoading.value ? (t('download_all') + ' ' + downLoadZipProgress.value + '%') : t('download_all');
+})
+
 </script>
 
 <template>
@@ -69,7 +73,7 @@ const items = computed(() => {
                             size="xl"
                             :icon="!isDownloadZipLoading ? 'material-symbols:download' : 'svg-spinners:180-ring-with-bg'"
                             class="download-btn btn-blue"
-                            :label="$t('download_all')"
+                            :label="downloadingText"
                             :trailing="false"
                             @click.stop="downloadZipHandler"
                             :disabled="isSomeProcessing"

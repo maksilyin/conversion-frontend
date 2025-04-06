@@ -2,6 +2,7 @@ import { FILE_STATUS } from "~/utils/constants"
 import type {UploadFile} from "~/types/UploadFile";
 import type {ChunkResult} from "~/types/ChunkResult";
 import { downloadFile } from "~/utils/functions"
+import type {AxiosProgressEvent, ResponseType} from "axios";
 interface UploaderParams {
     chunkSize: number,
     maxRetries: number,
@@ -18,6 +19,7 @@ const files: Record<string, UploadFile> = reactive({});
 const filesToUpload: UploadFile[] = reactive([]);
 const defaultFileParams = ref({});
 const isDownloadZipLoading = ref(false);
+const downLoadZipProgress = ref(0);
 let fileIndex = 0;
 export const useUploader = () => {
     const api = useApi();
@@ -86,15 +88,31 @@ export const useUploader = () => {
         const headers = {
             Accept: 'application/octet-stream',
         }
+
+        const data = {
+            task: uuid,
+        }
+
+        const requestParams: {
+            responseType: ResponseType
+            onDownloadProgress: (e: AxiosProgressEvent) => void
+        } = {
+            responseType: 'blob',
+            onDownloadProgress: (e: AxiosProgressEvent) => {
+                downLoadZipProgress.value = Math.round((e.loaded * 100) / (e.total || 1))
+            }
+        }
+
         api.callApi<BlobPart>('file.download.all', {
             task: uuid,
-        }, headers, 'blob').then((res) => {
+        }, headers, requestParams).then((res) => {
             const blob = new Blob([res]);
             downloadFile(blob, 'fastconvert.co.archive.zip');
         }).catch(e => {
             showError(e.message)
         }).finally(() => {
             isDownloadZipLoading.value = false;
+            downLoadZipProgress.value = 0;
         })
     }
 
@@ -289,6 +307,7 @@ export const useUploader = () => {
         setDefaultFileParams,
         unmount,
         isDownloadZipLoading,
+        downLoadZipProgress,
         setFileStatus,
         createFile,
         addCreatedFile,

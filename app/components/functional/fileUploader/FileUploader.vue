@@ -180,11 +180,6 @@ onBeforeMount(() => {
         <FileInput v-if="!files.length"/>
         <div v-else class="sticky z-[54] bottom-0 bg-white pb-0 sm:pb-5 sm:pt-5 border-t">
             <UContainer class="px-0 sm:px-0">
-                <div v-if="isShowProgress || status === 'complete'" class="flex justify-center">
-                    <div v-if="isShowProgress" class="absolute w-full left-0 top-0">
-                        <UProgress size="sm" color="blue" :value="taskProgress"></UProgress>
-                    </div>
-                </div>
                 <FileInputCompact @send="send" :is-disabled="!sendData">
                     <slot name="compact"></slot>
                 </FileInputCompact>

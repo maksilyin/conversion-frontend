@@ -40,6 +40,7 @@ const {
     removeFile,
     downloadResultFile,
     processingFile,
+    downLoadProgress
 } = useFile(props.file);
 const indexResult = 0;
 const { fileIcon } = useMimeTypes(props.file.mimetype);
@@ -225,7 +226,7 @@ const remove = () => {
             </div>
             <div class="w-[124px]">
                 <div class="flex items-center gap-2">
-                    <StatusBadge class="min-w-[100px] justify-center" :status="status"/>
+                    <StatusBadge class="min-w-[100px] justify-center" :status="status" :progress="downLoadProgress"/>
                     <UPopover v-if="errorMessage" mode="hover" :resize="true" :popper="{ placement: 'top', arrow: false }">
                         <template #panel>
                             <p class="text-red-500 py-1 px-2 text-xs max-w-[200px]">{{ errorMessage }}</p>
