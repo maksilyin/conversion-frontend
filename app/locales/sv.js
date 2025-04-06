@@ -7,6 +7,7 @@ export default {
         processing: 'Bearbetar',
         completed: 'Slutfört',
         delete: 'Radering',
+        download: "Laddar ner",
     },
     format: {
         images: 'Bilder',
@@ -206,6 +207,7 @@ export default {
         spreadsheet: 'Kalkylblad',
         presentation: 'Presentationer',
         vector: 'Vektorer',
+        ebook: "E-böcker",
     },
     load_more: 'Ladda fler',
     search: 'Sök...',

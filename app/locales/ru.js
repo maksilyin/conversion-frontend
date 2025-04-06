@@ -7,6 +7,7 @@ export default {
         processing: 'Обработка',
         completed: 'Завершено',
         delete: 'Удаление',
+        download: "Загрузка",
     },
     format: {
         images: 'Изображения',

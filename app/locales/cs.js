@@ -6,7 +6,8 @@ export default {
         error: "Chyba",
         processing: "Zpracování",
         completed: "Dokončeno",
-        delete: "Mazání"
+        delete: "Mazání",
+        download: "Stahování"
     },
     format: {
         images: "Obrázky",
@@ -204,7 +205,8 @@ export default {
         font: "Písma",
         spreadsheet: "Tabulky",
         presentation: "Prezentace",
-        vector: "Vektory"
+        vector: "Vektory",
+        ebook: "Elektronické knihy",
     },
     load_more: "Načíst více",
     search: "Hledat...",

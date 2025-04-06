@@ -6,7 +6,8 @@ export default {
         error: "Hiba",
         processing: "Feldolgozás",
         completed: "Befejezve",
-        delete: "Törlés"
+        delete: "Törlés",
+        download: "Letöltés",
     },
     format: {
         images: "Képek",
@@ -204,7 +205,8 @@ export default {
         font: "Betűtípusok",
         spreadsheet: "Táblázatok",
         presentation: "Prezentációk",
-        vector: "Vektorok"
+        vector: "Vektorok",
+        ebook: "Elektronikus könyvek",
     },
     load_more: "Továbbiak betöltése",
     search: "Keresés...",

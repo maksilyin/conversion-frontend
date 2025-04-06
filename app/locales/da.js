@@ -6,7 +6,8 @@ export default {
         error: "Fejl",
         processing: "Behandler",
         completed: "Færdig",
-        delete: "Sletter"
+        delete: "Sletter",
+        download: "Downloader"
     },
     format: {
         images: "Billeder",
@@ -205,7 +206,8 @@ export default {
         font: "Skrifttyper",
         spreadsheet: "Regneark",
         presentation: "Præsentationer",
-        vector: "Vektorer"
+        vector: "Vektorer",
+        ebook: "E-bøger",
     },
     load_more: "Indlæs mere",
     search: "Søg...",

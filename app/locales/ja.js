@@ -7,6 +7,7 @@ export default {
         processing: '処理中',
         completed: '完了',
         delete: '削除中',
+        download: "ダウンロード中",
     },
     format: {
         images: '画像',
@@ -206,6 +207,7 @@ export default {
         spreadsheet: 'スプレッドシート',
         presentation: 'プレゼンテーション',
         vector: 'ベクター',
+        ebook: "電子書籍",
     },
     load_more: 'さらに読み込む',
     search: '検索...',

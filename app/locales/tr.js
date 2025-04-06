@@ -7,6 +7,7 @@ export default {
         processing: 'İşleniyor',
         completed: 'Tamamlandı',
         delete: 'Siliniyor',
+        download: "İndiriliyor",
     },
     format: {
         images: 'Görüntüler',
@@ -206,6 +207,7 @@ export default {
         spreadsheet: 'E-Tablolar',
         presentation: 'Sunumlar',
         vector: 'Vektörler',
+        ebook: "E-kitaplar",
     },
     load_more: 'Daha fazla yükle',
     search: 'Ara...',

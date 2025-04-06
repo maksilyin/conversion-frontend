@@ -6,7 +6,8 @@ export default {
         error: "Kesalahan",
         processing: "Memproses",
         completed: "Selesai",
-        delete: "Menghapus"
+        delete: "Menghapus",
+        download: "Mengunduh"
     },
     format: {
         images: "Gambar",
@@ -204,7 +205,8 @@ export default {
         font: "Font",
         spreadsheet: "Spreadsheet",
         presentation: "Presentasi",
-        vector: "Vektor"
+        vector: "Vektor",
+        ebook: "Buku elektronik",
     },
     load_more: "Muat lebih banyak",
     search: "Cari...",

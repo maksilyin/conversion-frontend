@@ -7,6 +7,7 @@ export default {
         processing: 'جارٍ المعالجة',
         completed: 'مكتمل',
         delete: 'جارٍ الحذف',
+        download: "جارٍ التنزيل",
     },
     format: {
         images: 'الصور',
@@ -206,6 +207,7 @@ export default {
         spreadsheet: 'جداول بيانات',
         presentation: 'عروض تقديمية',
         vector: 'متجهات',
+        ebook: "الكتب الإلكترونية",
     },
     load_more: 'تحميل المزيد',
     search: 'بحث...',

@@ -6,7 +6,8 @@ export default {
         error: "Помилка",
         processing: "Обробка",
         completed: "Завершено",
-        delete: "Видалення"
+        delete: "Видалення",
+        download: "Завантаження",
     },
     format: {
         images: "Зображення",
@@ -210,7 +211,8 @@ export default {
         font: "Шрифти",
         spreadsheet: "Таблиці",
         presentation: "Презентації",
-        vector: "Вектори"
+        vector: "Вектори",
+        ebook: "Електронні книги",
     },
 
     load_more: "Завантажити ще",

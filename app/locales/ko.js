@@ -7,6 +7,7 @@ export default {
         processing: '처리 중',
         completed: '완료됨',
         delete: '삭제 중',
+        download: "다운로드 중",
     },
     format: {
         images: '이미지',
@@ -206,6 +207,7 @@ export default {
         spreadsheet: '스프레드시트',
         presentation: '프레젠테이션',
         vector: '벡터',
+        ebook: "전자책",
     },
     load_more: '더 보기',
     search: '검색...',

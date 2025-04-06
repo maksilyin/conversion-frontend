@@ -7,6 +7,7 @@ export default {
         processing: 'Käsittely',
         completed: 'Valmis',
         delete: 'Poistaminen',
+        download: "Ladataan",
     },
     format: {
         images: 'Kuvat',
@@ -205,6 +206,7 @@ export default {
         spreadsheet: 'Taulukot',
         presentation: 'Esitykset',
         vector: 'Vektorit',
+        ebook: "E-kirjat",
     },
     load_more: 'Lataa lisää',
     search: 'Hae...',

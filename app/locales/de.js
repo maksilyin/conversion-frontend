@@ -6,7 +6,8 @@ export default {
         error: "Fehler",
         processing: "Verarbeitung",
         completed: "Abgeschlossen",
-        delete: "Löschen"
+        delete: "Löschen",
+        download: "Herunterladen",
     },
     format: {
         images: "Bilder",
@@ -205,7 +206,8 @@ export default {
         font: "Schriftarten",
         spreadsheet: "Tabellen",
         presentation: "Präsentationen",
-        vector: "Vektoren"
+        vector: "Vektoren",
+        ebook: "E-Books",
     },
     load_more: "Mehr laden",
     search: "Suchen...",

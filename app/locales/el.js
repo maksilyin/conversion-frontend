@@ -6,7 +6,8 @@ export default {
         error: "Σφάλμα",
         processing: "Επεξεργασία",
         completed: "Ολοκληρώθηκε",
-        delete: "Διαγραφή"
+        delete: "Διαγραφή",
+        download: "Λήψη",
     },
     format: {
         images: "Εικόνες",
@@ -207,7 +208,8 @@ export default {
         font: "Γραμματοσειρές",
         spreadsheet: "Υπολογιστικά φύλλα",
         presentation: "Παρουσιάσεις",
-        vector: "Διανυσματικά"
+        vector: "Διανυσματικά",
+        ebook: "Ηλεκτρονικά βιβλία",
     },
     load_more: "Φόρτωση περισσότερων",
     search: "Αναζήτηση...",

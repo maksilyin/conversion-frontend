@@ -68,7 +68,7 @@ const statusMessage = computed(() => {
             return {
                 color: 'green',
                 status: 'download',
-                text: t('status.download') + ' ' + progressPercent.value
+                text: t('status.download') + (props.progress > 0 ? ' ' + progressPercent.value : '')
             }
         default:
             return {
@@ -102,16 +102,18 @@ const classProcessing = computed(() => {
             v-if="props.status === FILE_STATUS.PROCESSING
             || props.status === FILE_STATUS.LOADING
             || props.status === FILE_STATUS.PREPARE
-            || props.status === FILE_STATUS.DELETE"
+            || props.status === FILE_STATUS.DELETE
+            || props.status === FILE_STATUS.DOWNLOAD"
             class="progress-bar absolute"
             :class="[
                 `process-${statusMessage.status}`
             ]"
         />
         <span
-            class="relative z-1 py-1 uppercase"
+            class="relative z-1 py-1 uppercase w-full whitespace-nowrap truncate text-center"
             :class="[
-                `process-text-${statusMessage.status}`
+                `process-text-${statusMessage.status}`,
+                {small: props.progress > 0}
             ]"
         >
             {{ statusMessage.text }}
@@ -145,6 +147,10 @@ const classProcessing = computed(() => {
     @apply ring-purple-500 bg-purple-100 ring-1 ring-opacity-25;
 }
 
+.process-download {
+    @apply ring-green-500 bg-green-100 ring-1 ring-opacity-25;
+}
+
 .process-text-delete {
     @apply text-red-500;
 }
@@ -155,6 +161,14 @@ const classProcessing = computed(() => {
 
 .process-text-process {
     @apply text-purple-500;
+}
+
+.process-text-download {
+    @apply text-green-500;
+}
+
+.process-text-download.small {
+    @apply text-[10px];
 }
 
 .progress-bar {

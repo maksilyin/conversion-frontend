@@ -101,6 +101,7 @@ export const useFile = (uploadFile: UploadFile|null = null, hash: string | boole
             showError(e.message)
         }).finally(() => {
             setProcessing('download', false);
+            downLoadProgress.value = 0;
             if (file.value) {
                 file.value.status = oldStatus;
             }

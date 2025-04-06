@@ -6,7 +6,8 @@ export default {
         error: "Error",
         processing: "Processing",
         completed: "Completed",
-        delete: "Deleting"
+        delete: "Deleting",
+        download: "Downloading"
     },
     format: {
         images: "Images",

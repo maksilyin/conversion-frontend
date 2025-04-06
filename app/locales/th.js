@@ -7,6 +7,7 @@ export default {
         processing: 'กำลังประมวลผล',
         completed: 'เสร็จสิ้น',
         delete: 'กำลังลบ',
+        download: "กำลังดาวน์โหลด",
     },
     format: {
         images: 'รูปภาพ',
@@ -206,6 +207,7 @@ export default {
         spreadsheet: 'สเปรดชีต',
         presentation: 'งานนำเสนอ',
         vector: 'เวกเตอร์',
+        ebook: "หนังสืออิเล็กทรอนิกส์",
     },
     load_more: 'โหลดเพิ่ม',
     search: 'ค้นหา...',

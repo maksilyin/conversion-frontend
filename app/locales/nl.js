@@ -6,7 +6,8 @@ export default {
         error: "Fout",
         processing: "Verwerken",
         completed: "Voltooid",
-        delete: "Verwijderen"
+        delete: "Verwijderen",
+        download: "Downloaden",
     },
     format: {
         images: "Afbeeldingen",
@@ -204,7 +205,8 @@ export default {
         font: "Lettertypen",
         spreadsheet: "Spreadsheets",
         presentation: "Presentaties",
-        vector: "Vectoren"
+        vector: "Vectoren",
+        ebook: "E-boeken",
     },
     load_more: "Meer laden",
     search: "Zoeken...",

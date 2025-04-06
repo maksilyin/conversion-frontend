@@ -7,6 +7,7 @@ export default {
         processing: 'Đang xử lý',
         completed: 'Hoàn tất',
         delete: 'Đang xóa',
+        download: "Đang tải xuống",
     },
     format: {
         images: 'Hình ảnh',
@@ -206,6 +207,7 @@ export default {
         spreadsheet: 'Bảng tính',
         presentation: 'Bài thuyết trình',
         vector: 'Vector',
+        ebook: "Sách điện tử",
     },
     load_more: 'Tải thêm',
     search: 'Tìm kiếm...',

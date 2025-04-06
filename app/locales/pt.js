@@ -6,7 +6,8 @@ export default {
         error: "Erro",
         processing: "Processando",
         completed: "Concluído",
-        delete: "Excluindo"
+        delete: "Excluindo",
+        download: "Baixando",
     },
     format: {
         images: "Imagens",
@@ -207,7 +208,8 @@ export default {
         font: "Fontes",
         spreadsheet: "Planilhas",
         presentation: "Apresentações",
-        vector: "Vetores"
+        vector: "Vetores",
+        ebook: "Livros eletrônicos",
     },
 
     load_more: "Carregar mais",

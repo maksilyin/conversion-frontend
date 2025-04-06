@@ -7,6 +7,7 @@ export default {
         processing: '处理中',
         completed: '已完成',
         delete: '删除中',
+        download: "正在下载",
     },
     format: {
         images: '图片',
@@ -206,6 +207,7 @@ export default {
         spreadsheet: '表格',
         presentation: '演示文稿',
         vector: '矢量图',
+        ebook: "电子书",
     },
     load_more: '加载更多',
     search: '搜索...',
