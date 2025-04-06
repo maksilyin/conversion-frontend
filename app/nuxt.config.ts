@@ -28,7 +28,12 @@ export default defineNuxtConfig({
     'nuxt-og-image',
     '@nuxtjs/seo',
     '@nuxt/image',
+    'nuxt-yandex-metrika',
   ],
+  yandexMetrika: {
+    id: process.env.YANDEX_METRIKA,
+    debug: process.env.NODE_ENV !== "production",
+  },
   robots: {
     disallow: ['/admin', '/search'],
     credits: false,
@@ -47,5 +52,5 @@ export default defineNuxtConfig({
     ],
   },
   i18n: i18nConfig,
-  nitro: { compressPublicAssets: true, prerender: { failOnError: false, routes: ['sitemap.xml'], }, }
+  nitro: { compressPublicAssets: true, prerender: { failOnError: false, routes: ['sitemap_index.xml'], }, }
 })
