@@ -81,8 +81,6 @@ export const useApi = () => {
                     headers['X-Forwarded-For'] = <string>nuxtApp.realIp
                 }
             }
-
-            console.log(headers)
         }
 
         const cacheKey = fetchParams?.key || `${endpoint}-${locale}`;
