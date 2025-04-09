@@ -13,6 +13,7 @@ export default defineNuxtRouteMiddleware((to, from) => {
       nuxtApp.realIp = event.node.req.headers['x-forwarded-for'] ||
         event.node.req.socket?.remoteAddress ||
         '0.0.0.0'
+      nuxtApp.originHost = event.node.req.headers['host'] || 'unknown-host';
     }
     catch (e) {
       console.error(e);

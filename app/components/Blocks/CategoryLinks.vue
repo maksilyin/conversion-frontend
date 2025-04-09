@@ -67,7 +67,7 @@ const subtitle = t('subtitles.convert_category_block').replace('#TYPE#', t(`form
             <p class="max-w-4xl mx-auto text-center text-lg mb-10">{{ subtitle }}</p>
             <div
                 ref="showBlock"
-                class="transition-max-height duration-500 p-1 overflow-hidden"
+                class="transition-max-height duration-500 p-1"
             >
                 <div
                     ref="showBlock"

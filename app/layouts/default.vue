@@ -31,6 +31,13 @@ useHead({
         },
         { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
     ],
+    script: [
+        {
+            async: true,
+            src: 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1567768997855651',
+            crossorigin: 'anonymous'
+        }
+    ],
     titleTemplate: null,
 });
 
@@ -39,6 +46,7 @@ useHead({
 <template>
     <Html :lang="head.htmlAttrs.lang" :dir="head.htmlAttrs.dir" class="antialiased text-gray-800 dark:bg-black-900 dark:text-gray-400">
         <Head>
+            <meta name="google-adsense-account" content="ca-pub-1567768997855651">
             <Title>{{ title }}</Title>
             <template v-for="link in head.link" :key="link.id">
                 <Link :id="link.id" :rel="link.rel" :href="link.href" :hreflang="link.hreflang" />

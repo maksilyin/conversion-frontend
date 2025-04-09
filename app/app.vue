@@ -8,6 +8,10 @@ await Promise.all([
     loadLocales().then(() => undefined)
 ]);
 
+onMounted(() => {
+    useCsrf();
+})
+
 </script>
 
 <template>

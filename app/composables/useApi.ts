@@ -16,8 +16,6 @@ export const useApi = () => {
             throw new Error(`Endpoint "${key}" не найден`)
         }
 
-        headers['X-Accept-Language'] = locale.value;
-
         let { method, url } = endpoints[key]
 
         Object.keys(params).forEach(param => {
@@ -76,10 +74,10 @@ export const useApi = () => {
 
             if (cookie) {
                 headers['cookie'] = cookie
-                if (nuxtApp?.realIp) {
-                    headers['X-Real-IP'] = <string>nuxtApp.realIp
-                    headers['X-Forwarded-For'] = <string>nuxtApp.realIp
-                }
+            }
+            if (nuxtApp?.realIp) {
+                headers['X-Real-IP'] = <string>nuxtApp.realIp
+                headers['X-Forwarded-For'] = <string>nuxtApp.realIp
             }
         }
 

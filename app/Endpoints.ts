@@ -58,5 +58,9 @@ export default {
     'lang': {
         method: 'get',
         url: 'lang/',
+    },
+    'csrf': {
+        method: 'get',
+        url: 'csrf-token',
     }
 } as const;
