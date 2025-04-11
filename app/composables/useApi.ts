@@ -25,6 +25,9 @@ export const useApi = () => {
             }
         })
 
+        // @ts-ignore
+        headers['X-Accept-Language'] = locale.value;
+        console.log(headers)
         const options = {
             method,
             url: `${baseUrl}${url}`,

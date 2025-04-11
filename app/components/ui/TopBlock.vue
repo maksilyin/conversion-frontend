@@ -15,11 +15,11 @@ const props = defineProps({
 </script>
 
 <template>
-    <div>
+    <div class="top-block">
         <UContainer>
             <Breadcrumbs v-if="!hideBreadCrumbs" :links="breadcrumbs"/>
-            <div class="pt-7 lg:pt-14 pb-7">
-                <h1 class="text-black-500 font-[700] mb-5 mt-2 text-center text-3xl dark:text-white md:text-3xl lg:text-[42px] lg:leading-snug">
+            <div class="title-wrapper">
+                <h1>
                     <slot name="title"></slot>
                 </h1>
                 <p class="sm:text-lg text-black-300 mb-5 text-center dark:text-white lg:leading-snug">
@@ -31,5 +31,19 @@ const props = defineProps({
 </template>
 
 <style scoped>
+.top-block h1 {
+    @apply text-black font-[700] mb-5 mt-2 text-center text-3xl dark:text-white md:text-3xl lg:text-[42px] lg:leading-snug;
+}
 
+.top-block .title-wrapper {
+    @apply pt-7 lg:pt-14 pb-7;
+}
+
+.top-block.page h1 {
+    @apply text-left mb-0;
+}
+
+.top-block.page .title-wrapper {
+    @apply lg:pt-7 pb-0;
+}
 </style>

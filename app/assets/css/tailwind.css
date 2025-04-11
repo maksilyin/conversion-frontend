@@ -121,6 +121,14 @@ h2 {
     @apply bg-gray-50 dark:bg-gray-800;
 }
 
+.prose p {
+    @apply text-black mb-4 mt-4 leading-8;
+}
+
+.prose h2 {
+    @apply text-black;
+}
+
 .section {
     @apply py-14 md:py-20;
 }

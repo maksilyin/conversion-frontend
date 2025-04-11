@@ -26,7 +26,7 @@ if (page) {
 
 <template>
     <div v-if="page" class="">
-        <TopBlock>
+        <TopBlock class="page">
             <template #title>
                 {{ page.name }}
             </template>
